@@ -1,0 +1,4 @@
+#ifndef XMMREGS_CLOCKPATH_H
+#define XMMREGS_CLOCKPATH_H
+
+#endif
