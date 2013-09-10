@@ -27,12 +27,12 @@ int txMuxSfpSet(int transceiver, int val)
 {
   return XMMRegs_DataPath_UseSync_SfpTxmux_Set(&XMMRegsDriver, transceiver, val);
 }
-
+/*
 int txMuxMgtSet(int transceiver, int val)
 {
   return XMMRegs_DataPath_UseSync_MgtTxmux_Set(&XMMRegsDriver, transceiver, val);
 }
-
+*/
 int masterToMasterSyncSet(int forward)
 {
   if ( (!doesAlignPathApplyToTransceiver(MASTER_TRANSCEIVER) ) ) 
@@ -111,7 +111,7 @@ int allFifoMuxPathSet(int GTStype)
 {
   int status = XST_SUCCESS;
 
-//  status |= XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
+  status |= XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
   status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, DP_RXMUX_MGT);
 
   switch (GTStype) {
@@ -137,7 +137,7 @@ int allRegMuxPathSet(void)
 {
   int status = XST_SUCCESS;
 
-//  status |= XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
+  status |= XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
   status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_REG);
   status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, DP_RXMUX_MGT);
 

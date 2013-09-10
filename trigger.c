@@ -220,7 +220,7 @@ int triggerSetup(int GTStype, int step)
       logAnswer();
 
       XMMRegs_RocketIO_TriggerRstCarrier_Set(&XMMRegsDriver, 0);
-      XMMRegs_RocketIO_TxDataSel_Unset(&XMMRegsDriver, 0);
+//      XMMRegs_RocketIO_TxDataSel_Unset(&XMMRegsDriver, 0);
 
       /* one sends comma for the alignment of the backward link */
       status |= mgtDataCommaSet();
@@ -253,7 +253,7 @@ int triggerSetup(int GTStype, int step)
       logAnswer();
 
       XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver, 0);
-      XMMRegs_RocketIO_TxDataSel_Set(&XMMRegsDriver, 0);
+//      XMMRegs_RocketIO_TxDataSel_Set(&XMMRegsDriver, 0);
       status |= mgtDataCommaUnSet();
       status |= triggerPathSet(GTStype);
 

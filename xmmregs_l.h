@@ -3,75 +3,57 @@
 
 #define CARD_NUMBER_ADDRESS ( &cardNumber )
 
-#define XMMR_GT_CTRL_OFFSET            0x00
-#define XMMR_GT_DRP_ADDR_CTRL_OFFSET   0x04
-#define XMMR_GT_DRP_CTRL_OFFSET        0x08
-#define XMMR_MGT_REGDATA_CTRL_OFFSET   0x0C
-#define XMMR_DP_MUX_CTRL_OFFSET        0x10
-
-#define XMMR_DP_ULINKMUX_CTRL_OFFSET   0x00
-#define XMMR_DP_SYNC_LOGIC_CTRL_OFFSET 0x00
-
-#define XMMR_DP_TDC_CTRL_OFFSET        0x14
-#define XMMR_DP_DELAY_CTRL_OFFSET      0x18
-
-#define XMMR_TDC_EN_CTRL_OFFSET        0x00
-
-#define XMMR_FINE_DELAY_CTRL_OFFSET    0x1C
-#define XMMR_MGT_SEL_CTRL_OFFSET       0x20
-
-#define XMMR_LED_CTRL_OFFSET           0x00
-#define XMMR_TDC_DEBUG_CTRL_OFFSET     0x00
-
-#define XMMR_CLOCKPATH_CTRL_OFFSET     0x24
-#define XMMR_TRIGGER_CTRL_OFFSET       0x28
-
-#define XMMR_I2CGTS_INPUT_CTRL_OFFSET  0x00
-
-#define XMMR_I2CGTS_OUTPUT_CTRL_OFFSET 0x2C
-
-#define XMMR_DP_DIGITIZER_CTRL_OFFSET  0x00
-#define XMMR_TRIGGER_CONF_CTRL_OFFSET  0x00
-#define XMMR_DP_ACCESS_MGT_CTRL_OFFSET 0x00
-#define XMMR_PERIOD_CTRL_OFFSET        0x00
-#define XMMR_AURORA_CTRL_OFFSET        0x00
-
-#define XMMR_LMK_PLL_CTRL_OFFSET       0x30
-#define XMMR_TRIGGER_TEST_CTRL_OFFSET  0x34
-
-#define XMMR_TRIGGER_MUX_CTRL_OFFSET   0x00
-
-#define XMMR_GT_STATUS_OFFSET          0x38
-#define XMMR_GT_DRP_STATUS_OFFSET      0x3C
-#define XMMR_GT_RXDATA_OFFSET          0x40
-
-#define XMMR_MGT_RRDATA_STATUS_OFFSET  0x00
-
-#define XMMR_HARDWARE_STATUS_OFFSET    0x44
-#define XMMR_CLOCKPATH_STATUS_OFFSET   0x48
-#define XMMR_TRIGGER_STATUS_OFFSET     0x4C
-
-#define XMMR_I2CGTS_STATUS_OFFSET      0x00
-
+#define XMMR_GT_CTRL_OFFSET                 0x00
+#define XMMR_GT_DRP_ADDR_CTRL_OFFSET        0x04
+#define XMMR_GT_DRP_CTRL_OFFSET             0x08
+#define XMMR_MGT_REGDATA_CTRL_OFFSET        0x0C
+#define XMMR_LMK_PLL_CTRL_OFFSET            0x10
+#define XMMR_FINE_DELAY_CTRL_OFFSET         0x14
+#define XMMR_DP_DELAY_CTRL_OFFSET           0x18
+#define XMMR_DP_MUX_CTRL_OFFSET             0x1C
+#define XMMR_MGT_SEL_CTRL_OFFSET            0x20 /* NOT USED BUT STILL IN MEMORY AT THIS ADDRESS */
+#define XMMR_CLOCKPATH_CTRL_OFFSET          0x24
+#define XMMR_TRIGGER_CTRL_OFFSET            0x28
+#define XMMR_I2CGTS_OUTPUT_CTRL_OFFSET      0x2C
+#define XMMR_LMK_PLL_STATUS_OFFSET          0x30
+#define XMMR_TRIGGER_TEST_CTRL_OFFSET       0x34
+#define XMMR_GT_STATUS_OFFSET               0x38
+#define XMMR_GT_DRP_STATUS_OFFSET           0x3C
+#define XMMR_GT_RXDATA_OFFSET               0x40
+#define XMMR_VAL_REJ_RATE_STATUS_OFFSET     0x44
+#define XMMR_CLOCKPATH_STATUS_OFFSET        0x48 /* NOT USED BUT STILL IN MEMORY AT THIS ADDRESS */
+#define XMMR_TRIGGER_STATUS_OFFSET          0x4C
 #define XMMR_TRIGGER_INTERNAL_STATUS_OFFSET 0x50 /* 2 registers (MSW and LSW) */
 #define XMMR_GT_TXDATA_STATUS_OFFSET        0x58
 #define XMMR_UPSTREAM_LEAF_STATUS_OFFSET    0x5C
 #define XMMR_DOWNSTREAM_LEAF_STATUS_OFFSET  0x60
+#define XMMR_CARRIER_STATUS_OFFSET          0x64
+#define XMMR_REQ_BKP_RATE_STATUS_OFFSET     0x68
 
+/* NOT USED REGISTERS */
+#define XMMR_DP_ULINKMUX_CTRL_OFFSET        0x00
+#define XMMR_DP_SYNC_LOGIC_CTRL_OFFSET      0x00
+#define XMMR_DP_TDC_CTRL_OFFSET             0x00
+#define XMMR_TDC_EN_CTRL_OFFSET             0x00
+#define XMMR_LED_CTRL_OFFSET                0x00
+#define XMMR_TDC_DEBUG_CTRL_OFFSET          0x00
+#define XMMR_I2CGTS_INPUT_CTRL_OFFSET       0x00
+#define XMMR_DP_DIGITIZER_CTRL_OFFSET       0x00
+#define XMMR_TRIGGER_CONF_CTRL_OFFSET       0x00
+#define XMMR_DP_ACCESS_MGT_CTRL_OFFSET      0x00
+#define XMMR_PERIOD_CTRL_OFFSET             0x00
+#define XMMR_AURORA_CTRL_OFFSET             0x00
+#define XMMR_TRIGGER_MUX_CTRL_OFFSET        0x00
+#define XMMR_MGT_RRDATA_STATUS_OFFSET       0x00
+#define XMMR_HARDWARE_STATUS_OFFSET         0x00
+#define XMMR_I2CGTS_STATUS_OFFSET           0x00
 #define XMMR_UPSTREAM_ROOT_STATUS_OFFSET    0x00
 #define XMMR_DOWNSTREAM_ROOT_STATUS_OFFSET  0x00
-
-#define XMMR_CARRIER_STATUS_OFFSET          0x64
-
 #define XMMR_AURORA_STATUS_OFFSET           0x00
-
-#define XMMR_LMK_PLL_STATUS_OFFSET          0x68
-
-#define XMMR_REQ_BKP_RATE_STATUS_OFFSET     0x00
-#define XMMR_VAL_REJ_RATE_STATUS_OFFSET     0x00
 #define XMMR_IDENTIFICATION_STATUS_OFFSET   0x00
 #define XMMR_REV_PROJECT_STATUS_OFFSET      0x00
 #define XMMR_REV_IPLIB_STATUS_OFFSET        0x00
+/*********************/
 
 /* transceiver information */
 #define NO_TRANSCEIVER -1
@@ -115,7 +97,6 @@
 /* DataPath related */
 #define DP_RXMUX_MGT 0
 #define DP_RXMUX_SFP 1
-	
 #define DP_TXMUX_REG 0
 #define DP_TXMUX_USR 1
 #define DP_TXMUX_PLS 2
@@ -161,8 +142,7 @@
 
 typedef struct
 {
-  unsigned int                  : 13; /* 31->19 */
-  unsigned int gtxDualControl   : 1; /* 18 */
+  unsigned int                  : 14; /* 31->18 */
   unsigned int txcharisk_msb    : 1; /* 17 */
   unsigned int txcharisk_lsb    : 1; /* 16 */
   unsigned int msb              : 8; /* 15->8 */
@@ -188,17 +168,18 @@ typedef struct
   unsigned int                  : 10;
   unsigned int txchardispval    : 2; /*19->18*/
   unsigned int txchardispmode   : 2; /*17->16*/
-  unsigned int                  : 3;
-  unsigned int rx_polarities    : 1; /*12*/
-  unsigned int tx_polarities    : 1; /*11*/
-  unsigned int loopback         : 2; /*10->9*/
-  unsigned int choice_refclk    : 1; /*8*/
+  unsigned int                  : 2;
+  unsigned int gtx_buf_reset    : 1; /*13*/
+  unsigned int gtx_cdr_reset    : 1; /*12*/
+  unsigned int gtx_pll_reset    : 1; /*11*/
+  unsigned int rx_system_reset  : 1; /*10*/
+  unsigned int tx_system_reset  : 1; /*9*/
+  unsigned int gtx_reset        : 1; /*8*/
   unsigned int                  : 3;
   unsigned int rx_pcs_reset     : 1; /*4*/
   unsigned int tx_pcs_reset     : 1; /*3*/
-  unsigned int commaalign       : 1; /*2*/
-  unsigned int rx_system_reset  : 1; /*1*/
-  unsigned int tx_system_reset  : 1; /*0*/
+  unsigned int gtsStreamReady   : 1; /*2*/
+  unsigned int                  : 2;
 } XMMRegs_gt_ctrl;
 
 typedef struct
@@ -263,18 +244,15 @@ typedef struct
 
 typedef struct
 {
-  unsigned int                   : 2;
-  unsigned int txmux3            : 4; /*29->26*/
-  unsigned int rxmux3            : 2; /*25->24*/
-  unsigned int                   : 2;
-  unsigned int txmux2            : 4; /*21->18*/
-  unsigned int rxmux2            : 2; /*17->16*/
-  unsigned int                   : 2;
-  unsigned int txmux1            : 4; /*13->10*/
-  unsigned int rxmux1            : 2; /*9->8*/
-  unsigned int                   : 2;
-  unsigned int txmux0            : 4; /*5->2*/
-  unsigned int rxmux0            : 2; /*1->0*/
+  unsigned int inspection_mux_sel_1  : 4; /*31->28*/
+  unsigned int inspection_mux_sel_0  : 4; /*27->24*/
+  unsigned int                       : 14; /*23->10*/
+  unsigned int mux_clk_sync          : 1; /*9*/
+  unsigned int mux_digitizer_gts_tree: 1; /*8*/
+  unsigned int sfp_txmux_sync_select : 1; /*7*/
+  unsigned int use_sync              : 1; /*6*/
+  unsigned int mgt_txmux_select      : 4; /*5->2*/
+  unsigned int mgt_rxmux_select      : 2; /*1->0*/
 } XMMRegs_dp_mux_ctrl;
 
 typedef struct
@@ -310,10 +288,17 @@ typedef struct
 
 typedef struct
 {
-  unsigned int                     : 18;
-  unsigned int LEN1                :  1; /*13*/
-  unsigned int LEN0                :  1; /*12*/
-  unsigned int rst_pll_monitor     :  1; /*11*/
+  unsigned int                     : 9;
+  unsigned int TC_MD2              : 1; /*22*/
+  unsigned int TC_MD1              : 1; /*21*/
+  unsigned int                     : 1;
+  unsigned int tx_sel1             : 1; /*19*/
+  unsigned int tx_sel0             : 1; /*18*/
+  unsigned int rx_sel1             : 1; /*17*/
+  unsigned int rx_sel0             : 1; /*16*/
+  unsigned int                     : 3;
+  unsigned int LEN1                : 1; /*12*/
+  unsigned int LEN0                : 1; /*11*/
   unsigned int delay               : 11; /*10->0*/
 } XMMRegs_fine_delay_ctrl;
 
@@ -592,7 +577,7 @@ typedef struct
 
 typedef union
 {
-  unsigned int                        uint;
+  unsigned int               uint;
   XMMRegs_txmgtdata_ctrl     txmgtdata;
   XMMRegs_gt_ctrl            gt;
   XMMRegs_drp_addr_ctrl      drp_addr;
@@ -612,7 +597,7 @@ typedef union
 
 typedef union
 {
-  unsigned int                        uint;
+  unsigned int               uint;
   XMMRegs_txmgtdata_ctrl     txmgtdata;
   XMMRegs_dp_tdc_ctrl        tdc;
   XMMRegs_dp_delay_ctrl      delay;
@@ -623,11 +608,11 @@ typedef union
 
 typedef union
 {
-  unsigned int                        uint;
+  unsigned int               uint;
   XMMRegs_gt_status          gt;
   XMMRegs_drp_status         drp;
-  unsigned int                        rxdata;
-  unsigned int                        mgt_rrdata;
+  unsigned int               rxdata;
+  unsigned int               mgt_rrdata;
   XMMRegs_hardware_status    hardware;
   XMMRegs_ClockPath_status   ClockPath;
 } XMMRegs_status;

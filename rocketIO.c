@@ -1,26 +1,21 @@
 #include "xmmregs_i.h"
 #include "xmmregs_RocketIO.h"
-
+/*
 int LoopbackSet(void)
 {
-  int i;
-
-//  for (i = 0; i <= 3; i++)
-  XMMRegs_RocketIO_SerialLoopback_Set(&XMMRegsDriver, 0, SERIAL_LOOPBACK_ON);
+//  XMMRegs_RocketIO_SerialLoopback_Set(&XMMRegsDriver, 0, SERIAL_LOOPBACK_ON);
 
   return XST_SUCCESS;
 }
-
+*/
+/*
 int LoopbackUnSet(void)
 {
-  int i;
-
-//  for (i = 0; i <= 3; i++)
-  XMMRegs_RocketIO_SerialLoopback_Set(&XMMRegsDriver, 0, SERIAL_LOOPBACK_OFF);
+//  XMMRegs_RocketIO_SerialLoopback_Set(&XMMRegsDriver, 0, SERIAL_LOOPBACK_OFF);
 
   return XST_SUCCESS;
 }
-
+*/
 int drpRead(int transceiver, unsigned char DADDR)
 {
   XMMRegs_RocketIO_DrpWord_Read(&XMMRegsDriver, transceiver, DADDR);

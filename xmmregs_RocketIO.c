@@ -91,14 +91,12 @@ static void set_regdata(XMMRegs_txmgtdata_ctrl *reg, unsigned int msb, unsigned 
   }
 
   if (comma_lsb == 0) {
-    reg->gtxDualControl = 0;
     reg->txcharisk_lsb = 0;
     reg->lsb = lsb;
   }
   else {
     reg->lsb = lsb;
     reg->txcharisk_lsb = 1;
-    reg->gtxDualControl = 1;
   }
 
   return;
@@ -106,15 +104,11 @@ static void set_regdata(XMMRegs_txmgtdata_ctrl *reg, unsigned int msb, unsigned 
 
 static void setup_gt(XMMRegs_gt_ctrl *gt)
 {
-  gt->txchardispval = 0;
-  gt->txchardispmode = 0;
-  gt->rx_polarities = 0;
-  gt->tx_polarities = 0;
-  gt->loopback = 0; /* no loopback */
-  gt->choice_refclk = 0;
-  gt->rx_pcs_reset = 0;
-  gt->tx_pcs_reset = 0;
-  gt->commaalign = 1;
+//  gt->txchardispval = 0;
+//  gt->txchardispmode = 0;
+//  gt->rx_pcs_reset = 0;
+//  gt->tx_pcs_reset = 0;
+  gt->gtsStreamReady = 1;
   gt->rx_system_reset = 1;
   gt->tx_system_reset = 1;
   gt->backpressure = 0;
@@ -125,15 +119,11 @@ static void setup_gt(XMMRegs_gt_ctrl *gt)
 
 static void stop_gt(XMMRegs_gt_ctrl *gt)
 {
-  gt->txchardispval = 0;
-  gt->txchardispmode = 0;
-  gt->rx_polarities = 0;
-  gt->tx_polarities = 0;
-  gt->loopback = 0; /* no loopback */
-  gt->choice_refclk = 0;
-  gt->rx_pcs_reset = 0;
-  gt->tx_pcs_reset = 0;
-  gt->commaalign = 1;
+//  gt->txchardispval = 0;
+//  gt->txchardispmode = 0;
+//  gt->rx_pcs_reset = 0;
+//  gt->tx_pcs_reset = 0;
+  gt->gtsStreamReady = 1;
   gt->rx_system_reset = 1;
   gt->tx_system_reset = 1;
   gt->backpressure = 0;
@@ -174,7 +164,7 @@ static int status_gt_rx(XMMRegs_gt_status *gt_status)
   }
 
 //  return status;
-  return C_READY; // GTS_LEAF on ML507
+  return C_READY; // GTS_LEAF on NUMEXO2
 }
 
 static int status_gt_tx(XMMRegs_gt_status *gt_status)
@@ -195,7 +185,7 @@ static int status_gt_tx(XMMRegs_gt_status *gt_status)
   }
 
 //  return status;
-  return C_READY; // GTS_LEAF on ML507
+  return C_READY; // GTS_LEAF on NUMEXO2
 }
 
 static void reset_gt_tx(XMMRegs_gt_ctrl *gt)
@@ -379,7 +369,7 @@ int XMMRegs_RocketIO_DrpWord_Read(XMMRegs *InstancePtr, int transceiver, unsigne
 
   return XST_SUCCESS;
 }
-
+/*
 int XMMRegs_RocketIO_SerialLoopback_Set(XMMRegs *InstancePtr, int transceiver, unsigned char serial_loopback)
 {
   XMMRegs_gt_ctrl *gt;
@@ -414,10 +404,10 @@ int XMMRegs_RocketIO_SerialLoopback_Set(XMMRegs *InstancePtr, int transceiver, u
 
 //    switch (transceiver) 
 //    {
-//      case TRANSCEIVER_0 : case TRANSCEIVER_2 : /* MGTB */
+//      case TRANSCEIVER_0 : case TRANSCEIVER_2 :
 //        set_bit_drp(drp_addr, drp, drp_status, (unsigned char)transceiver, 0x4E, 12, TXPOST_TAP_PD);
 //        break;
-//      case TRANSCEIVER_1 : case TRANSCEIVER_3 : /* MGTA */
+//      case TRANSCEIVER_1 : case TRANSCEIVER_3 :
 //        set_bit_drp(drp_addr, drp, drp_status, (unsigned char)transceiver, 0x4C, 12, TXPOST_TAP_PD);
 //        break;
 //
@@ -436,7 +426,7 @@ int XMMRegs_RocketIO_SerialLoopback_Set(XMMRegs *InstancePtr, int transceiver, u
 
   return XST_SUCCESS;
 }
-
+*/
 /* returns the reference clock used by the RX transceiver */
 int XMMRegs_RocketIO_RefClkRX_Diagnose (XMMRegs *InstancePtr, int transceiver)
 {
@@ -459,20 +449,7 @@ int XMMRegs_RocketIO_RefClkRX_Diagnose (XMMRegs *InstancePtr, int transceiver)
 
   switch (transceiver) 
   {
-//    case TRANSCEIVER_0 : /* MGTB */
-//      RXPMACLKSEL_0 = read_bit_drp(drp_addr, drp, drp_status, TRANSCEIVER_0, 0x5D, 10);
-//      break;
-//    case TRANSCEIVER_1 : /* MGTA */
-//      RXPMACLKSEL_0 = read_bit_drp(drp_addr, drp, drp_status, TRANSCEIVER_0, 0x5D, 12);
-//      break;
-//    case TRANSCEIVER_2 : /* MGTB */
-//      RXPMACLKSEL_0 = read_bit_drp(drp_addr, drp, drp_status, TRANSCEIVER_2, 0x5D, 10);
-//      break;
-//    case TRANSCEIVER_3 : /* MGTA */
-//      RXPMACLKSEL_0 = read_bit_drp(drp_addr, drp, drp_status, TRANSCEIVER_2, 0x5D, 12);
-//      break;
-
-    case TRANSCEIVER_0 : // for GTS LEAF ML507 (Virtex5)
+    case TRANSCEIVER_0 : // for GTS LEAF NUMEXO2 (Virtex5)
       RXPMACLKSEL_0 = 1;
       break;
 
@@ -547,12 +524,10 @@ int XMMRegs_RocketIO_RefClkTX_Diagnose (XMMRegs *InstancePtr, int tile)
   drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
 
-//  return read_bit_drp(drp_addr, drp, drp_status, (unsigned char)(2 * tile), 0x5D, 8);
-
-  return REFCLK2; // for GTS LEAF ML507 (Virtex5)
+  return REFCLK2; // for GTS LEAF NUMEXO2 (Virtex5) // REFCLK2 = 1
 }
 
-int XMMRegs_RocketIO_RefclkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char refclk)
+int XMMRegs_RocketIO_RefClkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char refclk)
 {
   XMMRegs_drp_status *drp_status;
   XMMRegs_drp_addr_ctrl *drp_addr;
@@ -561,12 +536,12 @@ int XMMRegs_RocketIO_RefclkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char 
   void *ba;
 
   if ( (tile != TILE_0) && (tile != TILE_1) ) {
-    DBG(DBLE, "ERROR : out of range error for tile in function XMMRegs_RefclkTX_Set\n");
+    DBG(DBLE, "ERROR : out of range error for tile in function XMMRegs_RocketIO_RefClkTX_Set\n");
     return XST_FAILURE;
   }
 
   if ( (refclk != REFCLK1) && (refclk != REFCLK2) ) {
-    DBG(DBLE, "ERROR : out of range error for refclk in function XMMRegs_RefclkTX_Set\n");
+    DBG(DBLE, "ERROR : out of range error for refclk in function XMMRegs_RocketIO_RefClkTX_Set\n");
     return XST_FAILURE;
   }
 
@@ -576,20 +551,18 @@ int XMMRegs_RocketIO_RefclkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char 
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
 
   if (refclk == REFCLK2) {
-    TXABPMACLKSEL_0 = REFCLK2; /* REFCLK2 selected, DRP value 01, only LSB bit 1 taken */
+    TXABPMACLKSEL_0 = REFCLK2;
   }
   else {
-    TXABPMACLKSEL_0 = REFCLK1; /* REFCLK1 selected, DRP value 00, only LSB bit 0 taken */
+    TXABPMACLKSEL_0 = REFCLK1;
   }
 
-//  set_bit_drp(drp_addr, drp, drp_status, (unsigned char)(2 * tile), 0x5D, 8, TXABPMACLKSEL_0);
-
-  set_word_drp(drp_addr, drp, drp_status, 0, 0x04, 0xA0D9); // for GTS LEAF ML507 (Virtex5)
+  set_word_drp(drp_addr, drp, drp_status, 0, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
 
   return XST_SUCCESS;
 }
 
-int XMMRegs_RocketIO_RefclkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigned char refclk)
+int XMMRegs_RocketIO_RefClkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigned char refclk)
 {
   XMMRegs_drp_status *drp_status;
   XMMRegs_drp_addr_ctrl *drp_addr;
@@ -598,13 +571,13 @@ int XMMRegs_RocketIO_RefclkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigne
   void *ba;
 
   if ( (transceiver < NO_TRANSCEIVER) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range error in function XMMRegs_RocketIO_RefclkRX_Set\n");
+    DBG(DBLE, "ERROR : out of range error in function XMMRegs_RocketIO_RefClkRX_Set\n");
     DBG(DBLE, "ERROR : value of transceiver should be between %d and %d\n", NO_TRANSCEIVER, TRANSCEIVER_3);
     return XST_FAILURE;
   }
 
   if ( (refclk != REFCLK1) && (refclk != REFCLK2) ) {
-    DBG(DBLE, "ERROR : out of range error for refclk in function XMMRegs_RocketIO_RefclkRX_Set\n");
+    DBG(DBLE, "ERROR : out of range error for refclk in function XMMRegs_RocketIO_RefClkRX_Set\n");
     return XST_FAILURE;
   }
 
@@ -614,33 +587,13 @@ int XMMRegs_RocketIO_RefclkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigne
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
 
   if (refclk == REFCLK2) {
-    RXPMACLKSEL_0 = REFCLK2; /* REFCLK2 selected, DRP value 01, only LSB bit 1 is taken */
+    RXPMACLKSEL_0 = REFCLK2;
   }
   else {
-    RXPMACLKSEL_0 = REFCLK1; /* REFCLK1 selected, DRP value 00, only LSB bit 0 is taken */
+    RXPMACLKSEL_0 = REFCLK1;
   }
 
-//  switch (transceiver) 
-//  {
-//    case TRANSCEIVER_0 : /* MGTB */
-//      set_bit_drp(drp_addr, drp, drp_status, TRANSCEIVER_0, 0x5D, 10, RXPMACLKSEL_0);
-//      break;
-//    case TRANSCEIVER_1 : /* MGTA */
-//      set_bit_drp(drp_addr, drp, drp_status, TRANSCEIVER_0, 0x5D, 12, RXPMACLKSEL_0);
-//      break;
-//    case TRANSCEIVER_2 : /* MGTB */
-//      set_bit_drp(drp_addr, drp, drp_status, TRANSCEIVER_2, 0x5D, 10, RXPMACLKSEL_0);
-//      break;
-//    case TRANSCEIVER_3 : /* MGTA */
-//      set_bit_drp(drp_addr, drp, drp_status, TRANSCEIVER_2, 0x5D, 12, RXPMACLKSEL_0);
-//      break;
-//
-//    default :
-//      DBG(DBLI, "STRANGE : no transceiver selected\n");
-//      break;
-//  }
-
-  set_word_drp(drp_addr, drp, drp_status, 0, 0x04, 0xA0D9); // for GTS LEAF ML507 (Virtex5)
+  set_word_drp(drp_addr, drp, drp_status, 0, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
 
   return XST_SUCCESS;
 }
@@ -922,9 +875,9 @@ int XMMRegs_RocketIO_Setup(XMMRegs *InstancePtr)
 
   init_drp(drp);
 
-  status |= XMMRegs_RocketIO_RefclkTX_Set(InstancePtr, TILE_0, REFCLK2);
+  status |= XMMRegs_RocketIO_RefClkTX_Set(InstancePtr, TILE_0, REFCLK2);
 
-  status |= XMMRegs_RocketIO_RefclkRX_Set(InstancePtr, TRANSCEIVER_0, REFCLK2);
+//  status |= XMMRegs_RocketIO_RefClkRX_Set(InstancePtr, TRANSCEIVER_0, REFCLK2); // inutile car redondant avec XMMRegs_RocketIO_RefClkTX_Set
 
   if ( XMMRegs_IsTransceiverConnected(InstancePtr, TRANSCEIVER_0) == TRANSCEIVER_IS_CONNECTED)
   {
@@ -932,22 +885,22 @@ int XMMRegs_RocketIO_Setup(XMMRegs *InstancePtr)
     {
       setup_gt(gt0);
 
-      XMMRegs_RocketIO_SerialLoopback_Set(InstancePtr, TRANSCEIVER_0, SERIAL_LOOPBACK_OFF);
+//      XMMRegs_RocketIO_SerialLoopback_Set(InstancePtr, TRANSCEIVER_0, SERIAL_LOOPBACK_OFF);
     }
     else if ( XMMRegs_IsTransceiverConnectedToDigitizer(InstancePtr, TRANSCEIVER_0) == TRANSCEIVER_IS_CONNECTED_TO_DIGITIZER)
     { /* the RocketIO is bypassed */
       /* puts the transceiver in the unused mode */
-      XMMRegs_RocketIO_UnusedMode_Set(InstancePtr, TRANSCEIVER_0);
+//      XMMRegs_RocketIO_UnusedMode_Set(InstancePtr, TRANSCEIVER_0);
     }
     else
     { /* it is connected neither to the GTS tree nor to the digitizer */
-      XMMRegs_RocketIO_UnusedMode_Set(InstancePtr, TRANSCEIVER_0);
+//      XMMRegs_RocketIO_UnusedMode_Set(InstancePtr, TRANSCEIVER_0);
     }
   }
   else
   { /* the transceiver is not connected */
     /* puts the transceiver in the unused mode */
-    XMMRegs_RocketIO_UnusedMode_Set(InstancePtr, TRANSCEIVER_0);
+//    XMMRegs_RocketIO_UnusedMode_Set(InstancePtr, TRANSCEIVER_0);
   }
 
   return status;
@@ -974,32 +927,34 @@ int XMMRegs_RocketIO_TriggerRstCarrier_Unset(XMMRegs *InstancePtr, int transceiv
 
   return XST_SUCCESS;
 }
-
+/*
 int XMMRegs_RocketIO_TxDataSel_Set(XMMRegs *InstancePtr, int transceiver)
 {
   XMMRegs_gt_ctrl *gt0;
 
   gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
 
-  gt0->choice_refclk = 1; 
+//  gt0->choice_refclk = 1; 
 
   return XST_SUCCESS;
 }
-
+*/
+/*
 int XMMRegs_RocketIO_TxDataSel_Unset(XMMRegs *InstancePtr, int transceiver)
 {
   XMMRegs_gt_ctrl *gt0;
 
   gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
 
-  gt0->choice_refclk = 0; 
+//  gt0->choice_refclk = 0; 
 
   return XST_SUCCESS;
 }
-
+*/
 /* the RocketIO is set in the unused mode by software
 This code has to be improved.
 Ideally, it should shut down the transceiver */
+/*
 int XMMRegs_RocketIO_UnusedMode_Set(XMMRegs *InstancePtr, int transceiver)
 {
   int status = XST_SUCCESS;
@@ -1013,7 +968,7 @@ int XMMRegs_RocketIO_UnusedMode_Set(XMMRegs *InstancePtr, int transceiver)
 
   return XST_SUCCESS;
 }
-
+*/
 int XMMRegs_RocketIO_Stop(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
@@ -1037,11 +992,11 @@ int XMMRegs_RocketIO_Stop(XMMRegs *InstancePtr)
 
   stop_gt(gt0);
 
-  status |= XMMRegs_RocketIO_RefclkTX_Set(InstancePtr, TILE_0, REFCLK2);
+  status |= XMMRegs_RocketIO_RefClkTX_Set(InstancePtr, TILE_0, REFCLK2);
 
-  status |= XMMRegs_RocketIO_RefclkRX_Set(InstancePtr, TRANSCEIVER_0, REFCLK2);
+//  status |= XMMRegs_RocketIO_RefClkRX_Set(InstancePtr, TRANSCEIVER_0, REFCLK2); // inutile car redondant avec XMMRegs_RocketIO_RefClkTX_Set
 
-  status |= XMMRegs_RocketIO_SerialLoopback_Set(InstancePtr, TRANSCEIVER_0, SERIAL_LOOPBACK_OFF);
+//  status |= XMMRegs_RocketIO_SerialLoopback_Set(InstancePtr, TRANSCEIVER_0, SERIAL_LOOPBACK_OFF);
 
   return status;
 }

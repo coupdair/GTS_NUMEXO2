@@ -80,16 +80,16 @@ int gtsReadyUnSet(void)
   return XMMRegs_Trigger_GtsReady_UnSet(&XMMRegsDriver);
 }
 
-int refClk2Set(void)
+int refClkSet(void)
 {
   int tile, transceiver;
   int status = XST_SUCCESS;
 
   DBG(DBLD, "Reference clock source --->");
 
-  if ( doesAlignClkApplyToTile(0) ) status |= XMMRegs_RocketIO_RefclkTX_Set(&XMMRegsDriver, 0, REFCLK2);
+  if ( doesAlignClkApplyToTile(0) ) status |= XMMRegs_RocketIO_RefClkTX_Set(&XMMRegsDriver, 0, REFCLK2);
 
-  if ( doesAlignClkApplyToTransceiver(0) ) status |= XMMRegs_RocketIO_RefclkRX_Set(&XMMRegsDriver, 0, REFCLK2);
+  if ( doesAlignClkApplyToTransceiver(0) ) status |= XMMRegs_RocketIO_RefClkRX_Set(&XMMRegsDriver, 0, REFCLK2);
 
   DBG(DBLD, "---> set |\n");
 

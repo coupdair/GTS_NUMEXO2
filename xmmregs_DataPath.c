@@ -13,23 +13,17 @@
 
 static void set_all_txmux(XMMRegs_dp_mux_ctrl *dp_mux, unsigned int val)
 {
-  dp_mux->txmux0 = val;
-  dp_mux->txmux1 = val;
-  dp_mux->txmux2 = val;
-  dp_mux->txmux3 = val; 
+  dp_mux->mgt_txmux_select = val;
   return;
 }
 
 static void set_all_rxmux(XMMRegs_dp_mux_ctrl *dp_mux, unsigned char val)
 {
-  dp_mux->rxmux0 = val;
-  dp_mux->rxmux1 = val;
-  dp_mux->rxmux2 = val;
-  dp_mux->rxmux3 = val; 
+  dp_mux->mgt_rxmux_select = val;
   return;
 }
 
-static int set_sfp_txmux_sync(XMMRegs_dp_sync_logic_ctrl *dp_sync, int transceiver, int val)
+static int set_sfp_txmux_sync(XMMRegs_dp_mux_ctrl *d, int transceiver, int val)
 {
   int status = XST_SUCCESS;
 
@@ -38,9 +32,9 @@ static int set_sfp_txmux_sync(XMMRegs_dp_sync_logic_ctrl *dp_sync, int transceiv
       switch (val) {
         case SY_SFP : case SY_MGT_MASTER :
           if ( MUX_SYNC(val) )
-            dp_sync->sfp_txmux_sync = set_bit_to_1(dp_sync->sfp_txmux_sync, transceiver);
+            d->sfp_txmux_sync = set_bit_to_1(d->sfp_txmux_sync, transceiver);
           else
-            dp_sync->sfp_txmux_sync = set_bit_to_0(dp_sync->sfp_txmux_sync, transceiver);            
+            d->sfp_txmux_sync = set_bit_to_0(d->sfp_txmux_sync, transceiver);            
           break;
         default :
           DBG(DBLE, "ERROR : out of range on val in function set_sfp_txmux_sync");
@@ -52,9 +46,9 @@ static int set_sfp_txmux_sync(XMMRegs_dp_sync_logic_ctrl *dp_sync, int transceiv
       switch (val) {
         case SY_SFP_MASTER : case SY_SYNC :
           if ( MUX_SYNC(val) )
-            dp_sync->sfp_txmux_sync = set_bit_to_1(dp_sync->sfp_txmux_sync, transceiver);
+            d->sfp_txmux_sync = set_bit_to_1(d->sfp_txmux_sync, transceiver);
           else
-            dp_sync->sfp_txmux_sync = set_bit_to_0(dp_sync->sfp_txmux_sync, transceiver);            
+            d->sfp_txmux_sync = set_bit_to_0(d->sfp_txmux_sync, transceiver);            
           break;
         default : 
           DBG(DBLE, "ERROR : out of range on val in function set_sfp_txmux_sync");
@@ -71,22 +65,22 @@ static int set_sfp_txmux_sync(XMMRegs_dp_sync_logic_ctrl *dp_sync, int transceiv
   return status;
 }
 
-static int set_mgt_txmux_sync(XMMRegs_dp_sync_logic_ctrl *dp_sync, int transceiver, int val)
+static int set_mgt_txmux_sync(XMMRegs_dp_mux_ctrl *d, int transceiver, int val)
 {
   int status = XST_SUCCESS;
 
   switch (transceiver) {
     case TRANSCEIVER_0 :
       DBG(DBLW, "WARNING : set_mgt_txmux_sync has no effect on master transceiver in transmission\n");
-      dp_sync->mgt_txmux_sync = set_bit_to_1(dp_sync->sfp_txmux_sync, transceiver);
+      d->mgt_txmux_sync = set_bit_to_1(d->sfp_txmux_sync, transceiver);
       break;
     case TRANSCEIVER_1 : case TRANSCEIVER_2 : case TRANSCEIVER_3 :
       switch (val) {
         case SY_MGT_MASTER : case SY_SYNC :
           if ( MUX_SYNC(val) )
-            dp_sync->mgt_txmux_sync = set_bit_to_1(dp_sync->mgt_txmux_sync, transceiver);
+            d->mgt_txmux_sync = set_bit_to_1(d->mgt_txmux_sync, transceiver);
           else
-            dp_sync->mgt_txmux_sync = set_bit_to_0(dp_sync->mgt_txmux_sync, transceiver);
+            d->mgt_txmux_sync = set_bit_to_0(d->mgt_txmux_sync, transceiver);
           break;
         default : 
           DBG(DBLE, "ERROR : out of range on val in function set_mgt_txmux_sync");
@@ -146,17 +140,17 @@ static int set_tdc_stop_sync(XMMRegs_dp_tdc_ctrl *dp_tdc, int transceiver)
   return XST_SUCCESS;
 }
   
-static int use_sync(XMMRegs_dp_sync_logic_ctrl *d) {
+static int use_sync(XMMRegs_dp_mux_ctrl *d) {
   d->use_sync = SY_SYNC_USE;
   return XST_SUCCESS;
 }
 
-static int bypass_sync(XMMRegs_dp_sync_logic_ctrl *d) {
+static int bypass_sync(XMMRegs_dp_mux_ctrl *d) {
   d->use_sync = SY_SYNC_BYPASS;
   return XST_SUCCESS;
 }
-
-static int select_sfp_sync(XMMRegs_dp_sync_logic_ctrl *d, int transceiver)
+/*
+static int select_sfp_sync(XMMRegs_dp_mux_ctrl *d, int transceiver)
 {
   if ( (transceiver > TRANSCEIVER_3) || (transceiver < TRANSCEIVER_0) ) {
     DBG(DBLE, "ERROR : transceiver is out of range in set_sfp_sync_select");
@@ -165,24 +159,24 @@ static int select_sfp_sync(XMMRegs_dp_sync_logic_ctrl *d, int transceiver)
   d->sfp_sync = transceiver;
   return XST_SUCCESS;
 }
-
-static int connect_to_digitizer(XMMRegs_dp_digitizer_ctrl *dp_dig, int transceiver)
+*/
+static int connect_to_digitizer(XMMRegs_dp_mux_ctrl *d, int transceiver)
 {
   if ( (transceiver > TRANSCEIVER_3) || (transceiver < TRANSCEIVER_0) ) {
     DBG(DBLE, "ERROR : transceiver is out of range in connect_to_digitizer");
     return XST_FAILURE; 
   }
-  dp_dig->mux = set_bit_to_1(dp_dig->mux, transceiver);
+  d->mux_digitizer_gts_tree = 1;
   return XST_SUCCESS;
 }
 
-static int disconnect_from_digitizer(XMMRegs_dp_digitizer_ctrl *dp_dig, int transceiver)
+static int disconnect_from_digitizer(XMMRegs_dp_mux_ctrl *d, int transceiver)
 {
   if ( (transceiver > TRANSCEIVER_3) || (transceiver < TRANSCEIVER_0) ) {
     DBG(DBLE, "ERROR : transceiver is out of range in disconnect_from_digitizer");
     return XST_FAILURE; 
   }
-  dp_dig->mux = set_bit_to_0(dp_dig->mux, transceiver);
+  d->mux_digitizer_gts_tree = 0;
   return XST_SUCCESS;
 }
 
@@ -215,15 +209,15 @@ static int disconnect_from_trigger_core(XMMRegs_dp_access_mgt_ctrl *dp_access_mg
 int XMMRegs_DataPath_MuxClkSync_Set(XMMRegs *InstancePtr, unsigned int val)
 {
   int status = XST_SUCCESS;
-  XMMRegs_dp_digitizer_ctrl *dp_digitizer;
+  XMMRegs_dp_mux_ctrl *d;
 
-  if ( val > 0xF ) {
+  if ( val > 1 ) {
     DBG(DBLE, "ERROR : ouf of range on val in function XMMRegs_DataPath_MuxClkSync_Set\n")
     return XST_FAILURE;
   }
 
-  dp_digitizer = (XMMRegs_dp_digitizer_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_DIGITIZER_CTRL_OFFSET);
-  dp_digitizer->mux_clk_sync = val;
+  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
+  d->mux_clk_sync = val;
   
   return status;
 }
@@ -231,10 +225,10 @@ int XMMRegs_DataPath_MuxClkSync_Set(XMMRegs *InstancePtr, unsigned int val)
 int XMMRegs_DataPath_UseSync_Set(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
-  XMMRegs_dp_sync_logic_ctrl *dp_sync_logic;
+  XMMRegs_dp_mux_ctrl *d;
 
-  dp_sync_logic = (XMMRegs_dp_sync_logic_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_SYNC_LOGIC_CTRL_OFFSET);
-  status |= use_sync(dp_sync_logic);
+  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
+  status |= use_sync(d);
 
   return status;
 }
@@ -242,10 +236,10 @@ int XMMRegs_DataPath_UseSync_Set(XMMRegs *InstancePtr)
 int XMMRegs_DataPath_UseSync_UnSet(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
-  XMMRegs_dp_sync_logic_ctrl *dp_sync_logic;
+  XMMRegs_dp_mux_ctrl *d;
 
-  dp_sync_logic = (XMMRegs_dp_sync_logic_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_SYNC_LOGIC_CTRL_OFFSET);
-  status |= bypass_sync(dp_sync_logic);
+  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
+  status |= bypass_sync(d);
 
   return status;
 }
@@ -253,41 +247,41 @@ int XMMRegs_DataPath_UseSync_UnSet(XMMRegs *InstancePtr)
 int XMMRegs_DataPath_UseSync_SfpTxmux_Set(XMMRegs *InstancePtr, int transceiver, int val)
 {
   int status = XST_SUCCESS;
-  XMMRegs_dp_sync_logic_ctrl *dp_sync_logic;
-  unsigned int *dp_sync_logic_addr;
+  XMMRegs_dp_mux_ctrl *d;
+  unsigned int *d_addr;
 
-  dp_sync_logic = (XMMRegs_dp_sync_logic_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_SYNC_LOGIC_CTRL_OFFSET);
-  dp_sync_logic_addr = (unsigned int *) dp_sync_logic;  
+  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
+  d_addr = (unsigned int *)d;  
 
   DBG(DBLD, "set_sfp_txmux_sync --->\n");
   DBG(DBLD, "\tvalues before set_sfp_txmux_sync ->\n");
-  DBG(DBLD, "\tdp_sync_logic\t: sfp_txmux_sync\n");
-  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *dp_sync_logic_addr, dp_sync_logic->sfp_txmux_sync);
+  DBG(DBLD, "\td\t: sfp_txmux_sync\n");
+  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *d_addr, d->sfp_txmux_sync_select);
 
-  status |= set_sfp_txmux_sync(dp_sync_logic, transceiver, val);
+  status |= set_sfp_txmux_sync(d, transceiver, val);
 
   DBG(DBLD, "\tvalues after set_sfp_txmux_sync ->\n");
-  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *dp_sync_logic_addr, dp_sync_logic->sfp_txmux_sync);  
+  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *d_addr, d->sfp_txmux_sync_select);  
   DBG(DBLD, "---> set_sfp_txmux_sync |\n");
 
   return status;
 }
-
+/*
 int XMMRegs_DataPath_UseSync_MgtTxmux_Set(XMMRegs *InstancePtr, int transceiver, int val)
 {
   int status = XST_SUCCESS;
-  XMMRegs_dp_sync_logic_ctrl *dp_sync_logic;
-  unsigned int *dp_sync_logic_addr;
+  XMMRegs_dp_mux_ctrl *d;
+  unsigned int *d_addr;
 
-  dp_sync_logic = (XMMRegs_dp_sync_logic_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_SYNC_LOGIC_CTRL_OFFSET);
-  dp_sync_logic_addr = (unsigned int *) dp_sync_logic;  
+  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
+  d_addr = (unsigned int *)d;  
 
   DBG(DBLD, "set_mgt_txmux_sync --->\n");
   DBG(DBLD, "\tvalues before set_mgt_txmux_sync ->\n");
-  DBG(DBLD, "\tdp_sync_logic\t: mgt_txmux_sync\n");
-  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *dp_sync_logic_addr, dp_sync_logic->mgt_txmux_sync);
+  DBG(DBLD, "\td\t: mgt_txmux_sync\n");
+  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *d_addr, d->mgt_txmux_sync);
 
-  status |= set_sfp_txmux_sync(dp_sync_logic, transceiver, val);
+  status |= set_sfp_txmux_sync(d, transceiver, val);
 
   DBG(DBLD, "\tvalues after set_mgt_txmux_sync ->\n");
   DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *dp_sync_logic_addr, dp_sync_logic->mgt_txmux_sync);  
@@ -295,47 +289,33 @@ int XMMRegs_DataPath_UseSync_MgtTxmux_Set(XMMRegs *InstancePtr, int transceiver,
 
   return status;
 }
-
+*/
 /* The signal comes from the master SFP and flows back to the master SFP.
 parameter : forward -> in the forward direction, it indicates if the MGT is used or bypassed
 Note that, in the backward direction, the MGT is always bypassed */
 int XMMRegs_DataPath_UseSync_MasterToMaster_Set(XMMRegs *InstancePtr, int forward)
 {
   int status = XST_SUCCESS;
-  XMMRegs_dp_sync_logic_ctrl *dp_sync_logic;
+  XMMRegs_dp_mux_ctrl *d;
 
-  dp_sync_logic = (XMMRegs_dp_sync_logic_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_SYNC_LOGIC_CTRL_OFFSET);
+  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
   switch (forward) {
 
     case USE_MGT :
 
-      status |= use_sync(dp_sync_logic);
-      status |= select_sfp_sync(dp_sync_logic, TRANSCEIVER_0);
+      status |= use_sync(d);
 
-      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_0, SY_MGT_MASTER);
-      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_1, SY_SYNC);
-      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_2, SY_SYNC);
-      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_3, SY_SYNC);
+      status |= set_sfp_txmux_sync(d, TRANSCEIVER_0, SY_MGT_MASTER);
 
-      status |= set_mgt_txmux_sync(dp_sync_logic, TRANSCEIVER_1, SY_SYNC);
-      status |= set_mgt_txmux_sync(dp_sync_logic, TRANSCEIVER_2, SY_SYNC);
-      status |= set_mgt_txmux_sync(dp_sync_logic, TRANSCEIVER_3, SY_SYNC); 
       break;
 
     case BYPASS_MGT :
 
-      status |= use_sync(dp_sync_logic);
-      status |= select_sfp_sync(dp_sync_logic, TRANSCEIVER_0);
+      status |= use_sync(d);
 
-      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_0, SY_SFP);
-      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_1, SY_SYNC);
-      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_2, SY_SYNC);
-      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_3, SY_SYNC);
+      status |= set_sfp_txmux_sync(d, TRANSCEIVER_0, SY_SFP);
 
-      status |= set_mgt_txmux_sync(dp_sync_logic, TRANSCEIVER_1, SY_SYNC);
-      status |= set_mgt_txmux_sync(dp_sync_logic, TRANSCEIVER_2, SY_SYNC);
-      status |= set_mgt_txmux_sync(dp_sync_logic, TRANSCEIVER_3, SY_SYNC); 
       break;
 
     default :
@@ -348,14 +328,15 @@ int XMMRegs_DataPath_UseSync_MasterToMaster_Set(XMMRegs *InstancePtr, int forwar
   return status;
 }
 
-/* The signal comes from the master SFP and flows to a slave SFP.
+/* FANIN-FANOUT only : The signal comes from the master SFP and flows to a slave SFP.
 It comes back from the same SFP and flows back to the master SFP
 parameter : forward -> in the forward direction, it indicates if the MGT is used or bypassed 
 Note that, in the backward direction, the MGT is always bypassed */
 int XMMRegs_DataPath_UseSync_MasterToSlave_Set(XMMRegs *InstancePtr, int forward, int transceiver)
 {
   int status = XST_SUCCESS;
-  XMMRegs_dp_sync_logic_ctrl *dp_sync_logic;
+/*
+  XMMRegs_dp_mux_ctrl *d;
   int t;
 
   if ( (transceiver < TRANSCEIVER_1) || (transceiver > TRANSCEIVER_3) ) {
@@ -363,14 +344,12 @@ int XMMRegs_DataPath_UseSync_MasterToSlave_Set(XMMRegs *InstancePtr, int forward
     return XST_FAILURE; 
   }
 
-  dp_sync_logic = (XMMRegs_dp_sync_logic_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_SYNC_LOGIC_CTRL_OFFSET);
-  status |= use_sync(dp_sync_logic);
+  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
+  status |= use_sync(d);
 
   switch (forward) {
 
     case USE_MGT :
-
-      status |= select_sfp_sync(dp_sync_logic, transceiver);
 
       status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_0, SY_SFP);
       status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_1, SY_SYNC);
@@ -408,7 +387,7 @@ int XMMRegs_DataPath_UseSync_MasterToSlave_Set(XMMRegs *InstancePtr, int forward
       status |= XST_FAILURE;
       break;
   }
-
+*/
   return status;
 }
 
@@ -422,6 +401,7 @@ tdc_stop_sync is also set
 int XMMRegs_DataPath_UseSync_SyncToSlave_Set(XMMRegs *InstancePtr, int forward, int transceiver )
 {
   int status = XST_SUCCESS;
+/*
   XMMRegs_dp_sync_logic_ctrl *dp_sync_logic;
   XMMRegs_dp_tdc_ctrl *dp_tdc;
 
@@ -438,9 +418,9 @@ int XMMRegs_DataPath_UseSync_SyncToSlave_Set(XMMRegs *InstancePtr, int forward, 
 
     case USE_MGT : case BYPASS_MGT :
 
-      status |= select_sfp_sync(dp_sync_logic, TRANSCEIVER_0); /* master not used */
+      status |= select_sfp_sync(dp_sync_logic, TRANSCEIVER_0);
 
-      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_0, SY_SFP); /* SFP master loopback, irrelevant stuff */
+      status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_0, SY_SFP);
       status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_1, SY_SYNC);
       status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_2, SY_SYNC);
       status |= set_sfp_txmux_sync(dp_sync_logic, TRANSCEIVER_3, SY_SYNC);
@@ -458,7 +438,7 @@ int XMMRegs_DataPath_UseSync_SyncToSlave_Set(XMMRegs *InstancePtr, int forward, 
   }
 
   status |= set_tdc_stop_sync(dp_tdc, transceiver);
-
+*/
   return status;
 }
 
@@ -532,22 +512,22 @@ unsigned int  XMMRegs_DataPath_CoarseDelay_Read(XMMRegs *InstancePtr)
 
 int  XMMRegs_DataPath_Digitizer_Connect(XMMRegs *InstancePtr, int trans)
 {
-  XMMRegs_dp_digitizer_ctrl *dp_dig;
+  XMMRegs_dp_mux_ctrl *d;
 
-  dp_dig = (XMMRegs_dp_digitizer_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_DIGITIZER_CTRL_OFFSET);
+  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
-  return connect_to_digitizer(dp_dig, trans);
+  return connect_to_digitizer(d, trans);
 }
 
 int  XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr, int trans)
 {
-  XMMRegs_dp_digitizer_ctrl *dp_dig;
+  XMMRegs_dp_mux_ctrl *d;
 
-  dp_dig = (XMMRegs_dp_digitizer_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_DIGITIZER_CTRL_OFFSET);
+  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
-  return disconnect_from_digitizer(dp_dig, trans);
+  return disconnect_from_digitizer(d, trans);
 }
-
+/*
 int  XMMRegs_DataPath_TriggerCore_Connect(XMMRegs *InstancePtr, int trans)
 {
   XMMRegs_dp_access_mgt_ctrl *dp_access_mgt;
@@ -556,7 +536,8 @@ int  XMMRegs_DataPath_TriggerCore_Connect(XMMRegs *InstancePtr, int trans)
 
   return connect_to_trigger_core(dp_access_mgt, trans);
 }
-
+*/
+/*
 int  XMMRegs_DataPath_TriggerCore_DisConnect(XMMRegs *InstancePtr, int trans)
 {
   XMMRegs_dp_access_mgt_ctrl *dp_access_mgt;
@@ -565,7 +546,7 @@ int  XMMRegs_DataPath_TriggerCore_DisConnect(XMMRegs *InstancePtr, int trans)
 
   return disconnect_from_trigger_core(dp_access_mgt, trans);
 }
-
+*/
 /************************************************************
 
 	  INIT, RESET and PRINT FUNCTIONS
