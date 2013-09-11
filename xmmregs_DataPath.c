@@ -14,57 +14,36 @@
 static void set_all_txmux(XMMRegs_dp_mux_ctrl *dp_mux, unsigned int val)
 {
   dp_mux->mgt_txmux_select = val;
-  return;
 }
 
 static void set_all_rxmux(XMMRegs_dp_mux_ctrl *dp_mux, unsigned char val)
 {
   dp_mux->mgt_rxmux_select = val;
-  return;
 }
 
 static int set_sfp_txmux_sync(XMMRegs_dp_mux_ctrl *d, int transceiver, int val)
 {
   int status = XST_SUCCESS;
 
-  switch (transceiver) {
-    case TRANSCEIVER_0 :
-      switch (val) {
-        case SY_SFP : case SY_MGT_MASTER :
-          if ( MUX_SYNC(val) )
-            d->sfp_txmux_sync = set_bit_to_1(d->sfp_txmux_sync, transceiver);
-          else
-            d->sfp_txmux_sync = set_bit_to_0(d->sfp_txmux_sync, transceiver);            
-          break;
-        default :
-          DBG(DBLE, "ERROR : out of range on val in function set_sfp_txmux_sync");
-          status |= XST_FAILURE;
-          break; 
-      }
-      break;
-    case TRANSCEIVER_1 : case TRANSCEIVER_2 : case TRANSCEIVER_3 :
-      switch (val) {
-        case SY_SFP_MASTER : case SY_SYNC :
-          if ( MUX_SYNC(val) )
-            d->sfp_txmux_sync = set_bit_to_1(d->sfp_txmux_sync, transceiver);
-          else
-            d->sfp_txmux_sync = set_bit_to_0(d->sfp_txmux_sync, transceiver);            
-          break;
-        default : 
-          DBG(DBLE, "ERROR : out of range on val in function set_sfp_txmux_sync");
-          status |= XST_FAILURE;
-          break; 
-      }
-      break;
-    default :
-      DBG(DBLE, "ERROR : index of transceiver out of range in function set_sfp_txmux_sync\n");
-      status |= XST_FAILURE;
-      break;
+  if (transceiver == 0)
+  {
+    if      (val == SY_SFP       ) d->sfp_txmux_sync_select = 1;
+    else if (val == SY_MGT_MASTER) d->sfp_txmux_sync_select = 0;            
+    else
+    {
+      DBG(DBLE, "ERROR : out of range on val in function set_sfp_txmux_sync");
+      status = XST_FAILURE;
+    }
+  }
+  else
+  {
+    DBG(DBLE, "ERROR : index of transceiver out of range in function set_sfp_txmux_sync\n");
+    status = XST_FAILURE;
   }
 
   return status;
 }
-
+/*
 static int set_mgt_txmux_sync(XMMRegs_dp_mux_ctrl *d, int transceiver, int val)
 {
   int status = XST_SUCCESS;
@@ -96,7 +75,7 @@ static int set_mgt_txmux_sync(XMMRegs_dp_mux_ctrl *d, int transceiver, int val)
 
   return status;  
 }
-
+*/
 static int set_coarse_delay(XMMRegs_dp_delay_ctrl *dp_delay, unsigned int delay)
 {
 
