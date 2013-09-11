@@ -11,24 +11,6 @@
 
 ************************************************************/
 
-static void set_all_txmux(XMMRegs_dp_mux_ctrl *dp_mux, unsigned int val)
-{
-  dp_mux->mgt_txmux_select = val;
-}
-
-static void set_all_rxmux(XMMRegs_dp_mux_ctrl *dp_mux, unsigned char val)
-{
-  dp_mux->mgt_rxmux_select = val;
-}
-
-static int set_sfp_txmux_sync(XMMRegs_dp_mux_ctrl *d, int transceiver, int val)
-{
-  if (val == SY_SFP) d->sfp_txmux_sync_select = 1;
-  else               d->sfp_txmux_sync_select = 0;
-
-  return XST_SUCCESS;
-}
-
 static int set_coarse_delay(XMMRegs_dp_delay_ctrl *dp_delay, unsigned int delay)
 {
 
@@ -72,25 +54,6 @@ static int set_tdc_stop_sync(XMMRegs_dp_tdc_ctrl *dp_tdc, int transceiver)
   return XST_SUCCESS;
 }
 
-static int connect_to_digitizer(XMMRegs_dp_mux_ctrl *d, int transceiver)
-{
-  if ( (transceiver > TRANSCEIVER_3) || (transceiver < TRANSCEIVER_0) ) {
-    DBG(DBLE, "ERROR : transceiver is out of range in connect_to_digitizer");
-    return XST_FAILURE; 
-  }
-  d->mux_digitizer_gts_tree = 1;
-  return XST_SUCCESS;
-}
-
-static int disconnect_from_digitizer(XMMRegs_dp_mux_ctrl *d, int transceiver)
-{
-  if ( (transceiver > TRANSCEIVER_3) || (transceiver < TRANSCEIVER_0) ) {
-    DBG(DBLE, "ERROR : transceiver is out of range in disconnect_from_digitizer");
-    return XST_FAILURE; 
-  }
-  d->mux_digitizer_gts_tree = 0;
-  return XST_SUCCESS;
-}
 /*
 static int connect_to_trigger_core(XMMRegs_dp_access_mgt_ctrl *dp_access_mgt, int transceiver)
 {
@@ -305,7 +268,9 @@ int XMMRegs_DataPath_Digitizer_Connect(XMMRegs *InstancePtr, int trans)
 
   d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
-  return connect_to_digitizer(d, trans);
+  d->mux_digitizer_gts_tree = 1;
+
+  return XST_SUCCESS;
 }
 
 int XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr, int trans)
@@ -314,7 +279,9 @@ int XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr, int trans)
 
   d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
-  return disconnect_from_digitizer(d, trans);
+  d->mux_digitizer_gts_tree = 0;
+
+  return XST_SUCCESS;
 }
 /*
 int  XMMRegs_DataPath_TriggerCore_Connect(XMMRegs *InstancePtr, int trans)
