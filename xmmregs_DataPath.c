@@ -23,59 +23,12 @@ static void set_all_rxmux(XMMRegs_dp_mux_ctrl *dp_mux, unsigned char val)
 
 static int set_sfp_txmux_sync(XMMRegs_dp_mux_ctrl *d, int transceiver, int val)
 {
-  int status = XST_SUCCESS;
+  if (val == SY_SFP) d->sfp_txmux_sync_select = 1;
+  else               d->sfp_txmux_sync_select = 0;
 
-  if (transceiver == 0)
-  {
-    if      (val == SY_SFP       ) d->sfp_txmux_sync_select = 1;
-    else if (val == SY_MGT_MASTER) d->sfp_txmux_sync_select = 0;            
-    else
-    {
-      DBG(DBLE, "ERROR : out of range on val in function set_sfp_txmux_sync");
-      status = XST_FAILURE;
-    }
-  }
-  else
-  {
-    DBG(DBLE, "ERROR : index of transceiver out of range in function set_sfp_txmux_sync\n");
-    status = XST_FAILURE;
-  }
-
-  return status;
+  return XST_SUCCESS;
 }
-/*
-static int set_mgt_txmux_sync(XMMRegs_dp_mux_ctrl *d, int transceiver, int val)
-{
-  int status = XST_SUCCESS;
 
-  switch (transceiver) {
-    case TRANSCEIVER_0 :
-      DBG(DBLW, "WARNING : set_mgt_txmux_sync has no effect on master transceiver in transmission\n");
-      d->mgt_txmux_sync = set_bit_to_1(d->sfp_txmux_sync, transceiver);
-      break;
-    case TRANSCEIVER_1 : case TRANSCEIVER_2 : case TRANSCEIVER_3 :
-      switch (val) {
-        case SY_MGT_MASTER : case SY_SYNC :
-          if ( MUX_SYNC(val) )
-            d->mgt_txmux_sync = set_bit_to_1(d->mgt_txmux_sync, transceiver);
-          else
-            d->mgt_txmux_sync = set_bit_to_0(d->mgt_txmux_sync, transceiver);
-          break;
-        default : 
-          DBG(DBLE, "ERROR : out of range on val in function set_mgt_txmux_sync");
-          status |= XST_FAILURE;
-          break; 
-      }
-      break;
-    default :
-      DBG(DBLE, "ERROR : index of transceiver out of range in function set_mgt_txmux_sync\n");
-      status |= XST_FAILURE;
-      break;
-  }
-
-  return status;  
-}
-*/
 static int set_coarse_delay(XMMRegs_dp_delay_ctrl *dp_delay, unsigned int delay)
 {
 
@@ -128,17 +81,7 @@ static int bypass_sync(XMMRegs_dp_mux_ctrl *d) {
   d->use_sync = SY_SYNC_BYPASS;
   return XST_SUCCESS;
 }
-/*
-static int select_sfp_sync(XMMRegs_dp_mux_ctrl *d, int transceiver)
-{
-  if ( (transceiver > TRANSCEIVER_3) || (transceiver < TRANSCEIVER_0) ) {
-    DBG(DBLE, "ERROR : transceiver is out of range in set_sfp_sync_select");
-    return XST_FAILURE; 
-  }
-  d->sfp_sync = transceiver;
-  return XST_SUCCESS;
-}
-*/
+
 static int connect_to_digitizer(XMMRegs_dp_mux_ctrl *d, int transceiver)
 {
   if ( (transceiver > TRANSCEIVER_3) || (transceiver < TRANSCEIVER_0) ) {
@@ -204,24 +147,24 @@ int XMMRegs_DataPath_MuxClkSync_Set(XMMRegs *InstancePtr, unsigned int val)
 
 int XMMRegs_DataPath_UseSync_Set(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
   XMMRegs_dp_mux_ctrl *d;
 
   d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
-  status |= use_sync(d);
 
-  return status;
+  d->use_sync = 1;
+
+  return XST_SUCCESS;
 }
 
 int XMMRegs_DataPath_UseSync_UnSet(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
   XMMRegs_dp_mux_ctrl *d;
 
   d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
-  status |= bypass_sync(d);
 
-  return status;
+  d->use_sync = 0;
+
+  return XST_SUCCESS;
 }
 
 int XMMRegs_DataPath_UseSync_SfpTxmux_Set(XMMRegs *InstancePtr, int transceiver, int val)
@@ -246,30 +189,7 @@ int XMMRegs_DataPath_UseSync_SfpTxmux_Set(XMMRegs *InstancePtr, int transceiver,
 
   return status;
 }
-/*
-int XMMRegs_DataPath_UseSync_MgtTxmux_Set(XMMRegs *InstancePtr, int transceiver, int val)
-{
-  int status = XST_SUCCESS;
-  XMMRegs_dp_mux_ctrl *d;
-  unsigned int *d_addr;
 
-  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
-  d_addr = (unsigned int *)d;  
-
-  DBG(DBLD, "set_mgt_txmux_sync --->\n");
-  DBG(DBLD, "\tvalues before set_mgt_txmux_sync ->\n");
-  DBG(DBLD, "\td\t: mgt_txmux_sync\n");
-  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *d_addr, d->mgt_txmux_sync);
-
-  status |= set_sfp_txmux_sync(d, transceiver, val);
-
-  DBG(DBLD, "\tvalues after set_mgt_txmux_sync ->\n");
-  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *dp_sync_logic_addr, dp_sync_logic->mgt_txmux_sync);  
-  DBG(DBLD, "---> set_mgt_txmux_sync |\n");
-
-  return status;
-}
-*/
 /* The signal comes from the master SFP and flows back to the master SFP.
 parameter : forward -> in the forward direction, it indicates if the MGT is used or bypassed
 Note that, in the backward direction, the MGT is always bypassed */
@@ -280,26 +200,19 @@ int XMMRegs_DataPath_UseSync_MasterToMaster_Set(XMMRegs *InstancePtr, int forwar
 
   d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
+  status |= use_sync(d);
+
   switch (forward) {
 
     case USE_MGT :
-
-      status |= use_sync(d);
-
-      status |= set_sfp_txmux_sync(d, 0, SY_MGT_MASTER);
-
+      d->sfp_txmux_sync_select = 0;
       break;
 
     case BYPASS_MGT :
-
-      status |= use_sync(d);
-
-      status |= set_sfp_txmux_sync(d, 0, SY_SFP);
-
+      d->sfp_txmux_sync_select = 1;
       break;
 
     default :
-
       DBG(DBLE, "ERROR : out of range for forward in fucntion XMMRegs_DataPath_UseSync_MasterToMaster_Set\n");
       status |= XST_FAILURE;
       break;
