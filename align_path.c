@@ -22,17 +22,6 @@ int doesAlignPathApplyToTransceiver(int transceiver)
   return bool;
 }
 
-/* no check here, as the function can be used even if the transceiver is not connected */
-int txMuxSfpSet(int transceiver, int val)
-{
-  return XMMRegs_DataPath_UseSync_SfpTxmux_Set(&XMMRegsDriver, transceiver, val);
-}
-/*
-int txMuxMgtSet(int transceiver, int val)
-{
-  return XMMRegs_DataPath_UseSync_MgtTxmux_Set(&XMMRegsDriver, transceiver, val);
-}
-*/
 int masterToMasterSyncSet(int forward)
 {
   if ( (!doesAlignPathApplyToTransceiver(MASTER_TRANSCEIVER) ) ) 
@@ -83,10 +72,9 @@ int muxSyncSet(int GTStype, int forward, int transceiver)
   int status = XST_SUCCESS;
   int t;
 
-  status |= XMMRegs_DataPath_UseSync_Set(&XMMRegsDriver);
-  for (t = TRANSCEIVER_0; t <= TRANSCEIVER_3; t++) {
-      XMMRegs_DataPath_Digitizer_Disconnect(&XMMRegsDriver, t);
-  }
+  status = XMMRegs_DataPath_UseSync_Set(&XMMRegsDriver);
+
+  XMMRegs_DataPath_Digitizer_Disconnect(&XMMRegsDriver, 0);
 
   switch (GTStype) {
     case ROOT :
@@ -111,8 +99,8 @@ int allFifoMuxPathSet(int GTStype)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
-  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, DP_RXMUX_MGT);
+  status = XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
+  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
 
   switch (GTStype) {
     case ROOT :
@@ -122,7 +110,7 @@ int allFifoMuxPathSet(int GTStype)
       status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_MST);
       break;
     case LEAVE :
-      status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_MST);
+      status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 5); // NUMEXO2
       break;
     default :
       DBG(DBLE, "ERROR : out of range error on GTStype values in function triggerMuxPathSet\n");
@@ -138,8 +126,8 @@ int allRegMuxPathSet(void)
   int status = XST_SUCCESS;
 
   status |= XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
-  status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_REG);
-  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, DP_RXMUX_MGT);
+  status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 0);
+  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0);
 
   return status;
 }

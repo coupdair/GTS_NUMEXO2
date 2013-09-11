@@ -98,8 +98,6 @@ int alignSet(int GTStype, int forward)
       return XST_FAILURE;
   }
 
-//  status |= XMMRegs_MuxInOut_DefaultLed_Set(&XMMRegsDriver);
-
   status |= muxExtSet(GTStype, forward, backward);
   status |= mgtDataCommaSet();
   status |= clkSet(GTStype, usrclk, forward, backward, force_set, block_mode);
@@ -139,7 +137,10 @@ int alignTdcSet(int GTStype, int forward, int transceiver, int newcal)
     measure = MEAS1;
   }
 
-//  status |= muxSyncSet(GTStype, forward, transceiver);
+  status  = XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
+  status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 5); // NUMEXO2
+
+  status = muxSyncSet(GTStype, forward, transceiver);
 
   if ( (GTStype == ROOT) && (newcal == DO_NEW_CAL) ) {
     status |= tdcSet(measure, debug, delay);

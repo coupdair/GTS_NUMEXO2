@@ -75,8 +75,8 @@ int triggerPathSet(int GTStype)
   int status = XST_SUCCESS;
   
   status |= XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
-  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, DP_RXMUX_MGT); 
-  status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_USR);
+  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
+  status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 5); // NUMEXO2
    
   switch (GTStype) {
     case ROOT :
@@ -220,7 +220,7 @@ int triggerSetup(int GTStype, int step)
       logAnswer();
 
       XMMRegs_RocketIO_TriggerRstCarrier_Set(&XMMRegsDriver, 0);
-//      XMMRegs_RocketIO_TxDataSel_Unset(&XMMRegsDriver, 0);
+//      XMMRegs_RocketIO_TxDataSel_Unset(&XMMRegsDriver, 0); // disconnect trigger core
 
       /* one sends comma for the alignment of the backward link */
       status |= mgtDataCommaSet();
@@ -253,7 +253,7 @@ int triggerSetup(int GTStype, int step)
       logAnswer();
 
       XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver, 0);
-//      XMMRegs_RocketIO_TxDataSel_Set(&XMMRegsDriver, 0);
+//      XMMRegs_RocketIO_TxDataSel_Set(&XMMRegsDriver, 0); // connect trigger core
       status |= mgtDataCommaUnSet();
       status |= triggerPathSet(GTStype);
 
