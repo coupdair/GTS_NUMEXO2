@@ -43,7 +43,6 @@ int alignSet(int GTStype, int forward)
 {
   int status = XST_SUCCESS;
   int usrclk;
-  int backward = BYPASS_MGT;
   int force_set = FORCE_SET;
   int block_mode = BLOCKING;
 
@@ -98,9 +97,9 @@ int alignSet(int GTStype, int forward)
       return XST_FAILURE;
   }
 
-  status |= muxExtSet(GTStype, forward, backward);
+  status |= muxExtSet(GTStype, forward, BYPASS_MGT);
   status |= mgtDataCommaSet();
-  status |= clkSet(GTStype, usrclk, forward, backward, force_set, block_mode);
+  status |= clkSet(GTStype, usrclk, forward, BYPASS_MGT, force_set, block_mode);
 
   return status;
 }

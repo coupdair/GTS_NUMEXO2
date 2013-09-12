@@ -25,18 +25,18 @@ static void ctrl_to_hardware_for_external_mux(XMMRegs_mgt_sel_ctrl *m)
   return; 
 }
 
-static int external_txmux_set( XMMRegs_mgt_sel_ctrl *m, int transceiver, int mgt_sfp )
+static int external_txmux_set( XMMRegs_fine_delay_ctrl *m, int transceiver, int mgt_sfp )
 {
   int status = XST_SUCCESS;
 
   switch (mgt_sfp) {
     case USE_MGT :
-      m->tx_sel0 = set_bit_to_0(m->tx_sel0, transceiver);
-      m->tx_sel1 = set_bit_to_1(m->tx_sel1, transceiver);
+      m->tx_sel0 = 0;
+      m->tx_sel1 = 0;
       break;
     case BYPASS_MGT :
-      m->tx_sel0 = set_bit_to_1(m->tx_sel0, transceiver);
-      m->tx_sel1 = set_bit_to_0(m->tx_sel1, transceiver);
+      m->tx_sel0 = 1;
+      m->tx_sel1 = 1;
       break;
     default :
       status = XST_FAILURE;
@@ -46,20 +46,18 @@ static int external_txmux_set( XMMRegs_mgt_sel_ctrl *m, int transceiver, int mgt
   return status;
 }
 
-static int external_rxmux_set( XMMRegs_mgt_sel_ctrl *m, int transceiver, int mgt_sfp )
+static int external_rxmux_set( XMMRegs_fine_delay_ctrl *m, int transceiver, int mgt_sfp )
 {
   int status = XST_SUCCESS;
 
   switch (mgt_sfp) {
     case USE_MGT : 
-      /* only the MGT receives signals from SFP */
-      m->rx_sel0 = set_bit_to_0(m->rx_sel0, transceiver);
-      m->rx_sel1 = set_bit_to_1(m->rx_sel1, transceiver);
+      m->rx_sel0 = 0;
+      m->rx_sel1 = 0;
       break;
     case BYPASS_MGT :
-      /* both the MGT and the TST receive signals from SFP */
-      m->rx_sel0 = set_bit_to_0(m->rx_sel0, transceiver);
-      m->rx_sel1 = set_bit_to_0(m->rx_sel1, transceiver);
+      m->rx_sel0 = 1;
+      m->rx_sel1 = 1;
       break;
     default :
       status = XST_FAILURE;
@@ -160,7 +158,8 @@ static void reset_pll_monitor(XMMRegs_fine_delay_ctrl *d)
 */
 static int pll_has_unlocked(XMMRegs_hardware_status *h)
 {
-  return (h->pll_has_unlocked); 
+//  return (h->pll_has_unlocked); 
+  return 0; // NUMEXO2
 }
 
 static void init_led(XMMRegs_led_ctrl *l)
@@ -244,7 +243,7 @@ int XMMRegs_MuxInOut_ExternalTxMux_Set(XMMRegs *InstancePtr, int transceiver, in
     status = XST_FAILURE;
   }
   else {
-    status |= external_txmux_set((XMMRegs_mgt_sel_ctrl *)(InstancePtr->BaseAddress + XMMR_MGT_SEL_CTRL_OFFSET),transceiver,mgt_sfp);
+    status = external_txmux_set((XMMRegs_fine_delay_ctrl *)(InstancePtr->BaseAddress + XMMR_FINE_DELAY_CTRL_OFFSET),transceiver,mgt_sfp);
   }
 
   return status;
@@ -259,7 +258,7 @@ int XMMRegs_MuxInOut_ExternalRxMux_Set(XMMRegs *InstancePtr, int transceiver, in
     status = XST_FAILURE;
   }
   else {
-    status |= external_rxmux_set( (XMMRegs_mgt_sel_ctrl *) (InstancePtr->BaseAddress + XMMR_MGT_SEL_CTRL_OFFSET), transceiver, mgt_sfp );
+    status = external_rxmux_set((XMMRegs_fine_delay_ctrl *)(InstancePtr->BaseAddress + XMMR_FINE_DELAY_CTRL_OFFSET),transceiver,mgt_sfp );
   }
 
   return status;
@@ -428,46 +427,45 @@ int XMMRegs_MuxInOut_FineDelay_GradualSet(XMMRegs *InstancePtr, unsigned int del
 
 ************************************************************/
 
-int  XMMRegs_MuxInOut_Setup(XMMRegs *InstancePtr)
+int XMMRegs_MuxInOut_Setup(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
   XMMRegs_ctrl *c;
-  XMMRegs_mgt_sel_ctrl *mgt_sel;
+  XMMRegs_fine_delay_ctrl *d;
   void *ba = InstancePtr->BaseAddress;
-  int trans;
 
   c = (XMMRegs_ctrl *)(ba + XMMR_FINE_DELAY_CTRL_OFFSET);
   set_fine_delay( &(c->fine_delay), FINE_DELAY_DEFAULT );
 //  reset_pll_monitor( &(c->fine_delay) ); // NUMEXO2 : reset_pll_monitor is not implemented any more
 
-  mgt_sel = (XMMRegs_mgt_sel_ctrl *)(ba + XMMR_MGT_SEL_CTRL_OFFSET);
-  external_txmux_set( mgt_sel, 0, USE_MGT );
-  external_rxmux_set( mgt_sel, 0, USE_MGT );
+  d = (XMMRegs_fine_delay_ctrl *)(ba + XMMR_FINE_DELAY_CTRL_OFFSET);
+  external_txmux_set( d, 0, USE_MGT );
+  external_rxmux_set( d, 0, USE_MGT );
 
   if ( XMMRegs_IsTransceiverConnected(InstancePtr, 0) == TRANSCEIVER_IS_CONNECTED) 
   {
-    if ( XMMRegs_IsTransceiverInGtsTree(InstancePtr, trans) == TRANSCEIVER_IS_IN_GTS_TREE )
+    if ( XMMRegs_IsTransceiverInGtsTree(InstancePtr, 0) == TRANSCEIVER_IS_IN_GTS_TREE )
     {
-      external_txmux_set( mgt_sel, 0, USE_MGT );
-      external_rxmux_set( mgt_sel, 0, USE_MGT );
+      external_txmux_set( d, 0, USE_MGT );
+      external_rxmux_set( d, 0, USE_MGT );
     }
     else if ( XMMRegs_IsTransceiverConnectedToDigitizer(InstancePtr, 0) == TRANSCEIVER_IS_CONNECTED_TO_DIGITIZER) 
     { /* the RocketIO is bypassed */
-      external_txmux_set( mgt_sel, 0, BYPASS_MGT );
-      external_rxmux_set( mgt_sel, 0, BYPASS_MGT );
+      external_txmux_set( d, 0, BYPASS_MGT );
+      external_rxmux_set( d, 0, BYPASS_MGT );
     }
     else { /* it is connected neither to the GTS tree nor to the digitizer */
-      external_txmux_set( mgt_sel, 0, USE_MGT );
-      external_rxmux_set( mgt_sel, 0, USE_MGT );
+      external_txmux_set( d, 0, USE_MGT );
+      external_rxmux_set( d, 0, USE_MGT );
     }
   }
   else { /* the transceiver is not connected */
     /* it is thus bypassed */
-    external_txmux_set( mgt_sel, 0, BYPASS_MGT );
-    external_rxmux_set( mgt_sel, 0, BYPASS_MGT );
+    external_txmux_set( d, 0, BYPASS_MGT );
+    external_rxmux_set( d, 0, BYPASS_MGT );
   }
   
-  ctrl_to_software_for_external_mux(mgt_sel);
+//  ctrl_to_software_for_external_mux(mgt_sel);
 
   return status;
 }
@@ -479,28 +477,27 @@ int  XMMRegs_MuxInOut_Start(XMMRegs *InstancePtr)
   return status;
 }
 
-int  XMMRegs_MuxInOut_Stop(XMMRegs *InstancePtr)
+int XMMRegs_MuxInOut_Stop(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
   XMMRegs_ctrl *c;
-  XMMRegs_mgt_sel_ctrl *mgt_sel;
+  XMMRegs_fine_delay_ctrl *d;
   void *ba = InstancePtr->BaseAddress;
 
   c = (XMMRegs_ctrl *)(ba + XMMR_FINE_DELAY_CTRL_OFFSET);
   set_fine_delay( &(c->fine_delay), FINE_DELAY_DEFAULT );
 //  reset_pll_monitor( &(c->fine_delay) ); // NUMEXO2 : reset_pll_monitor is not implemented any more
 
-  mgt_sel = (XMMRegs_mgt_sel_ctrl *)(ba + XMMR_MGT_SEL_CTRL_OFFSET);
-  ctrl_to_hardware_for_external_mux(mgt_sel);
-  external_txmux_set( mgt_sel, 0, BYPASS_MGT );
-  external_rxmux_set( mgt_sel, 0, BYPASS_MGT );
+  d = (XMMRegs_fine_delay_ctrl *)(ba + XMMR_FINE_DELAY_CTRL_OFFSET);
+//  ctrl_to_hardware_for_external_mux(mgt_sel);
+  external_txmux_set( d, 0, BYPASS_MGT );
+  external_rxmux_set( d, 0, BYPASS_MGT );
 
   return status;
 }  
 
 int XMMRegs_MuxInOut_Init(XMMRegs *InstancePtr)
 {
-  /* local variables */
   int status = XST_SUCCESS;
 
   DBG(DBLD, "MuxInOut_Init --->\n");
@@ -513,7 +510,6 @@ int XMMRegs_MuxInOut_Init(XMMRegs *InstancePtr)
 
 int XMMRegs_MuxInOut_Reset(XMMRegs *InstancePtr)
 {
-  /* local variables */
   int status = XST_SUCCESS;
 
   status |= XMMRegs_MuxInOut_Stop(InstancePtr);
@@ -529,15 +525,6 @@ void XMMRegs_MuxInOut_PrintAll(XMMRegs *InstancePtr)
 
   DBG(DBLI, "fine_delay_ctrl\t\t:\t"); 
   XMMRegs_PrintBinary(InstancePtr, XMMR_FINE_DELAY_CTRL_OFFSET);
-/*
-  DBG(DBLI, "mgt_sel_ctrl\t\t:\t"); 
-  XMMRegs_PrintBinary(InstancePtr, XMMR_MGT_SEL_CTRL_OFFSET);
-*/
-/*
-  DBG(DBLI, "hardware_status\t\t:\t"); 
-  XMMRegs_PrintBinary(InstancePtr, XMMR_HARDWARE_STATUS_OFFSET);
-*/
-  return;
 }
 
 #undef DBG
