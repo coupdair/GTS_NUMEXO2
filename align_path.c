@@ -99,8 +99,8 @@ int allFifoMuxPathSet(int GTStype)
 {
   int status = XST_SUCCESS;
 
-  status = XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
-  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
+  status  = XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
+  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0); // NUMEXO2
 
   switch (GTStype) {
     case ROOT :
@@ -110,7 +110,7 @@ int allFifoMuxPathSet(int GTStype)
       status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_MST);
       break;
     case LEAVE :
-      status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 5); // NUMEXO2
+      status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
       break;
     default :
       DBG(DBLE, "ERROR : out of range error on GTStype values in function triggerMuxPathSet\n");

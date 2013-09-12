@@ -13,7 +13,6 @@
 
 static int set_coarse_delay(XMMRegs_dp_delay_ctrl *dp_delay, unsigned int delay)
 {
-
   if ( delay >= 256 ) {
     DBG(DBLE, "ERROR : out of range error in function set_coarse_delay\n"); 
     DBG(DBLE, "the coarse delay should be smaller than 256 clock cycles\n");
@@ -33,7 +32,6 @@ static void init_dp_tdc(XMMRegs_dp_tdc_ctrl *dp_tdc)
   dp_tdc->tdc_stop_sync_select = TRANSCEIVER_1; /* TDC_STOP waits signal from TRANSCEIVER_1 in sync mode */
   dp_tdc->tdc_stop_select = 0;
   dp_tdc->tdc_start_select = 0; 
-  return;
 }
 
 static void do_one_sweep_nodebug(XMMRegs_dp_tdc_ctrl *dp_tdc)
@@ -41,7 +39,6 @@ static void do_one_sweep_nodebug(XMMRegs_dp_tdc_ctrl *dp_tdc)
   dp_tdc->pgen_start = 0;
   dp_tdc->pgen_start = 1;
   dp_tdc->pgen_start = 0;
-  return; 
 }
 
 static int set_tdc_stop_sync(XMMRegs_dp_tdc_ctrl *dp_tdc, int transceiver)
@@ -284,7 +281,7 @@ int XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr, int trans)
   return XST_SUCCESS;
 }
 /*
-int  XMMRegs_DataPath_TriggerCore_Connect(XMMRegs *InstancePtr, int trans)
+int XMMRegs_DataPath_TriggerCore_Connect(XMMRegs *InstancePtr, int trans)
 {
   XMMRegs_dp_access_mgt_ctrl *dp_access_mgt;
 
@@ -294,7 +291,7 @@ int  XMMRegs_DataPath_TriggerCore_Connect(XMMRegs *InstancePtr, int trans)
 }
 */
 /*
-int  XMMRegs_DataPath_TriggerCore_DisConnect(XMMRegs *InstancePtr, int trans)
+int XMMRegs_DataPath_TriggerCore_DisConnect(XMMRegs *InstancePtr, int trans)
 {
   XMMRegs_dp_access_mgt_ctrl *dp_access_mgt;
 

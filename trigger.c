@@ -74,9 +74,9 @@ int triggerPathSet(int GTStype)
 {
   int status = XST_SUCCESS;
   
-  status |= XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
-  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
-  status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 5); // NUMEXO2
+  status  = XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
+  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0); // NUMEXO2
+  status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
    
   switch (GTStype) {
     case ROOT :
@@ -171,8 +171,6 @@ int triggerSetup(int GTStype, int step)
 {
   int status = XST_SUCCESS;
   int usrclk;
-  int force_set = DONT_FORCE_SET;
-  int block_mode = BLOCKING;
   int iscomma;
 
   if ( (GTStype != ROOT) && (GTStype != FANIN_FANOUT) && (GTStype != LEAVE) ) {
@@ -211,8 +209,6 @@ int triggerSetup(int GTStype, int step)
       break;
   }
   
-//  status |= XMMRegs_MuxInOut_TriggerLed_Set(&XMMRegsDriver);
-
   switch (step) {
 
     case 1 :
@@ -220,14 +216,13 @@ int triggerSetup(int GTStype, int step)
       logAnswer();
 
       XMMRegs_RocketIO_TriggerRstCarrier_Set(&XMMRegsDriver, 0);
-//      XMMRegs_RocketIO_TxDataSel_Unset(&XMMRegsDriver, 0); // disconnect trigger core
 
-      /* one sends comma for the alignment of the backward link */
-      status |= mgtDataCommaSet();
+      /* one sends comma for the alignment */
+      status  = mgtDataCommaSet();
   
       status |= muxExtSet(GTStype, USE_MGT, USE_MGT);  
       status |= allRegMuxPathSet();
-      status |= clkSet(GTStype, usrclk, USE_MGT, USE_MGT, force_set, block_mode);
+      status |= clkSet(GTStype, usrclk, USE_MGT, USE_MGT, DONT_FORCE_SET, BLOCKING);
   
       break;
 
@@ -253,8 +248,8 @@ int triggerSetup(int GTStype, int step)
       logAnswer();
 
       XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver, 0);
-//      XMMRegs_RocketIO_TxDataSel_Set(&XMMRegsDriver, 0); // connect trigger core
-      status |= mgtDataCommaUnSet();
+
+      status  = mgtDataCommaUnSet();
       status |= triggerPathSet(GTStype);
 
       break;
@@ -270,12 +265,11 @@ it launches the trigger using the
 ************************************************************/
 int triggerStart(int GTStype)
 {
-  int status = XST_SUCCESS;
-  
   if ( (GTStype != ROOT) && (GTStype != FANIN_FANOUT) && (GTStype != LEAVE) ) {
     DBG(DBLE, "ERROR : out of range on GTStype in function triggerStart");
     return XST_FAILURE; 
   }
+
   DBG(DBLI, "GTS type : ");
   switch (GTStype) {
     case ROOT :
@@ -292,9 +286,7 @@ int triggerStart(int GTStype)
       break;
   }
   
-  status |= triggerCoreSet(GTStype);
-  
-  return status;
+  return triggerCoreSet(GTStype);
 }
 
 
