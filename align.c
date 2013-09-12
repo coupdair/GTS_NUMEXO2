@@ -43,8 +43,6 @@ int alignSet(int GTStype, int forward)
 {
   int status = XST_SUCCESS;
   int usrclk;
-  int force_set = FORCE_SET;
-  int block_mode = BLOCKING;
 
   if ( (GTStype != ROOT) && (GTStype != FANIN_FANOUT) && (GTStype != LEAVE) ) {
     DBG(DBLE, "ERROR : out of range on GTStype in function alignSet");
@@ -97,9 +95,9 @@ int alignSet(int GTStype, int forward)
       return XST_FAILURE;
   }
 
-  status |= muxExtSet(GTStype, forward, BYPASS_MGT);
+  status  = muxExtSet(GTStype, USE_MGT, BYPASS_MGT); // NUMEXO2 LEAF : RX external mux is always 00
   status |= mgtDataCommaSet();
-  status |= clkSet(GTStype, usrclk, forward, BYPASS_MGT, force_set, block_mode);
+  status |= clkSet(GTStype, usrclk, forward, BYPASS_MGT, FORCE_SET, BLOCKING);
 
   return status;
 }
@@ -159,9 +157,7 @@ nmes : the number of tdc measurements
 ************************************************************/
 int alignMeas(int forward, int nmes)
 {
-  int status = XST_SUCCESS;
   int measure; 
-  int debug = NO_TDC_DEBUG;
 
   if ( (forward != USE_MGT) && (forward != BYPASS_MGT) ) {
     DBG(DBLE, "ERROR : out of range on forward in function alignMeas");
@@ -175,9 +171,9 @@ int alignMeas(int forward, int nmes)
     measure = MEAS1;
   }
 
-  tdcMeas(measure, debug, nmes);
+  tdcMeas(measure, NO_TDC_DEBUG, nmes);
 
-  return status;
+  return XST_SUCCESS;
 }
 
 #undef DBG
