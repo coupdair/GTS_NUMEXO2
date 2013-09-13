@@ -6,13 +6,11 @@
 
 #define DBG XMMR_ROCKETIO_DBG
 
-
 /************************************************************
 
 		LOW-LEVEL STATIC FUNCTIONS
 
 ************************************************************/
-
 
 static void print_u16_binary(unsigned short *ba)
 {
@@ -39,25 +37,8 @@ static int read_u16_bit(unsigned short val, unsigned char bit_pos)
 
   tmp = val << (15 - bit_pos);
   tmp = tmp >> 15;
-  return (int) ( tmp );
+  return (int)tmp;
 }
-
-/* is the address of pointer p between baseaddres ba and highaddress ba+offset ? */
-/*
-static unsigned char debug_address(unsigned int p, char *str, unsigned int ba, unsigned int offset)
-{
-  if ( (p < ba) || (p > ba+offset ) )
-  {
-  DBG(DBLE, "ERROR : in function %s\n", str);
-  DBG(DBLE, "ERROR : 0x%08X out of range", p);
-  return 0;
-  }
-
-  DBG(DBLD, "address : 0x%08X\n", p); 
-
-  return 1;
-}
-*/
 
 static unsigned int set_drp_choice(int transceiver)
 {
@@ -98,52 +79,31 @@ static void set_regdata(XMMRegs_txmgtdata_ctrl *reg, unsigned int msb, unsigned 
     reg->lsb = lsb;
     reg->txcharisk_lsb = 1;
   }
-
-  return;
 }
 
 static void setup_gt(XMMRegs_gt_ctrl *gt)
 {
-//  gt->txchardispval = 0;
-//  gt->txchardispmode = 0;
-//  gt->rx_pcs_reset = 0;
-//  gt->tx_pcs_reset = 0;
+  gt->gtx_reset = 1;
   gt->gtsStreamReady = 1;
-  gt->rx_system_reset = 1;
-  gt->tx_system_reset = 1;
+//  gt->rx_system_reset = 1;
+//  gt->tx_system_reset = 1;
   gt->backpressure = 0;
   gt->trigger_rst_carrier = 1;
-
-  return;
 }
 
 static void stop_gt(XMMRegs_gt_ctrl *gt)
 {
-//  gt->txchardispval = 0;
-//  gt->txchardispmode = 0;
-//  gt->rx_pcs_reset = 0;
-//  gt->tx_pcs_reset = 0;
+  gt->gtx_reset = 1;
   gt->gtsStreamReady = 1;
-  gt->rx_system_reset = 1;
-  gt->tx_system_reset = 1;
+//  gt->rx_system_reset = 1;
+//  gt->tx_system_reset = 1;
   gt->backpressure = 0;
   gt->trigger_rst_carrier = 1;
-
-  return;
 }
 
-static void init_gt_tx(XMMRegs_gt_ctrl *gt)
+static void init_gt(XMMRegs_gt_ctrl *gt)
 {
-  gt->tx_system_reset = 0;
-
-  return;
-}
-
-static void init_gt_rx(XMMRegs_gt_ctrl *gt)
-{
-  gt->rx_system_reset = 0;
-
-  return;
+  gt->gtx_reset = 0;
 }
 
 static int status_gt_rx(XMMRegs_gt_status *gt_status)
@@ -188,54 +148,17 @@ static int status_gt_tx(XMMRegs_gt_status *gt_status)
   return C_READY; // GTS_LEAF on NUMEXO2
 }
 
-static void reset_gt_tx(XMMRegs_gt_ctrl *gt)
+static void reset_gt(XMMRegs_gt_ctrl *gt)
 {
-  gt->tx_system_reset = 1;
-
-  return;
-}
-
-static void reset_gt_rx(XMMRegs_gt_ctrl *gt)
-{
-  gt->rx_system_reset = 1;
-
-  return;
-}
-
-static void reset_gt_tx_pcs(XMMRegs_gt_ctrl *gt)
-{
-  gt->tx_pcs_reset = 1;
-
-  return;
-}
-
-static void reset_gt_rx_pcs(XMMRegs_gt_ctrl *gt)
-{
-  gt->rx_pcs_reset = 1;
-
-  return;
-}
-
-static void init_gt_tx_pcs(XMMRegs_gt_ctrl *gt)
-{
-  gt->tx_pcs_reset = 0;
-
-  return;
-}
-
-static void init_gt_rx_pcs(XMMRegs_gt_ctrl *gt)
-{
-  gt->rx_pcs_reset = 0;
+  gt->gtx_reset = 1;
 
   return;
 }
 
 static void init_drp_addr(XMMRegs_drp_addr_ctrl *drp_addr)
 {
-  drp_addr->drp_choice = set_drp_choice(NO_TRANSCEIVER);
+  drp_addr->drp_choice = 0;
   drp_addr->drp_addr = 0;
-
-  return;
 }
 
 static void init_drp(XMMRegs_drp_ctrl *drp)
@@ -245,19 +168,15 @@ static void init_drp(XMMRegs_drp_ctrl *drp)
   drp->drp_we = 0;
   drp->drp_en = 0;
   drp->drp_di = 0;
-
-  return;
 }
 
 static void stop_drp(XMMRegs_drp_ctrl *drp)
 {
-  drp->signal_detect = 0x0;
+  drp->signal_detect = 0;
   drp->RST_drp_bsy = 0;
   drp->drp_we = 0;
   drp->drp_en = 0;
   drp->drp_di = 0;
-
-  return;
 }
 
 static unsigned short change_bit(unsigned short word_value, unsigned char bit_pos, unsigned char bit_value)
@@ -277,19 +196,19 @@ static unsigned short change_bit(unsigned short word_value, unsigned char bit_po
   return new_word_value;
 }
 
-static unsigned short read_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, XMMRegs_drp_status *drp_status, unsigned char transceiver, unsigned char DADDR)
+static unsigned short read_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, XMMRegs_drp_status *drp_status, unsigned char DADDR)
 {
   unsigned short val;
 
-  drp_addr->drp_choice = set_drp_choice((int)transceiver);
   drp_addr->drp_addr = DADDR;
   drp->drp_en = 0;
   drp->drp_we = 0;
   drp->drp_en = 1;
   drp->drp_en = 0;
+
   while (drp_status->drp_bsy == 1) ;
 
-  val = (unsigned short) (drp_status->drp_do);
+  val = (unsigned short)(drp_status->drp_do);
 
   DBG(DBLD, "read value at drp address : 0x%X : ", DADDR);
   print_u16_binary(&val);
@@ -297,9 +216,8 @@ static unsigned short read_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp
   return val;
 }
 
-static void set_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, XMMRegs_drp_status *drp_status, unsigned char transceiver, unsigned char DADDR, unsigned short DI)
+static void set_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, XMMRegs_drp_status *drp_status, unsigned char DADDR, unsigned short DI)
 {
-  drp_addr->drp_choice = set_drp_choice((int)transceiver);
   drp_addr->drp_addr = DADDR;
   drp->drp_di = DI;
   drp->drp_en = 0;
@@ -309,33 +227,6 @@ static void set_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp,
   drp->drp_we = 1;
 
   while (drp_status->drp_bsy == 1) ;
-
-  return;
-}
-
-static int read_bit_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, XMMRegs_drp_status *drp_status, unsigned char transceiver, unsigned char DADDR, unsigned char bit_pos)
-{
-  unsigned short word_value;
-
-  word_value = read_word_drp(drp_addr, drp, drp_status, transceiver, DADDR);
-
-  return read_u16_bit(word_value, bit_pos);
-}
-
-static void set_bit_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, XMMRegs_drp_status *drp_status, unsigned char transceiver, unsigned char DADDR, unsigned char bit_pos, unsigned char bit_value)
-{
-  unsigned short word_value, new_word_value;
-
-  word_value = read_word_drp(drp_addr, drp, drp_status, transceiver, DADDR);
-//  DBG(DBLD, "Old bit value was : %d\n", read_u16_bit(word_value, bit_pos) );
-  new_word_value = change_bit(word_value, bit_pos, bit_value);
-//  DBG(DBLD, "Word value to be sent : "); print_u16_binary(&new_word_value); 
-  set_word_drp(drp_addr, drp, drp_status, transceiver, DADDR, new_word_value);
-//  DBG(DBLD, "After DRP programming :\n");
-  word_value = read_word_drp(drp_addr, drp, drp_status, transceiver, DADDR); /* to control */
-//  DBG(DBLD, "New bit value is : %d\n", read_u16_bit(word_value, bit_pos) );    
-
-  return;
 }
 
 /************************************************************
@@ -344,121 +235,26 @@ static void set_bit_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, 
 
 ************************************************************/
 
-int XMMRegs_RocketIO_DrpWord_Read(XMMRegs *InstancePtr, int transceiver, unsigned char DADDR)
+int XMMRegs_RocketIO_DrpWord_Read(XMMRegs *InstancePtr, unsigned char DADDR)
 {
   XMMRegs_drp_status *drp_status;
   XMMRegs_drp_addr_ctrl *drp_addr;
   XMMRegs_drp_ctrl *drp;
   void *ba;
 
-  if ( (transceiver < NO_TRANSCEIVER) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range error in function XMMRegs_read_word_drp\n");
-    DBG(DBLE, "ERROR : value of transceiver should be between %d and %d\n", NO_TRANSCEIVER, TRANSCEIVER_3);
-
-    return XST_FAILURE;
-  }
-
   ba = InstancePtr->BaseAddress;
   drp_status = (XMMRegs_drp_status *)(ba + XMMR_GT_DRP_STATUS_OFFSET);
   drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
 
-  if (transceiver > NO_TRANSCEIVER) {
-    read_word_drp(drp_addr, drp, drp_status, (unsigned char)transceiver, DADDR);
-  }
+  read_word_drp(drp_addr, drp, drp_status, DADDR);
 
   return XST_SUCCESS;
 }
-/*
-int XMMRegs_RocketIO_SerialLoopback_Set(XMMRegs *InstancePtr, int transceiver, unsigned char serial_loopback)
-{
-  XMMRegs_gt_ctrl *gt;
-  XMMRegs_drp_status *drp_status;
-  XMMRegs_drp_addr_ctrl *drp_addr;
-  XMMRegs_drp_ctrl *drp;  
-  unsigned char TXPOST_TAP_PD;
-  void *ba;
 
-  if ( (transceiver < NO_TRANSCEIVER) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range error in function XMMRegs_handle_serial_loopback\n");
-    DBG(DBLE, "ERROR : value of transceiver should be between %d and %d\n", NO_TRANSCEIVER, TRANSCEIVER_3);
-
-    return XST_FAILURE;
-  }
-
-  ba = InstancePtr->BaseAddress;
-  drp_status = (XMMRegs_drp_status *)(ba + XMMR_GT_DRP_STATUS_OFFSET);
-  drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
-  drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
-
-  if (transceiver > NO_TRANSCEIVER) {
-    gt = (XMMRegs_gt_ctrl *)(ba +  XMMR_GT_CTRL_OFFSET + 0x4*transceiver);
-    if (serial_loopback == SERIAL_LOOPBACK_ON) {
-      TXPOST_TAP_PD = 0;
-      gt->loopback = 3;
-    }
-    else {
-      TXPOST_TAP_PD = 1;
-      gt->loopback = 0;
-    }
-
-//    switch (transceiver) 
-//    {
-//      case TRANSCEIVER_0 : case TRANSCEIVER_2 :
-//        set_bit_drp(drp_addr, drp, drp_status, (unsigned char)transceiver, 0x4E, 12, TXPOST_TAP_PD);
-//        break;
-//      case TRANSCEIVER_1 : case TRANSCEIVER_3 :
-//        set_bit_drp(drp_addr, drp, drp_status, (unsigned char)transceiver, 0x4C, 12, TXPOST_TAP_PD);
-//        break;
-//
-//      case TRANSCEIVER_0 :
-//        set_word_drp(drp_addr, drp, drp_status, (unsigned char)transceiver, 0x04, 0xA0D9);
-//        break;
-//
-//      default :
-//        DBG(DBLI, "STRANGE : no transceiver selected\n");
-//        break;
-//    }  
-  }
-  else {
-    DBG(DBLI, "STRANGE : no transceiver selected for serial loopback setting\\n");
-  }
-
-  return XST_SUCCESS;
-}
-*/
-/* returns the reference clock used by the RX transceiver */
 int XMMRegs_RocketIO_RefClkRX_Diagnose (XMMRegs *InstancePtr, int transceiver)
 {
-  XMMRegs_drp_status *drp_status;
-  XMMRegs_drp_addr_ctrl *drp_addr;
-  XMMRegs_drp_ctrl *drp;  
-  int RXPMACLKSEL_0 = NO_REFCLK;
-  void *ba;
-
-  if ( (transceiver < NO_TRANSCEIVER) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range error in function XMMRegs_RocketIO_RefClkRX_Diagnose \n");
-    DBG(DBLE, "ERROR : value of transceiver should be between %d and %d\n", NO_TRANSCEIVER, TRANSCEIVER_3);
-    return NO_REFCLK; // NO_REFCLK = -1
-  }
-
-  ba = InstancePtr->BaseAddress;
-  drp_status = (XMMRegs_drp_status *)(ba + XMMR_GT_DRP_STATUS_OFFSET);
-  drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
-  drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
-
-  switch (transceiver) 
-  {
-    case TRANSCEIVER_0 : // for GTS LEAF NUMEXO2 (Virtex5)
-      RXPMACLKSEL_0 = 1;
-      break;
-
-    default :
-      DBG(DBLI, "STRANGE : no transceiver selected\n");
-      break;
-  }  
-
-  return RXPMACLKSEL_0;
+  return 1; // NUMEXO2
 }
 
 /* looks if there is a comma alignment */
@@ -506,25 +302,9 @@ unsigned int XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr, int transceiv
   return val;
 }
 
-/* returns the reference clock used by the TX transceiver */
 int XMMRegs_RocketIO_RefClkTX_Diagnose (XMMRegs *InstancePtr, int tile)
 {
-  XMMRegs_drp_status *drp_status;
-  XMMRegs_drp_addr_ctrl *drp_addr;
-  XMMRegs_drp_ctrl *drp;  
-  void *ba;
-
-  if ( (tile != TILE_0) && (tile != TILE_1) ) {
-    DBG(DBLE, "ERROR : out of range error for tile in function XMMRegs_RocketIO_RefClkTX_Diagnose\n");
-    return NO_REFCLK; // NO_RECLK = -1
-  }
-
-  ba = InstancePtr->BaseAddress;
-  drp_status = (XMMRegs_drp_status *)(ba + XMMR_GT_DRP_STATUS_OFFSET);
-  drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
-  drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
-
-  return REFCLK2; // for GTS LEAF NUMEXO2 (Virtex5) // REFCLK2 = 1
+  return 1; // NUMEXO2
 }
 
 int XMMRegs_RocketIO_RefClkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char refclk)
@@ -532,30 +312,12 @@ int XMMRegs_RocketIO_RefClkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char 
   XMMRegs_drp_status *drp_status;
   XMMRegs_drp_addr_ctrl *drp_addr;
   XMMRegs_drp_ctrl *drp;  
-  unsigned char TXABPMACLKSEL_0;
   void *ba;
-
-  if ( (tile != TILE_0) && (tile != TILE_1) ) {
-    DBG(DBLE, "ERROR : out of range error for tile in function XMMRegs_RocketIO_RefClkTX_Set\n");
-    return XST_FAILURE;
-  }
-
-  if ( (refclk != REFCLK1) && (refclk != REFCLK2) ) {
-    DBG(DBLE, "ERROR : out of range error for refclk in function XMMRegs_RocketIO_RefClkTX_Set\n");
-    return XST_FAILURE;
-  }
 
   ba = InstancePtr->BaseAddress;
   drp_status = (XMMRegs_drp_status *)(ba + XMMR_GT_DRP_STATUS_OFFSET);
   drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
-
-  if (refclk == REFCLK2) {
-    TXABPMACLKSEL_0 = REFCLK2;
-  }
-  else {
-    TXABPMACLKSEL_0 = REFCLK1;
-  }
 
   set_word_drp(drp_addr, drp, drp_status, 0, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
 
@@ -567,44 +329,23 @@ int XMMRegs_RocketIO_RefClkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigne
   XMMRegs_drp_status *drp_status;
   XMMRegs_drp_addr_ctrl *drp_addr;
   XMMRegs_drp_ctrl *drp;  
-  unsigned char RXPMACLKSEL_0;
   void *ba;
-
-  if ( (transceiver < NO_TRANSCEIVER) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range error in function XMMRegs_RocketIO_RefClkRX_Set\n");
-    DBG(DBLE, "ERROR : value of transceiver should be between %d and %d\n", NO_TRANSCEIVER, TRANSCEIVER_3);
-    return XST_FAILURE;
-  }
-
-  if ( (refclk != REFCLK1) && (refclk != REFCLK2) ) {
-    DBG(DBLE, "ERROR : out of range error for refclk in function XMMRegs_RocketIO_RefClkRX_Set\n");
-    return XST_FAILURE;
-  }
 
   ba = InstancePtr->BaseAddress;
   drp_status = (XMMRegs_drp_status *)(ba + XMMR_GT_DRP_STATUS_OFFSET);
   drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
 
-  if (refclk == REFCLK2) {
-    RXPMACLKSEL_0 = REFCLK2;
-  }
-  else {
-    RXPMACLKSEL_0 = REFCLK1;
-  }
-
   set_word_drp(drp_addr, drp, drp_status, 0, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
 
   return XST_SUCCESS;
 }
-
 
 /************************************************************
 
 	Lowlevel INIT and RESET FUNCTIONS
 
 ************************************************************/
-
 
 int XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr, int transceiver)
 {
