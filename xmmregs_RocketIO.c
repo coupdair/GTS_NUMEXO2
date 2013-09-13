@@ -152,23 +152,6 @@ static void stop_drp(XMMRegs_drp_ctrl *drp)
   drp->drp_di = 0;
 }
 
-static unsigned short change_bit(unsigned short word_value, unsigned char bit_pos, unsigned char bit_value)
-{
-  unsigned short new_word_value;
-
-  if ( (bit_pos > 15) || (bit_value > 1) ) {
-    DBG(DBLE, "ERROR : out of range error in function change_bit\n");
-    return word_value;  
-  }
-
-  if (bit_value)
-    new_word_value = ( (1 << bit_pos) | word_value );
-  else
-    new_word_value = ( ( ~(1 << bit_pos) ) & word_value );
-
-  return new_word_value;
-}
-
 static void set_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, XMMRegs_drp_status *drp_status, unsigned char DADDR, unsigned short DI)
 {
   drp_addr->drp_addr = DADDR;
