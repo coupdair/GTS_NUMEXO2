@@ -236,13 +236,9 @@ extern int  XMMRegs_RocketIO_Init(XMMRegs *InstancePtr);
 extern int  XMMRegs_RocketIO_Reset(XMMRegs *InstancePtr);
 extern int  XMMRegs_RocketIO_TriggerRstCarrier_Set(XMMRegs *InstancePtr, int transceiver);
 extern int  XMMRegs_RocketIO_TriggerRstCarrier_Unset(XMMRegs *InstancePtr, int transceiver);
-//extern int  XMMRegs_RocketIO_TxDataSel_Set(XMMRegs *InstancePtr, int transceiver);
-//extern int  XMMRegs_RocketIO_TxDataSel_Unset(XMMRegs *InstancePtr, int transceiver);
-//extern int  XMMRegs_RocketIO_UnusedMode_Set(XMMRegs *InstancePtr, int transceiver);
 extern void XMMRegs_RocketIO_PrintAll(XMMRegs *InstancePtr);
 extern int  XMMRegs_RocketIO_AllDisconnected_Stop(XMMRegs *InstancePtr);
 extern int  XMMRegs_RocketIO_MgtData_Set(XMMRegs *InstancePtr, int transceiver, unsigned int msb, unsigned int lsb, unsigned char comma_msb, unsigned char comma_lsb);
-//extern int  XMMRegs_RocketIO_SerialLoopback_Set(XMMRegs *InstancePtr, int transceiver, unsigned char serial_loopback);
 extern int  XMMRegs_RocketIO_RefClkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigned char refclk);
 extern int  XMMRegs_RocketIO_RefClkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char refclk);
 extern int  XMMRegs_RocketIO_RefClkRX_Diagnose (XMMRegs *InstancePtr, int transceiver);
@@ -279,16 +275,12 @@ extern int  XMMRegs_DataPath_CoarseDelay_Set(XMMRegs *InstancePtr, unsigned int 
 extern unsigned int  XMMRegs_DataPath_CoarseDelay_Read(XMMRegs *InstancePtr);
 extern int  XMMRegs_DataPath_UseSync_Set(XMMRegs *InstancePtr);
 extern int  XMMRegs_DataPath_UseSync_UnSet(XMMRegs *InstancePtr);
-extern int  XMMRegs_DataPath_UseSync_SfpTxmux_Set(XMMRegs *InstancePtr, int transceiver, int val);
-//extern int  XMMRegs_DataPath_UseSync_MgtTxmux_Set(XMMRegs *InstancePtr, int transceiver, int val);
 extern int  XMMRegs_DataPath_UseSync_MasterToMaster_Set(XMMRegs *InstancePtr, int forward);
 extern int  XMMRegs_DataPath_UseSync_MasterToSlave_Set(XMMRegs *InstancePtr, int forward, int transceiver);
 extern int  XMMRegs_DataPath_UseSync_SyncToSlave_Set(XMMRegs *InstancePtr, int forward, int transceiver);
 extern int  XMMRegs_DataPath_OneSweep_Do(XMMRegs *InstancePtr);
 extern int  XMMRegs_DataPath_Digitizer_Connect(XMMRegs *InstancePtr, int trans);
 extern int  XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr, int trans);
-//extern int  XMMRegs_DataPath_TriggerCore_Connect(XMMRegs *InstancePtr, int trans);
-//extern int  XMMRegs_DataPath_TriggerCore_DisConnect(XMMRegs *InstancePtr, int trans);
 
 /***********************************************/
 /*  Trigger APIs                               */

@@ -51,28 +51,6 @@ static int set_tdc_stop_sync(XMMRegs_dp_tdc_ctrl *dp_tdc, int transceiver)
   return XST_SUCCESS;
 }
 
-/*
-static int connect_to_trigger_core(XMMRegs_dp_access_mgt_ctrl *dp_access_mgt, int transceiver)
-{
-  if ( (transceiver > TRANSCEIVER_3) || (transceiver < TRANSCEIVER_0) ) {
-    DBG(DBLE, "ERROR : transceiver is out of range in connect_to_trigger_core");
-    return XST_FAILURE; 
-  }
-  dp_access_mgt->mux = set_bit_to_1(dp_access_mgt->mux, transceiver);
-  return XST_SUCCESS;
-}
-*/
-/*
-static int disconnect_from_trigger_core(XMMRegs_dp_access_mgt_ctrl *dp_access_mgt, int transceiver)
-{
-  if ( (transceiver > TRANSCEIVER_3) || (transceiver < TRANSCEIVER_0) ) {
-    DBG(DBLE, "ERROR : transceiver is out of range in disconnect_from_trigger_core");
-    return XST_FAILURE; 
-  }
-  dp_access_mgt->mux = set_bit_to_0(dp_access_mgt->mux, transceiver);
-  return XST_SUCCESS;
-}
-*/
 /************************************************************
 
 		HIGH LEVEL FUNCTIONS
@@ -115,30 +93,6 @@ int XMMRegs_DataPath_UseSync_UnSet(XMMRegs *InstancePtr)
   d->use_sync = 0;
 
   return XST_SUCCESS;
-}
-
-int XMMRegs_DataPath_UseSync_SfpTxmux_Set(XMMRegs *InstancePtr, int transceiver, int val)
-{
-  int status = XST_SUCCESS;
-  XMMRegs_dp_mux_ctrl *d;
-  unsigned int *d_addr;
-
-  d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
-  d_addr = (unsigned int *)d;  
-
-  DBG(DBLD, "set_sfp_txmux_sync --->\n");
-  DBG(DBLD, "\tvalues before set_sfp_txmux_sync ->\n");
-  DBG(DBLD, "\td\t: sfp_txmux_sync\n");
-  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *d_addr, d->sfp_txmux_sync_select);
-
-  if (val == SY_SFP) d->sfp_txmux_sync_select = 1;
-  else               d->sfp_txmux_sync_select = 0;
-
-  DBG(DBLD, "\tvalues after set_sfp_txmux_sync ->\n");
-  DBG(DBLD, "\t0x%08X\t: 0x%01X\n", *d_addr, d->sfp_txmux_sync_select);  
-  DBG(DBLD, "---> set_sfp_txmux_sync |\n");
-
-  return status;
 }
 
 /* The signal comes from the master SFP and flows back to the master SFP.
@@ -280,26 +234,7 @@ int XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr, int trans)
 
   return XST_SUCCESS;
 }
-/*
-int XMMRegs_DataPath_TriggerCore_Connect(XMMRegs *InstancePtr, int trans)
-{
-  XMMRegs_dp_access_mgt_ctrl *dp_access_mgt;
 
-  dp_access_mgt = (XMMRegs_dp_access_mgt_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_ACCESS_MGT_CTRL_OFFSET);
-
-  return connect_to_trigger_core(dp_access_mgt, trans);
-}
-*/
-/*
-int XMMRegs_DataPath_TriggerCore_DisConnect(XMMRegs *InstancePtr, int trans)
-{
-  XMMRegs_dp_access_mgt_ctrl *dp_access_mgt;
-
-  dp_access_mgt = (XMMRegs_dp_access_mgt_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_ACCESS_MGT_CTRL_OFFSET);
-
-  return disconnect_from_trigger_core(dp_access_mgt, trans);
-}
-*/
 /************************************************************
 
 	  INIT, RESET and PRINT FUNCTIONS
@@ -312,20 +247,14 @@ int XMMRegs_DataPath_Setup(XMMRegs *InstancePtr)
   XMMRegs_dp_mux_ctrl *dp_mux;  
   XMMRegs_dp_delay_ctrl *dp_delay;
 
-  unsigned int *dp_mux_addr;
-  unsigned int *dp_delay_addr;
-
   dp_mux = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
   dp_delay = (XMMRegs_dp_delay_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_DELAY_CTRL_OFFSET);
-  dp_mux_addr = (unsigned int *)dp_mux;
-  dp_delay_addr = (unsigned int *)dp_delay;
 
   dp_mux->mgt_txmux_select = 0;
   dp_mux->mgt_rxmux_select = 0;
   dp_mux->use_sync = 0;
   dp_mux->mux_digitizer_gts_tree = 0;
   dp_mux->sfp_txmux_sync_select = 0;
-//  disconnect_from_trigger_core(dp_mux, 0);
 
   status = set_coarse_delay(dp_delay, 0);
 
@@ -343,10 +272,9 @@ int  XMMRegs_DataPath_Stop(XMMRegs *InstancePtr)
 
   dp_mux->mgt_txmux_select = 0;
   dp_mux->mgt_rxmux_select = 0;
-  dp_mux->use_sync = 1;
+  dp_mux->use_sync = 0;
   dp_mux->mux_digitizer_gts_tree = 0;
-  dp_mux->sfp_txmux_sync_select = 1;
-//  disconnect_from_trigger_core(dp_mux, 0);
+  dp_mux->sfp_txmux_sync_select = 0;
 
   status = set_coarse_delay(dp_delay, 0);
 
