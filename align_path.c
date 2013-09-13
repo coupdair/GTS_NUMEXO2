@@ -44,7 +44,7 @@ int masterToSlaveSyncSet(int forward, int transceiver)
   }
   else
   {
-    return XMMRegs_DataPath_UseSync_MasterToSlave_Set(&XMMRegsDriver, forward, transceiver);
+    return XMMRegs_DataPath_UseSync_MasterToSlave_Set(&XMMRegsDriver, forward);
   }
 }
 
@@ -57,7 +57,7 @@ int syncToSlaveSyncSet(int forward, int transceiver)
   }
   else
   {
-    return XMMRegs_DataPath_UseSync_SyncToSlave_Set(&XMMRegsDriver, forward, transceiver);
+    return XMMRegs_DataPath_UseSync_SyncToSlave_Set(&XMMRegsDriver, forward);
   }
 }
 
@@ -72,23 +72,23 @@ int muxSyncSet(int GTStype, int forward)
   int status = XST_SUCCESS;
   int t;
 
-  status = XMMRegs_DataPath_UseSync_Set(&XMMRegsDriver);
+  XMMRegs_DataPath_UseSync_Set(&XMMRegsDriver);
 
   XMMRegs_DataPath_Digitizer_Disconnect(&XMMRegsDriver, 0);
 
   switch (GTStype) {
     case ROOT :
-      status |= syncToSlaveSyncSet(forward, 0);
+      status = syncToSlaveSyncSet(forward, 0);
       break;
     case FANIN_FANOUT :
-      status |= masterToSlaveSyncSet(forward, 0);
+      status = masterToSlaveSyncSet(forward, 0);
       break;
     case LEAVE :
-      status |= masterToMasterSyncSet(forward);
+      status = masterToMasterSyncSet(forward);
       break;
     default :
       DBG(DBLE, "ERROR : out of range error on GTStype values in function muxSyncSet\n");
-      status |= XST_FAILURE;
+      status = XST_FAILURE;
       break; 
   }
 
@@ -99,22 +99,22 @@ int allFifoMuxPathSet(int GTStype)
 {
   int status = XST_SUCCESS;
 
-  status  = XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
-  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0); // NUMEXO2
+  XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
+  XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0); // NUMEXO2
 
   switch (GTStype) {
     case ROOT :
-      status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_TST);
+      XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_TST);
       break;
     case FANIN_FANOUT :
-      status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_MST);
+      XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, DP_TXMUX_MST);
       break;
     case LEAVE :
-      status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
+      XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
       break;
     default :
       DBG(DBLE, "ERROR : out of range error on GTStype values in function triggerMuxPathSet\n");
-      status |= XST_FAILURE;
+      status = XST_FAILURE;
       break; 
   }
 
@@ -125,9 +125,9 @@ int allRegMuxPathSet(void)
 {
   int status = XST_SUCCESS;
 
-  status  = XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
-  status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 0);
-  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0);
+  XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
+  XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 0);
+  XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0);
 
   return status;
 }

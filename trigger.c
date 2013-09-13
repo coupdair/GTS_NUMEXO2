@@ -74,9 +74,9 @@ int triggerPathSet(int GTStype)
 {
   int status = XST_SUCCESS;
   
-  status  = XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
-  status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0); // NUMEXO2
-  status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
+  XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
+  XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0); // NUMEXO2
+  XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
    
   switch (GTStype) {
     case ROOT :
@@ -87,7 +87,7 @@ int triggerPathSet(int GTStype)
       break;
     default :
       DBG(DBLE, "ERROR : out of range error on GTStype values in function triggerPathSet\n");
-      status |= XST_FAILURE;
+      status = XST_FAILURE;
       break; 
   }
   

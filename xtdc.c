@@ -137,10 +137,10 @@ int xtdc_DoOneSweep(XMMRegs *InstancePtr, int debug)
 
   switch (debug) {
     case TDC_DEBUG :
-      status |= XMMRegs_TdcDebug_OneSweep_Do(InstancePtr);
+      status = XMMRegs_TdcDebug_OneSweep_Do(InstancePtr);
       break;
     case NO_TDC_DEBUG :
-      status |= XMMRegs_DataPath_OneSweep_Do(InstancePtr);
+      XMMRegs_DataPath_OneSweep_Do(InstancePtr);
       break;
     default :
       DBG(DBLE, "ERROR : debug is out of range in xtdc_DoOneSweep\n");

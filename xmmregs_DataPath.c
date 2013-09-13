@@ -73,26 +73,22 @@ int XMMRegs_DataPath_MuxClkSync_Set(XMMRegs *InstancePtr, unsigned int val)
   return status;
 }
 
-int XMMRegs_DataPath_UseSync_Set(XMMRegs *InstancePtr)
+void XMMRegs_DataPath_UseSync_Set(XMMRegs *InstancePtr)
 {
   XMMRegs_dp_mux_ctrl *d;
 
   d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
   d->use_sync = 1;
-
-  return XST_SUCCESS;
 }
 
-int XMMRegs_DataPath_UseSync_UnSet(XMMRegs *InstancePtr)
+void XMMRegs_DataPath_UseSync_UnSet(XMMRegs *InstancePtr)
 {
   XMMRegs_dp_mux_ctrl *d;
 
   d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
   d->use_sync = 0;
-
-  return XST_SUCCESS;
 }
 
 /* The signal comes from the master SFP and flows back to the master SFP.
@@ -130,7 +126,7 @@ int XMMRegs_DataPath_UseSync_MasterToMaster_Set(XMMRegs *InstancePtr, int forwar
 It comes back from the same SFP and flows back to the master SFP
 parameter : forward -> in the forward direction, it indicates if the MGT is used or bypassed 
 Note that, in the backward direction, the MGT is always bypassed */
-int XMMRegs_DataPath_UseSync_MasterToSlave_Set(XMMRegs *InstancePtr, int forward, int transceiver)
+int XMMRegs_DataPath_UseSync_MasterToSlave_Set(XMMRegs *InstancePtr, int forward)
 {
   return XST_SUCCESS;
 }
@@ -142,54 +138,38 @@ Note that, in the backward direction, the MGT is always bypassed
 This function will be used on the root GTS
 tdc_stop_sync is also set
 */
-int XMMRegs_DataPath_UseSync_SyncToSlave_Set(XMMRegs *InstancePtr, int forward, int transceiver )
+int XMMRegs_DataPath_UseSync_SyncToSlave_Set(XMMRegs *InstancePtr, int forward)
 {
   return XST_SUCCESS;
 }
 
-int XMMRegs_DataPath_OneSweep_Do(XMMRegs *InstancePtr)
+void XMMRegs_DataPath_OneSweep_Do(XMMRegs *InstancePtr)
 {
   XMMRegs_dp_tdc_ctrl *dp_tdc;
   void *ba = InstancePtr->BaseAddress;
 
-  dp_tdc = (XMMRegs_dp_tdc_ctrl *) (ba + XMMR_DP_TDC_CTRL_OFFSET);
+  dp_tdc = (XMMRegs_dp_tdc_ctrl *)(ba + XMMR_DP_TDC_CTRL_OFFSET);
   do_one_sweep_nodebug(dp_tdc);
-
-  return XST_SUCCESS;
 }
 
-int XMMRegs_DataPath_AllTxmux_Set(XMMRegs *InstancePtr, int val)
+void XMMRegs_DataPath_AllTxmux_Set(XMMRegs *InstancePtr, int val)
 {
   XMMRegs_dp_mux_ctrl *dp_mux;  
   void *ba;
 
-  if ( (val < DP_TXMUX_REG) || (val > DP_TXMUX_LBK) ) {
-    DBG(DBLE, "ERROR : out of range on val in function XMMRegs_DataPath_AllTxmux_Set\n"); 
-    return XST_FAILURE;
-  }
-
   ba = InstancePtr->BaseAddress;
-  dp_mux = (XMMRegs_dp_mux_ctrl *) (ba  +  XMMR_DP_MUX_CTRL_OFFSET);
+  dp_mux = (XMMRegs_dp_mux_ctrl *)(ba  +  XMMR_DP_MUX_CTRL_OFFSET);
   dp_mux->mgt_txmux_select = val;
-
-  return XST_SUCCESS;
 }
 
-int XMMRegs_DataPath_AllRxmux_Set(XMMRegs *InstancePtr, int val)
+void XMMRegs_DataPath_AllRxmux_Set(XMMRegs *InstancePtr, int val)
 {
   XMMRegs_dp_mux_ctrl *dp_mux;  
   void *ba;
 
-  if ( (val != DP_RXMUX_MGT) && (val != DP_RXMUX_SFP) ) {
-    DBG(DBLE, "ERROR : out of range on val in function XMMRegs_DataPath_AllRxmux_Set\n"); 
-    return XST_FAILURE;
-  }
-
   ba = InstancePtr->BaseAddress;
-  dp_mux = (XMMRegs_dp_mux_ctrl *) (ba  +  XMMR_DP_MUX_CTRL_OFFSET);
+  dp_mux = (XMMRegs_dp_mux_ctrl *)(ba  +  XMMR_DP_MUX_CTRL_OFFSET);
   dp_mux->mgt_rxmux_select = val;
-
-  return XST_SUCCESS;
 }
 
 int XMMRegs_DataPath_CoarseDelay_Set(XMMRegs *InstancePtr, unsigned int delay)
@@ -199,9 +179,7 @@ int XMMRegs_DataPath_CoarseDelay_Set(XMMRegs *InstancePtr, unsigned int delay)
 
   dp_delay = (XMMRegs_dp_delay_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_DELAY_CTRL_OFFSET);
 
-  status |= set_coarse_delay(dp_delay, delay);
-
-  return status;
+  return set_coarse_delay(dp_delay, delay);
 }
 
 unsigned int XMMRegs_DataPath_CoarseDelay_Read(XMMRegs *InstancePtr)
