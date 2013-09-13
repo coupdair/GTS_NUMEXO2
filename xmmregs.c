@@ -276,45 +276,25 @@ int XMMRegs_Status_Setup(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_Transceiver_Connect(InstancePtr, TRANSCEIVER_0);
-//  status |= XMMRegs_Transceiver_Connect(InstancePtr, TRANSCEIVER_1);
-//  status |= XMMRegs_Transceiver_Connect(InstancePtr, TRANSCEIVER_2);
-//  status |= XMMRegs_Transceiver_Connect(InstancePtr, TRANSCEIVER_3);
+  status  = XMMRegs_Transceiver_Connect(InstancePtr, TRANSCEIVER_0);
   status |= XMMRegs_TransceiverGtsTree_Insert(InstancePtr, TRANSCEIVER_0);
-//  status |= XMMRegs_TransceiverGtsTree_Insert(InstancePtr, TRANSCEIVER_1);
-//  status |= XMMRegs_TransceiverGtsTree_Insert(InstancePtr, TRANSCEIVER_2);
-//  status |= XMMRegs_TransceiverGtsTree_Insert(InstancePtr, TRANSCEIVER_3);
   status |= XMMRegs_TransceiverDigitizer_DisConnect(InstancePtr, TRANSCEIVER_0);
-//  status |= XMMRegs_TransceiverDigitizer_DisConnect(InstancePtr, TRANSCEIVER_1);
-//  status |= XMMRegs_TransceiverDigitizer_DisConnect(InstancePtr, TRANSCEIVER_2);
-//  status |= XMMRegs_TransceiverDigitizer_DisConnect(InstancePtr, TRANSCEIVER_3);
 
   return status;
 }
 
 int XMMRegs_Status_Start(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
-
-  return status;
+  return XST_SUCCESS;
 }
 
 int XMMRegs_Status_Stop(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_Transceiver_DisConnect(InstancePtr, TRANSCEIVER_0);
-//  status |= XMMRegs_Transceiver_DisConnect(InstancePtr, TRANSCEIVER_1);
-//  status |= XMMRegs_Transceiver_DisConnect(InstancePtr, TRANSCEIVER_2);
-//  status |= XMMRegs_Transceiver_DisConnect(InstancePtr, TRANSCEIVER_3);
+  status  = XMMRegs_Transceiver_DisConnect(InstancePtr, TRANSCEIVER_0);
   status |= XMMRegs_TransceiverGtsTree_Remove(InstancePtr, TRANSCEIVER_0);
-//  status |= XMMRegs_TransceiverGtsTree_Remove(InstancePtr, TRANSCEIVER_1);
-//  status |= XMMRegs_TransceiverGtsTree_Remove(InstancePtr, TRANSCEIVER_2);
-//  status |= XMMRegs_TransceiverGtsTree_Remove(InstancePtr, TRANSCEIVER_3);
   status |= XMMRegs_TransceiverDigitizer_DisConnect(InstancePtr, TRANSCEIVER_0);
-//  status |= XMMRegs_TransceiverDigitizer_DisConnect(InstancePtr, TRANSCEIVER_1);
-//  status |= XMMRegs_TransceiverDigitizer_DisConnect(InstancePtr, TRANSCEIVER_2);
-//  status |= XMMRegs_TransceiverDigitizer_DisConnect(InstancePtr, TRANSCEIVER_3);
 
   return status;
 }
@@ -323,7 +303,7 @@ int XMMRegs_Status_Init(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_Status_Setup(InstancePtr);
+  status  = XMMRegs_Status_Setup(InstancePtr);
   status |= XMMRegs_Status_Start(InstancePtr);
 
   return status;
@@ -333,7 +313,7 @@ int XMMRegs_Status_Reset(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_Status_Stop(InstancePtr);
+  status  = XMMRegs_Status_Stop(InstancePtr);
   status |= XMMRegs_Status_Init(InstancePtr);
 
   return status;
@@ -347,8 +327,6 @@ void XMMRegs_Status_PrintAll(XMMRegs *InstancePtr)
   DBG(DBLI, "\t\t\t:\t  28 :   24 :   20 :   16 :   12 :    8 :    4 :    0\n");
   DBG(DBLI, "StatusTransceiver\t:\t"); 
   print_binary((unsigned int *)&s);
-
-  return;
 }
 
 int XMMRegs_Status_Check(XMMRegs *InstancePtr)
@@ -387,19 +365,7 @@ int XMMRegs_Status_Check(XMMRegs *InstancePtr)
     DBG(DBLE, "ERROR : the master transceiver has to be connected\n"); 
     status |= XST_FAILURE;
   }
-/*
-  for (trans = TRANSCEIVER_1; trans <= TRANSCEIVER_3; trans++)
-  {
-    dig = XMMRegs_IsTransceiverConnectedToDigitizer(InstancePtr, trans);
-    gts = XMMRegs_IsTransceiverInGtsTree(InstancePtr, trans);
 
-    if ( (dig == TRANSCEIVER_IS_CONNECTED_TO_DIGITIZER) && (gts = TRANSCEIVER_IS_IN_GTS_TREE) )
-    {
-      DBG(DBLE, "ERROR : the transceiver %d is connected at the same time to the GTS tree and to the digitizer\n", trans);
-      status |= XST_FAILURE;
-    }
-  }
-*/
   return status;
 }
     
@@ -497,7 +463,7 @@ int XMMRegs_Settings_Stop(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_FineDelayParameter_Set(InstancePtr, DELAYLINE_STEP_SIZE_DEFAULT, DELAYLINE_STEP_INTERVAL_DEFAULT);
+  status  = XMMRegs_FineDelayParameter_Set(InstancePtr, DELAYLINE_STEP_SIZE_DEFAULT, DELAYLINE_STEP_INTERVAL_DEFAULT);
   status |= XMMRegs_LmkPllDelayParameter_Set(InstancePtr, LMKPLL_STEP_SIZE_DEFAULT, LMKPLL_STEP_INTERVAL_DEFAULT);
   status |= XMMRegs_AlignMode_Set(InstancePtr, CARRIER_EXCLUDED);
 
@@ -521,7 +487,6 @@ void XMMRegs_Settings_PrintAll(XMMRegs *InstancePtr)
   DBG(DBLI, "rev_project\t\t:\t%u\n", t.rev_project);
   DBG(DBLI, "rev_specific_driver\t:\t%u\n", t.rev_specific_driver);
   DBG(DBLI, "rev_shared_driver\t:\t%u\n", t.rev_shared_driver);
-  return;
 }
 
 /************************************************************
@@ -560,7 +525,6 @@ void XMMRegs_Data_PrintAll(XMMRegs *InstancePtr)
   DBG(DBLI, "\nPrintAll of Data :--------------------------------------------------------------\n");
   DBG(DBLI, "total delay\t\t:\t%u\n", s.total_delay); 
   DBG(DBLI, "lmk_config_CLKout4\t:\t%08X\n", s.lmk_config_CLKout4); 
-  return;
 }
     
 /************************************************************
@@ -583,22 +547,17 @@ XMMRegs_Config *XMMRegs_LookupConfig(unsigned short DeviceId)
 
 int XMMRegs_Initialize(XMMRegs *InstancePtr, unsigned short DeviceId)
 {
-  int status = XST_SUCCESS;
-
   XMMRegs_Config *CfgPtr;
-
-//  XASSERT_NONVOID(InstancePtr != NULL);
 
   CfgPtr = XMMRegs_LookupConfig(DeviceId);
 
-  if (CfgPtr == (XMMRegs_Config*)NULL)
-    return XST_DEVICE_NOT_FOUND;
+  if (CfgPtr == (XMMRegs_Config*)NULL) return XST_DEVICE_NOT_FOUND;
 
   InstancePtr->BaseAddress = CfgPtr->BaseAddress;
 
   XMMRegs_ClearStats(InstancePtr);
 
-  return status;
+  return XST_SUCCESS;
 }
 
 int XMMRegs_Setup(XMMRegs *InstancePtr)
@@ -607,15 +566,13 @@ int XMMRegs_Setup(XMMRegs *InstancePtr)
 
   XMMRegs_ClearStats(InstancePtr);
 
-//  status |= XMMRegs_LmkPll_Setup(InstancePtr);
-  status |= XMMRegs_Status_Setup(InstancePtr);
+  status  = XMMRegs_Status_Setup(InstancePtr);
   status |= XMMRegs_Settings_Setup(InstancePtr);
-//  status |= XMMRegs_TdcDebug_Setup(InstancePtr);
   status |= XMMRegs_MuxInOut_Setup(InstancePtr);
   status |= XMMRegs_ClockPath_Setup(InstancePtr, XMMR_SETUP);
   status |= XMMRegs_DataPath_Setup(InstancePtr);
   status |= XMMRegs_Trigger_Setup(InstancePtr);
-  status |= XMMRegs_RocketIO_Setup(InstancePtr);
+  XMMRegs_RocketIO_Setup(InstancePtr);
   status |= XMMRegs_Data_Setup(InstancePtr);
   status |= XMMRegs_Reg_Setup(InstancePtr);
 
@@ -626,15 +583,13 @@ int XMMRegs_Start(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-//  status |= XMMRegs_LmkPll_Start(InstancePtr);
-  status |= XMMRegs_Status_Start(InstancePtr);
+  status  = XMMRegs_Status_Start(InstancePtr);
   status |= XMMRegs_Settings_Start(InstancePtr);
-//  status |= XMMRegs_TdcDebug_Start(InstancePtr);
   status |= XMMRegs_MuxInOut_Start(InstancePtr);
   status |= XMMRegs_ClockPath_Start(InstancePtr);
   status |= XMMRegs_DataPath_Start(InstancePtr);
   status |= XMMRegs_Trigger_Start(InstancePtr);
-  status |= XMMRegs_RocketIO_Start(InstancePtr);
+  XMMRegs_RocketIO_Start(InstancePtr);
   status |= XMMRegs_Data_Start(InstancePtr);
   status |= XMMRegs_Reg_Start(InstancePtr);
 
@@ -645,15 +600,13 @@ int XMMRegs_Stop(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_RocketIO_Stop(InstancePtr);
-  status |= XMMRegs_Trigger_Stop(InstancePtr);
+  XMMRegs_RocketIO_Stop(InstancePtr);
+  status  = XMMRegs_Trigger_Stop(InstancePtr);
   status |= XMMRegs_DataPath_Stop(InstancePtr);
   status |= XMMRegs_ClockPath_Stop(InstancePtr);
   status |= XMMRegs_MuxInOut_Stop(InstancePtr);
-//  status |= XMMRegs_TdcDebug_Stop(InstancePtr);
   status |= XMMRegs_Settings_Stop(InstancePtr);
   status |= XMMRegs_Status_Stop(InstancePtr);
-//  status |= XMMRegs_LmkPll_Stop(InstancePtr);
   status |= XMMRegs_Data_Stop(InstancePtr);
   status |= XMMRegs_Reg_Stop(InstancePtr);
 
@@ -666,7 +619,7 @@ int XMMRegs_Reset(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_Stop(InstancePtr);
+  status  = XMMRegs_Stop(InstancePtr);
   status |= XMMRegs_Init(InstancePtr);
 
   return status;
@@ -676,7 +629,7 @@ int XMMRegs_Init(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_Setup(InstancePtr);
+  status  = XMMRegs_Setup(InstancePtr);
   status |= XMMRegs_Start(InstancePtr);
   status |= XMMRegs_Status_Check(InstancePtr);
 
@@ -691,27 +644,23 @@ int  XMMRegs_Update(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_Status_Check(InstancePtr);
+  status  = XMMRegs_Status_Check(InstancePtr);
 
-//  status |= XMMRegs_LmkPll_Setup(InstancePtr);
   status |= XMMRegs_Settings_Setup(InstancePtr);
-//  status |= XMMRegs_TdcDebug_Setup(InstancePtr);
   status |= XMMRegs_MuxInOut_Setup(InstancePtr);
   status |= XMMRegs_ClockPath_Setup(InstancePtr, XMMR_UPDATE);
   status |= XMMRegs_DataPath_Setup(InstancePtr);
   status |= XMMRegs_Trigger_Setup(InstancePtr);
-  status |= XMMRegs_RocketIO_Setup(InstancePtr); /* the handling of the unconnected transceivers is done here */
+  XMMRegs_RocketIO_Setup(InstancePtr);
   status |= XMMRegs_Data_Setup(InstancePtr); 
   status |= XMMRegs_Reg_Setup(InstancePtr);
 
-//  status |= XMMRegs_LmkPll_Start(InstancePtr);
   status |= XMMRegs_Settings_Start(InstancePtr);
-//  status |= XMMRegs_TdcDebug_Start(InstancePtr);
   status |= XMMRegs_MuxInOut_Start(InstancePtr);
   status |= XMMRegs_ClockPath_Start(InstancePtr);
   status |= XMMRegs_DataPath_Start(InstancePtr);
   status |= XMMRegs_Trigger_Start(InstancePtr);
-  status |= XMMRegs_RocketIO_Start(InstancePtr);
+  XMMRegs_RocketIO_Start(InstancePtr);
   status |= XMMRegs_Data_Start(InstancePtr); 
   status |= XMMRegs_Reg_Start(InstancePtr);
 

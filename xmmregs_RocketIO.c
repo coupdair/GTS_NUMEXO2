@@ -124,8 +124,6 @@ static int status_gt_tx(XMMRegs_gt_status *gt_status)
 static void reset_gt(XMMRegs_gt_ctrl *gt)
 {
   gt->gtx_reset = 1;
-
-  return;
 }
 
 static void init_drp_addr(XMMRegs_drp_addr_ctrl *drp_addr)
@@ -171,31 +169,21 @@ static void set_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp,
 
 ************************************************************/
 
-int XMMRegs_RocketIO_RefClkRX_Diagnose (XMMRegs *InstancePtr, int transceiver)
-{
-  return 1; // NUMEXO2
-}
-
 /* looks if there is a comma alignment */
-int XMMRegs_RocketIO_CommaAlign_Diagnose (XMMRegs *InstancePtr, int transceiver)
+int XMMRegs_RocketIO_CommaAlign_Diagnose(XMMRegs *InstancePtr)
 {
   XMMRegs_gt_status *s;
   void *ba;
 
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range error for transceiver in function XMMRegs_RocketIO_CommaAlign_Diagnose\n");
-    return -1;
-  }
-
   ba = InstancePtr->BaseAddress;
-  s = (XMMRegs_gt_status *)(ba + XMMR_GT_STATUS_OFFSET + 0x4*transceiver);
+  s = (XMMRegs_gt_status *)(ba + XMMR_GT_STATUS_OFFSET);
 
-  if ( XMMRegs_RocketIO_RxSystem_Status(InstancePtr, transceiver) == READY )
+  if ( XMMRegs_RocketIO_RxSystem_Status(InstancePtr, 0) == READY )
   {
 // F. Saillant le 30 novembre 2012 : on autorise aussi COMMA (0x00BC) car c'est ce que les mezzanines GTS v3 envoient ...
 
 //    if ((s->rxcommadet == 1) && (s->rxchariscomma == 1) && ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, transceiver) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, transceiver) == COMMA)))
-    if ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, transceiver) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, transceiver) == COMMA))
+    if ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, 0) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, 0) == COMMA))
     {
       return COMMA_DETECTED;
     }
@@ -221,12 +209,7 @@ unsigned int XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr, int transceiv
   return val;
 }
 
-int XMMRegs_RocketIO_RefClkTX_Diagnose (XMMRegs *InstancePtr, int tile)
-{
-  return 1; // NUMEXO2
-}
-
-int XMMRegs_RocketIO_RefClkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char refclk)
+void XMMRegs_RocketIO_RefClk_Set(XMMRegs *InstancePtr)
 {
   XMMRegs_drp_status *drp_status;
   XMMRegs_drp_addr_ctrl *drp_addr;
@@ -239,25 +222,6 @@ int XMMRegs_RocketIO_RefClkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char 
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
 
   set_word_drp(drp_addr, drp, drp_status, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
-
-  return XST_SUCCESS;
-}
-
-int XMMRegs_RocketIO_RefClkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigned char refclk)
-{
-  XMMRegs_drp_status *drp_status;
-  XMMRegs_drp_addr_ctrl *drp_addr;
-  XMMRegs_drp_ctrl *drp;  
-  void *ba;
-
-  ba = InstancePtr->BaseAddress;
-  drp_status = (XMMRegs_drp_status *)(ba + XMMR_GT_DRP_STATUS_OFFSET);
-  drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
-  drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
-
-  set_word_drp(drp_addr, drp, drp_status, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
-
-  return XST_SUCCESS;
 }
 
 /************************************************************
@@ -266,202 +230,62 @@ int XMMRegs_RocketIO_RefClkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigne
 
 ************************************************************/
 
-int XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr, int transceiver)
+void XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr, int transceiver)
 {
-  int status = XST_SUCCESS; 
-  XMMRegs_gt_ctrl *gt0;
-  unsigned int i;  
+  XMMRegs_gt_ctrl *gt;
 
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress +  XMMR_GT_CTRL_OFFSET);
+  gt = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress +  XMMR_GT_CTRL_OFFSET);
 
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_TxSystem_Stop\n");
-    status = XST_FAILURE;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    reset_gt_tx( gt0 + i );
-  }
-
-  return status;
+  reset_gt(gt);
 }
 
 int XMMRegs_RocketIO_RxSystem_Stop(XMMRegs *InstancePtr, int transceiver)
 {
-  int status = XST_SUCCESS; 
-  XMMRegs_gt_ctrl *gt0;
-  unsigned int i;  
+  XMMRegs_gt_ctrl *gt;
 
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress +  XMMR_GT_CTRL_OFFSET);
+  gt = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress +  XMMR_GT_CTRL_OFFSET);
 
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_RxSystem_Stop\n");
-    status = XST_FAILURE;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    reset_gt_rx( gt0 + i );
-  }
-
-  return status;
+  reset_gt(gt);
 }
 
-int XMMRegs_RocketIO_TxSystem_Init(XMMRegs *InstancePtr, int transceiver)
+void XMMRegs_RocketIO_TxSystem_Init(XMMRegs *InstancePtr, int transceiver)
 {
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
-  unsigned int i;
+  XMMRegs_gt_ctrl *gt;
 
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
+  gt = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
 
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_TxSystem_Init\n");
-    status = XST_FAILURE;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    init_gt_tx( gt0 + i );
-  }
-
-  return status;
+  init_gt(gt);
 }
 
-int XMMRegs_RocketIO_RxSystem_Init(XMMRegs *InstancePtr, int transceiver)
+void XMMRegs_RocketIO_RxSystem_Init(XMMRegs *InstancePtr, int transceiver)
 {
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
-  unsigned int i;
+  XMMRegs_gt_ctrl *gt;
 
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
+  gt = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
 
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_RxSystem_Init\n");
-    status = XST_FAILURE;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    init_gt_rx( gt0 + i );
-  }
-
-  return status;
+  init_gt(gt);
 }
 
-int XMMRegs_RocketIO_TxSystem_Reset(XMMRegs *InstancePtr, int transceiver)
+void XMMRegs_RocketIO_TxSystem_Reset(XMMRegs *InstancePtr, int transceiver)
 {
-  int status = XST_SUCCESS;
-
-  status |= XMMRegs_RocketIO_TxSystem_Stop(InstancePtr, transceiver);
-  status |= XMMRegs_RocketIO_TxSystem_Init(InstancePtr, transceiver);
-
-  return status;
+  XMMRegs_RocketIO_TxSystem_Stop(InstancePtr, transceiver);
+  XMMRegs_RocketIO_TxSystem_Init(InstancePtr, transceiver);
 }
 
-int XMMRegs_RocketIO_RxSystem_Reset(XMMRegs *InstancePtr, int transceiver)
+void XMMRegs_RocketIO_RxSystem_Reset(XMMRegs *InstancePtr, int transceiver)
 {
-  int status = XST_SUCCESS;
-
-  status |= XMMRegs_RocketIO_RxSystem_Stop(InstancePtr, transceiver);
-  status |= XMMRegs_RocketIO_RxSystem_Init(InstancePtr, transceiver);
-
-  return status;
-}
-
-int XMMRegs_RocketIO_RxPcs_Init(XMMRegs *InstancePtr, int transceiver)
-{
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
-  unsigned int i;
-
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_RxPcs_Init\n");
-    status = XST_FAILURE;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    init_gt_rx_pcs( gt0 + i );
-  }
-
-  return status;
-}
-
-int XMMRegs_RocketIO_TxPcs_Init(XMMRegs *InstancePtr, int transceiver)
-{
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
-  unsigned int i;
-
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_TxPcs_Init\n");
-    status = XST_FAILURE;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    init_gt_tx_pcs( gt0 + i );
-  }
-
-  return status;
-}
-
-int XMMRegs_RocketIO_RxPcs_Reset(XMMRegs *InstancePtr, int transceiver)
-{
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
-  unsigned int i;
-
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_RxPcs_Reset\n");
-    status = XST_FAILURE;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    reset_gt_rx_pcs( gt0 + i );
-  }
-
-  return status;
-}
-
-int XMMRegs_RocketIO_TxPcs_Reset(XMMRegs *InstancePtr, int transceiver)
-{
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
-  unsigned int i;
-
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_TxPcs_Reset\n");
-    status = XST_FAILURE;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    reset_gt_tx_pcs( gt0 + i );
-  }
-
-  return status;
+  XMMRegs_RocketIO_RxSystem_Stop(InstancePtr, transceiver);
+  XMMRegs_RocketIO_RxSystem_Init(InstancePtr, transceiver);
 }
 
 int XMMRegs_RocketIO_TxSystem_Status(XMMRegs *InstancePtr, int transceiver)
 {
   int system_status;
   XMMRegs_gt_status *gt_status;
-  unsigned int i;
 
   gt_status = (XMMRegs_gt_status *)(InstancePtr->BaseAddress + XMMR_GT_STATUS_OFFSET);
 
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_TxSystem_Status\n");
-    system_status = C_NULL;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    system_status = status_gt_tx( gt_status + i );
-  }
+  system_status = status_gt_tx( gt_status );
 
   return system_status;
 }
@@ -470,28 +294,20 @@ int XMMRegs_RocketIO_RxSystem_Status(XMMRegs *InstancePtr, int transceiver)
 {
   int system_status;
   XMMRegs_gt_status *gt_status;
-  unsigned int i;
 
   gt_status = (XMMRegs_gt_status *)(InstancePtr->BaseAddress + XMMR_GT_STATUS_OFFSET);
 
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_RxSystem_Status\n");
-    system_status = C_NULL;
-  }
-  else {
-    i = transceiver - TRANSCEIVER_0;
-    system_status = status_gt_rx( gt_status + i );
-  }
+  system_status = status_gt_rx( gt_status );
 
   return system_status;
 }
 
 int XMMRegs_RocketIO_MgtData_Set(XMMRegs *InstancePtr, int transceiver, unsigned int msb, unsigned int lsb, unsigned char comma_msb, unsigned char comma_lsb)
 {
-  XMMRegs_txmgtdata_ctrl *reg0, *reg;
+  XMMRegs_txmgtdata_ctrl *reg;
   void *ba = InstancePtr->BaseAddress;
 
-  reg0 = (XMMRegs_txmgtdata_ctrl *) (ba +  XMMR_MGT_REGDATA_CTRL_OFFSET);
+  reg = (XMMRegs_txmgtdata_ctrl *)(ba +  XMMR_MGT_REGDATA_CTRL_OFFSET);
 
   if ( ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) ||
        ( (msb > 0xFF) || (lsb > 0xFF) ) ||
@@ -501,12 +317,28 @@ int XMMRegs_RocketIO_MgtData_Set(XMMRegs *InstancePtr, int transceiver, unsigned
     return XST_FAILURE;
   }
 
-  reg = reg0 + transceiver;
   set_regdata(reg, msb, lsb, comma_msb, comma_lsb);
 
   return XST_SUCCESS; 
 }
 
+void XMMRegs_RocketIO_TriggerRstCarrier_Set(XMMRegs *InstancePtr)
+{
+  XMMRegs_gt_ctrl *gt;
+
+  gt = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
+
+  gt->trigger_rst_carrier = 1; 
+}
+
+void XMMRegs_RocketIO_TriggerRstCarrier_Unset(XMMRegs *InstancePtr)
+{
+  XMMRegs_gt_ctrl *gt;
+
+  gt = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
+
+  gt->trigger_rst_carrier = 0; 
+}
 
 /************************************************************
 
@@ -514,190 +346,78 @@ int XMMRegs_RocketIO_MgtData_Set(XMMRegs *InstancePtr, int transceiver, unsigned
 
 ************************************************************/
 
-int XMMRegs_RocketIO_Setup(XMMRegs *InstancePtr)
+void XMMRegs_RocketIO_Setup(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
+  XMMRegs_gt_ctrl *gt;
   XMMRegs_drp_addr_ctrl *drp_addr;
   XMMRegs_drp_ctrl *drp;
-  XMMRegs_txmgtdata_ctrl *reg0;
+  XMMRegs_txmgtdata_ctrl *reg;
   void *ba;
 
   ba = InstancePtr->BaseAddress;
-  gt0 = (XMMRegs_gt_ctrl *)(ba +  XMMR_GT_CTRL_OFFSET);
+  gt = (XMMRegs_gt_ctrl *)(ba +  XMMR_GT_CTRL_OFFSET);
   drp_addr = (XMMRegs_drp_addr_ctrl *)(ba +  XMMR_GT_DRP_ADDR_CTRL_OFFSET); 
   drp = (XMMRegs_drp_ctrl *)(ba +  XMMR_GT_DRP_CTRL_OFFSET);
-  reg0 = (XMMRegs_txmgtdata_ctrl *) (ba +  XMMR_MGT_REGDATA_CTRL_OFFSET);
+  reg = (XMMRegs_txmgtdata_ctrl *)(ba +  XMMR_MGT_REGDATA_CTRL_OFFSET);
 
-  set_regdata(reg0, TEST_POLARITY, COMMA, COMMA_OFF, COMMA_ON);
+  set_regdata(reg, TEST_POLARITY, COMMA, COMMA_OFF, COMMA_ON);
 
   init_drp_addr(drp_addr);
 
   init_drp(drp);
 
-  status |= XMMRegs_RocketIO_RefClkTX_Set(InstancePtr, TILE_0, REFCLK2);
+  XMMRegs_RocketIO_RefClk_Set(InstancePtr);
 
-//  status |= XMMRegs_RocketIO_RefClkRX_Set(InstancePtr, TRANSCEIVER_0, REFCLK2); // inutile car redondant avec XMMRegs_RocketIO_RefClkTX_Set
-
-  if ( XMMRegs_IsTransceiverConnected(InstancePtr, TRANSCEIVER_0) == TRANSCEIVER_IS_CONNECTED)
-  {
-    if ( XMMRegs_IsTransceiverInGtsTree(InstancePtr, TRANSCEIVER_0) == TRANSCEIVER_IS_IN_GTS_TREE )
-    {
-      setup_gt(gt0);
-
-//      XMMRegs_RocketIO_SerialLoopback_Set(InstancePtr, TRANSCEIVER_0, SERIAL_LOOPBACK_OFF);
-    }
-    else if ( XMMRegs_IsTransceiverConnectedToDigitizer(InstancePtr, TRANSCEIVER_0) == TRANSCEIVER_IS_CONNECTED_TO_DIGITIZER)
-    { /* the RocketIO is bypassed */
-      /* puts the transceiver in the unused mode */
-//      XMMRegs_RocketIO_UnusedMode_Set(InstancePtr, TRANSCEIVER_0);
-    }
-    else
-    { /* it is connected neither to the GTS tree nor to the digitizer */
-//      XMMRegs_RocketIO_UnusedMode_Set(InstancePtr, TRANSCEIVER_0);
-    }
-  }
-  else
-  { /* the transceiver is not connected */
-    /* puts the transceiver in the unused mode */
-//    XMMRegs_RocketIO_UnusedMode_Set(InstancePtr, TRANSCEIVER_0);
-  }
-
-  return status;
+  setup_gt(gt);
 }
 
-int XMMRegs_RocketIO_TriggerRstCarrier_Set(XMMRegs *InstancePtr, int transceiver)
+void XMMRegs_RocketIO_Stop(XMMRegs *InstancePtr)
 {
-  XMMRegs_gt_ctrl *gt0;
-
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-  gt0->trigger_rst_carrier = 1; 
-
-  return XST_SUCCESS;
-}
-
-int XMMRegs_RocketIO_TriggerRstCarrier_Unset(XMMRegs *InstancePtr, int transceiver)
-{
-  XMMRegs_gt_ctrl *gt0;
-
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-  gt0->trigger_rst_carrier = 0; 
-
-  return XST_SUCCESS;
-}
-/*
-int XMMRegs_RocketIO_TxDataSel_Set(XMMRegs *InstancePtr, int transceiver)
-{
-  XMMRegs_gt_ctrl *gt0;
-
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-//  gt0->choice_refclk = 1; 
-
-  return XST_SUCCESS;
-}
-*/
-/*
-int XMMRegs_RocketIO_TxDataSel_Unset(XMMRegs *InstancePtr, int transceiver)
-{
-  XMMRegs_gt_ctrl *gt0;
-
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-//  gt0->choice_refclk = 0; 
-
-  return XST_SUCCESS;
-}
-*/
-/* the RocketIO is set in the unused mode by software
-This code has to be improved.
-Ideally, it should shut down the transceiver */
-/*
-int XMMRegs_RocketIO_UnusedMode_Set(XMMRegs *InstancePtr, int transceiver)
-{
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
-
-  gt0 = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-  stop_gt(gt0 + transceiver); 
-
-  status |= XMMRegs_RocketIO_SerialLoopback_Set(InstancePtr, transceiver, SERIAL_LOOPBACK_ON);
-
-  return XST_SUCCESS;
-}
-*/
-int XMMRegs_RocketIO_Stop(XMMRegs *InstancePtr)
-{
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
+  XMMRegs_gt_ctrl *gt;
   XMMRegs_drp_addr_ctrl *drp_addr;
   XMMRegs_drp_ctrl *drp;
-  XMMRegs_txmgtdata_ctrl *reg0;
+  XMMRegs_txmgtdata_ctrl *reg;
   void *ba;
 
   ba = InstancePtr->BaseAddress;
-  gt0 = (XMMRegs_gt_ctrl *)(ba +  XMMR_GT_CTRL_OFFSET);
+  gt = (XMMRegs_gt_ctrl *)(ba +  XMMR_GT_CTRL_OFFSET);
   drp_addr = (XMMRegs_drp_addr_ctrl *)(ba +  XMMR_GT_DRP_ADDR_CTRL_OFFSET); 
   drp = (XMMRegs_drp_ctrl *)(ba +  XMMR_GT_DRP_CTRL_OFFSET);
-  reg0 = (XMMRegs_txmgtdata_ctrl *) (ba +  XMMR_MGT_REGDATA_CTRL_OFFSET);
+  reg = (XMMRegs_txmgtdata_ctrl *) (ba +  XMMR_MGT_REGDATA_CTRL_OFFSET);
 
-  set_regdata(reg0, TEST_POLARITY, COMMA, COMMA_OFF, COMMA_ON);
+  set_regdata(reg, TEST_POLARITY, COMMA, COMMA_OFF, COMMA_ON);
 
   init_drp_addr(drp_addr);
 
   stop_drp(drp);
 
-  stop_gt(gt0);
+  stop_gt(gt);
 
-  status |= XMMRegs_RocketIO_RefClkTX_Set(InstancePtr, TILE_0, REFCLK2);
-
-//  status |= XMMRegs_RocketIO_RefClkRX_Set(InstancePtr, TRANSCEIVER_0, REFCLK2); // inutile car redondant avec XMMRegs_RocketIO_RefClkTX_Set
-
-//  status |= XMMRegs_RocketIO_SerialLoopback_Set(InstancePtr, TRANSCEIVER_0, SERIAL_LOOPBACK_OFF);
-
-  return status;
+  XMMRegs_RocketIO_RefClk_Set(InstancePtr);
 }
 
-int XMMRegs_RocketIO_Start(XMMRegs *InstancePtr)
+void XMMRegs_RocketIO_Start(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
-  XMMRegs_gt_ctrl *gt0;
+  XMMRegs_gt_ctrl *gt;
   void *ba;
 
   ba = InstancePtr->BaseAddress;
 
-  gt0 = (XMMRegs_gt_ctrl *)(ba +  XMMR_GT_CTRL_OFFSET);
+  gt = (XMMRegs_gt_ctrl *)(ba +  XMMR_GT_CTRL_OFFSET);
 
-  init_gt_tx(gt0);
-
-  init_gt_rx(gt0);
-
-  return status;
+  init_gt(gt);
 }
 
-int XMMRegs_RocketIO_Init(XMMRegs *InstancePtr)
+void XMMRegs_RocketIO_Init(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
-
-//  DBG(DBLD, "RocketIO_Init --->\n");
-  status  = XMMRegs_RocketIO_Setup(InstancePtr);
-  status |= XMMRegs_RocketIO_Start(InstancePtr);
-//  DBG(DBLD, "---> RocketIO_Init |\n");
-
-  return status;
+  XMMRegs_RocketIO_Setup(InstancePtr);
+  XMMRegs_RocketIO_Start(InstancePtr);
 }
 
-int XMMRegs_RocketIO_Reset(XMMRegs *InstancePtr)
+void XMMRegs_RocketIO_Reset(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
-
-  status  = XMMRegs_RocketIO_Stop(InstancePtr);
-  status |= XMMRegs_RocketIO_Init(InstancePtr);
-
-  return status;
+  XMMRegs_RocketIO_Stop(InstancePtr);
+  XMMRegs_RocketIO_Init(InstancePtr);
 }
 
 void XMMRegs_RocketIO_PrintAll(XMMRegs *InstancePtr)
@@ -719,8 +439,6 @@ void XMMRegs_RocketIO_PrintAll(XMMRegs *InstancePtr)
   XMMRegs_PrintBinary(InstancePtr, XMMR_GT_DRP_STATUS_OFFSET);
   DBG(DBLI, "gt_txdata_status\t:\t");
   XMMRegs_PrintHex(InstancePtr, XMMR_GT_TXDATA_STATUS_OFFSET );
-
-  return;
 }
 
 #undef DBG

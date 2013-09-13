@@ -19,13 +19,11 @@ int treeSetup(int step)
   {
     case 1 :
 
-    XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver, 0);
+    XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver);
 
     status |= transCon(TRANSCEIVER_IS_CONNECTED, TRANSCEIVER_IS_CONNECTED, TRANSCEIVER_IS_CONNECTED, TRANSCEIVER_IS_CONNECTED);
     status |= transGtsTree(TRANSCEIVER_IS_IN_GTS_TREE, TRANSCEIVER_IS_IN_GTS_TREE, TRANSCEIVER_IS_IN_GTS_TREE, TRANSCEIVER_IS_IN_GTS_TREE);
     status |= transDigitizer(TRANSCEIVER_IS_NOT_CONNECTED_TO_DIGITIZER, TRANSCEIVER_IS_NOT_CONNECTED_TO_DIGITIZER, TRANSCEIVER_IS_NOT_CONNECTED_TO_DIGITIZER, TRANSCEIVER_IS_NOT_CONNECTED_TO_DIGITIZER);
-
-//    status |= XMMRegs_Update(&XMMRegsDriver); // commented because GTS_LEAF on NUMEXO2 needs trigger_rst_carrier bit at zero
 
     /* sends comma for alignment */
     status |= XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, 0, ZERO_VECTOR, COMMA, COMMA_OFF, COMMA_ON);
@@ -44,7 +42,7 @@ int treeSetup(int step)
     {
       iscomma = COMMA_DETECTED;
 
-      if ( XMMRegs_RocketIO_CommaAlign_Diagnose(&XMMRegsDriver, 0) != COMMA_DETECTED ) iscomma = COMMA_NOT_DETECTED;
+      if ( XMMRegs_RocketIO_CommaAlign_Diagnose(&XMMRegsDriver) != COMMA_DETECTED ) iscomma = COMMA_NOT_DETECTED;
     }
 
     DBG(DBLD, ">| done\n");
@@ -53,23 +51,12 @@ int treeSetup(int step)
 
     case 3 :
 
-    XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver, 0);
+    XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver);
 
-//    if ( (isPllLocked() == PLL_NOT_LOCKED) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-    if (rxSystemStatus(MASTER_TRANSCEIVER) != READY)
-    {
-      DBG(DBLD, "it considers itself as a ROOT (external PLL is NOT locked or RX master transceiver is NOT ready)\n");
-      status |= muxExtSet(LEAVE, USE_MGT, USE_MGT);
-      status |= allRegMuxPathSet();
-      status |= clkSet(ROOT, LOCAL_CLK, USE_MGT, USE_MGT, DONT_FORCE_SET, NON_BLOCKING); // sets the clock as if it was a ROOT
-    }
-    else
-    {
-      DBG(DBLD, "it considers itself as a LEAF or a FANIN-FANOUT (external PLL is locked and RX master transceiver is ready)\n");
-      status |= muxExtSet(LEAVE, USE_MGT, USE_MGT);
-      status |= allRegMuxPathSet();
-      status |= clkSet(FANIN_FANOUT, RECOVERED_CLK, USE_MGT, USE_MGT, FORCE_SET, NON_BLOCKING); // sets the clock as if it was a FANIN-FANOUT
-    }
+    DBG(DBLD, "it considers itself as a LEAF or a FANIN-FANOUT\n");
+    status |= muxExtSet(LEAVE, USE_MGT, USE_MGT);
+    status |= allRegMuxPathSet();
+    status |= clkSet(FANIN_FANOUT, RECOVERED_CLK, USE_MGT, USE_MGT, FORCE_SET, NON_BLOCKING); // sets the clock as if it was a FANIN-FANOUT
 
     /* sends COMMA again, indeed maybe the TX are not ready yet and have to align */
     status |= XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, 0, ZERO_VECTOR, COMMA, COMMA_OFF, COMMA_ON);
@@ -85,7 +72,7 @@ int treeSetup(int step)
     {
       iscomma = COMMA_DETECTED;
 
-      if ( XMMRegs_RocketIO_CommaAlign_Diagnose (&XMMRegsDriver, 0) != COMMA_DETECTED ) iscomma = COMMA_NOT_DETECTED;
+      if ( XMMRegs_RocketIO_CommaAlign_Diagnose (&XMMRegsDriver) != COMMA_DETECTED ) iscomma = COMMA_NOT_DETECTED;
     }
 
     DBG(DBLD, ">| done\n");

@@ -234,29 +234,21 @@ extern void XMMRegs_RocketIO_Start(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_Stop(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_Init(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_Reset(XMMRegs *InstancePtr);
-extern void XMMRegs_RocketIO_TriggerRstCarrier_Set(XMMRegs *InstancePtr, int transceiver);
-extern void XMMRegs_RocketIO_TriggerRstCarrier_Unset(XMMRegs *InstancePtr, int transceiver);
+extern void XMMRegs_RocketIO_TriggerRstCarrier_Set(XMMRegs *InstancePtr);
+extern void XMMRegs_RocketIO_TriggerRstCarrier_Unset(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_PrintAll(XMMRegs *InstancePtr);
-extern int  XMMRegs_RocketIO_AllDisconnected_Stop(XMMRegs *InstancePtr);
 extern int  XMMRegs_RocketIO_MgtData_Set(XMMRegs *InstancePtr, int transceiver, unsigned int msb, unsigned int lsb, unsigned char comma_msb, unsigned char comma_lsb);
-extern int  XMMRegs_RocketIO_RefClkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigned char refclk);
-extern int  XMMRegs_RocketIO_RefClkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char refclk);
-extern int  XMMRegs_RocketIO_RefClkRX_Diagnose(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_RefClkTX_Diagnose(XMMRegs *InstancePtr, int tile);
-extern int  XMMRegs_RocketIO_CommaAlign_Diagnose(XMMRegs *InstancePtr, int transceiver);
+extern void XMMRegs_RocketIO_RefClk_Set(XMMRegs *InstancePtr);
+extern int  XMMRegs_RocketIO_CommaAlign_Diagnose(XMMRegs *InstancePtr);
 extern unsigned int  XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_TxSystem_Reset(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_RxSystem_Reset(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr, int transceiver);
+extern void XMMRegs_RocketIO_TxSystem_Reset(XMMRegs *InstancePtr, int transceiver);
+extern void XMMRegs_RocketIO_RxSystem_Reset(XMMRegs *InstancePtr, int transceiver);
+extern void XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr, int transceiver);
 extern int  XMMRegs_RocketIO_RxSystem_Stop(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_TxSystem_Init(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_RxSystem_Init(XMMRegs *InstancePtr, int transceiver);
+extern void XMMRegs_RocketIO_TxSystem_Init(XMMRegs *InstancePtr, int transceiver);
+extern void XMMRegs_RocketIO_RxSystem_Init(XMMRegs *InstancePtr, int transceiver);
 extern int  XMMRegs_RocketIO_TxSystem_Status(XMMRegs *InstancePtr, int transceiver);
 extern int  XMMRegs_RocketIO_RxSystem_Status(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_TxPcs_Init(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_RxPcs_Init(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_TxPcs_Reset(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_RxPcs_Reset(XMMRegs *InstancePtr, int transceiver);
   
 /***********************************************/
 /*  DataPath APIs                              */
