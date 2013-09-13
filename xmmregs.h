@@ -247,8 +247,8 @@ extern void XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_RxSystem_Stop(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_TxSystem_Init(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_RxSystem_Init(XMMRegs *InstancePtr);
-extern int  XMMRegs_RocketIO_TxSystem_Status(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_RxSystem_Status(XMMRegs *InstancePtr, int transceiver);
+extern int  XMMRegs_RocketIO_TxSystem_Status(XMMRegs *InstancePtr);
+extern int  XMMRegs_RocketIO_RxSystem_Status(XMMRegs *InstancePtr);
   
 /***********************************************/
 /*  DataPath APIs                              */

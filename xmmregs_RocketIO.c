@@ -178,7 +178,7 @@ int XMMRegs_RocketIO_CommaAlign_Diagnose(XMMRegs *InstancePtr)
   ba = InstancePtr->BaseAddress;
   s = (XMMRegs_gt_status *)(ba + XMMR_GT_STATUS_OFFSET);
 
-  if ( XMMRegs_RocketIO_RxSystem_Status(InstancePtr, 0) == READY )
+  if ( XMMRegs_RocketIO_RxSystem_Status(InstancePtr) == READY )
   {
 // F. Saillant le 30 novembre 2012 : on autorise aussi COMMA (0x00BC) car c'est ce que les mezzanines GTS v3 envoient ...
 
@@ -251,7 +251,7 @@ void XMMRegs_RocketIO_Gtx_Reset(XMMRegs *InstancePtr)
   XMMRegs_RocketIO_Gtx_Init(InstancePtr);
 }
 
-int XMMRegs_RocketIO_TxSystem_Status(XMMRegs *InstancePtr, int transceiver)
+int XMMRegs_RocketIO_TxSystem_Status(XMMRegs *InstancePtr)
 {
   int system_status;
   XMMRegs_gt_status *gt_status;
@@ -263,7 +263,7 @@ int XMMRegs_RocketIO_TxSystem_Status(XMMRegs *InstancePtr, int transceiver)
   return system_status;
 }
 
-int XMMRegs_RocketIO_RxSystem_Status(XMMRegs *InstancePtr, int transceiver)
+int XMMRegs_RocketIO_RxSystem_Status(XMMRegs *InstancePtr)
 {
   int system_status;
   XMMRegs_gt_status *gt_status;
