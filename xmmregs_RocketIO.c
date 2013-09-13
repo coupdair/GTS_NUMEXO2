@@ -218,7 +218,7 @@ void XMMRegs_RocketIO_RefClk_Set(XMMRegs *InstancePtr)
   drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
 
-  set_word_drp(drp_addr, drp, drp_status, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
+  set_word_drp(drp_addr, drp, drp_status, 3, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
 }
 
 /************************************************************
