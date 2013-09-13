@@ -169,26 +169,6 @@ static unsigned short change_bit(unsigned short word_value, unsigned char bit_po
   return new_word_value;
 }
 
-static unsigned short read_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, XMMRegs_drp_status *drp_status, unsigned char DADDR)
-{
-  unsigned short val;
-
-  drp_addr->drp_addr = DADDR;
-  drp->drp_en = 0;
-  drp->drp_we = 0;
-  drp->drp_en = 1;
-  drp->drp_en = 0;
-
-  while (drp_status->drp_bsy == 1) ;
-
-  val = (unsigned short)(drp_status->drp_do);
-
-  DBG(DBLD, "read value at drp address : 0x%X : ", DADDR);
-  print_u16_binary(&val);
-
-  return val;
-}
-
 static void set_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp, XMMRegs_drp_status *drp_status, unsigned char DADDR, unsigned short DI)
 {
   drp_addr->drp_addr = DADDR;
