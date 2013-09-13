@@ -568,7 +568,7 @@ int XMMRegs_Setup(XMMRegs *InstancePtr)
 
   status  = XMMRegs_Status_Setup(InstancePtr);
   status |= XMMRegs_Settings_Setup(InstancePtr);
-  status |= XMMRegs_MuxInOut_Setup(InstancePtr);
+  XMMRegs_MuxInOut_Setup(InstancePtr);
   status |= XMMRegs_ClockPath_Setup(InstancePtr, XMMR_SETUP);
   status |= XMMRegs_DataPath_Setup(InstancePtr);
   status |= XMMRegs_Trigger_Setup(InstancePtr);
@@ -585,7 +585,7 @@ int XMMRegs_Start(XMMRegs *InstancePtr)
 
   status  = XMMRegs_Status_Start(InstancePtr);
   status |= XMMRegs_Settings_Start(InstancePtr);
-  status |= XMMRegs_MuxInOut_Start(InstancePtr);
+  XMMRegs_MuxInOut_Start(InstancePtr);
   status |= XMMRegs_ClockPath_Start(InstancePtr);
   status |= XMMRegs_DataPath_Start(InstancePtr);
   status |= XMMRegs_Trigger_Start(InstancePtr);
@@ -604,7 +604,7 @@ int XMMRegs_Stop(XMMRegs *InstancePtr)
   status  = XMMRegs_Trigger_Stop(InstancePtr);
   status |= XMMRegs_DataPath_Stop(InstancePtr);
   status |= XMMRegs_ClockPath_Stop(InstancePtr);
-  status |= XMMRegs_MuxInOut_Stop(InstancePtr);
+  XMMRegs_MuxInOut_Stop(InstancePtr);
   status |= XMMRegs_Settings_Stop(InstancePtr);
   status |= XMMRegs_Status_Stop(InstancePtr);
   status |= XMMRegs_Data_Stop(InstancePtr);
@@ -647,7 +647,7 @@ int  XMMRegs_Update(XMMRegs *InstancePtr)
   status  = XMMRegs_Status_Check(InstancePtr);
 
   status |= XMMRegs_Settings_Setup(InstancePtr);
-  status |= XMMRegs_MuxInOut_Setup(InstancePtr);
+  XMMRegs_MuxInOut_Setup(InstancePtr);
   status |= XMMRegs_ClockPath_Setup(InstancePtr, XMMR_UPDATE);
   status |= XMMRegs_DataPath_Setup(InstancePtr);
   status |= XMMRegs_Trigger_Setup(InstancePtr);
@@ -656,7 +656,7 @@ int  XMMRegs_Update(XMMRegs *InstancePtr)
   status |= XMMRegs_Reg_Setup(InstancePtr);
 
   status |= XMMRegs_Settings_Start(InstancePtr);
-  status |= XMMRegs_MuxInOut_Start(InstancePtr);
+  XMMRegs_MuxInOut_Start(InstancePtr);
   status |= XMMRegs_ClockPath_Start(InstancePtr);
   status |= XMMRegs_DataPath_Start(InstancePtr);
   status |= XMMRegs_Trigger_Start(InstancePtr);

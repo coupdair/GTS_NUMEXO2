@@ -29,8 +29,8 @@ int xtdc_CommunicationSet(XMMRegs *InstancePtr, int debug_mode, unsigned int del
   DBG(DBLD, "communication setting...");
 
   /* enables tdc */
-  status |= XMMRegs_MuxInOut_Tdc_Disable(InstancePtr);
-  status |= XMMRegs_MuxInOut_Tdc_Enable(InstancePtr);
+  XMMRegs_MuxInOut_Tdc_Disable(InstancePtr);
+  XMMRegs_MuxInOut_Tdc_Enable(InstancePtr);
 
   /* if debug_mode == NO_TDC_DEBUG, TdcDebug is bypassed */
   switch (debug_mode) {

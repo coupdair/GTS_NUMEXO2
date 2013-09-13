@@ -13,23 +13,13 @@
 
 ************************************************************/
 
-static void ctrl_to_software_for_external_mux(XMMRegs_mgt_sel_ctrl *m)
-{
-  m->ctrl_enable = 1;
-}
-
-static void ctrl_to_hardware_for_external_mux(XMMRegs_mgt_sel_ctrl *m)
-{
-  m->ctrl_enable = 0;
-}
-
-static void external_txmux_set( XMMRegs_fine_delay_ctrl *m, int transceiver, int b )
+static void external_txmux_set( XMMRegs_fine_delay_ctrl *m, int b )
 {
   m->tx_sel0 = b;
   m->tx_sel1 = b;
 }
 
-static void external_rxmux_set( XMMRegs_fine_delay_ctrl *m, int transceiver, int b )
+static void external_rxmux_set( XMMRegs_fine_delay_ctrl *m, int b )
 {
   m->rx_sel0 = b;
   m->rx_sel1 = b;
@@ -154,77 +144,33 @@ static void stop_led(XMMRegs_led_ctrl *l)
 
 ************************************************************/
 
-int XMMRegs_MuxInOut_TriggerLed_Set(XMMRegs *InstancePtr)
+void XMMRegs_MuxInOut_Tdc_Enable(XMMRegs *InstancePtr)
 {
   void *ba = InstancePtr->BaseAddress;
-  XMMRegs_led_ctrl *t = (XMMRegs_led_ctrl *) ( ba + XMMR_LED_CTRL_OFFSET );
-
-  t->mux_led = 1;
-
-  return XST_SUCCESS;
-}
-
-int XMMRegs_MuxInOut_DefaultLed_Set(XMMRegs *InstancePtr)
-{
-  void *ba = InstancePtr->BaseAddress;
-  XMMRegs_led_ctrl *t = (XMMRegs_led_ctrl *) ( ba + XMMR_LED_CTRL_OFFSET );
-
-  t->mux_led = 0;
-
-  return XST_SUCCESS;
-}
-
-int XMMRegs_MuxInOut_Tdc_Enable(XMMRegs *InstancePtr)
-{
-  void *ba = InstancePtr->BaseAddress;
-  XMMRegs_tdc_en_ctrl *t = (XMMRegs_tdc_en_ctrl *) ( ba + XMMR_TDC_EN_CTRL_OFFSET );
+  XMMRegs_tdc_en_ctrl *t = (XMMRegs_tdc_en_ctrl *)( ba + XMMR_TDC_EN_CTRL_OFFSET );
 
   enable_tdc(t);
-
-  return XST_SUCCESS;
 }
 
-int XMMRegs_MuxInOut_Tdc_Disable(XMMRegs *InstancePtr)
+void XMMRegs_MuxInOut_Tdc_Disable(XMMRegs *InstancePtr)
 {
   void *ba = InstancePtr->BaseAddress;
-  XMMRegs_tdc_en_ctrl *t = (XMMRegs_tdc_en_ctrl *) ( ba + XMMR_TDC_EN_CTRL_OFFSET );
+  XMMRegs_tdc_en_ctrl *t = (XMMRegs_tdc_en_ctrl *)( ba + XMMR_TDC_EN_CTRL_OFFSET );
 
   disable_tdc(t);
-
-  return XST_SUCCESS;
 }
 
-int XMMRegs_MuxInOut_ExternalTxMux_Set(XMMRegs *InstancePtr, int transceiver, int b)
+void XMMRegs_MuxInOut_ExternalTxMux_Set(XMMRegs *InstancePtr, int b)
 {
-  int status = XST_SUCCESS;
-
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_MuxInOut_ExternalTxMux_Set\n");
-    status = XST_FAILURE;
-  }
-  else {
-    external_txmux_set((XMMRegs_fine_delay_ctrl *)(InstancePtr->BaseAddress + XMMR_FINE_DELAY_CTRL_OFFSET),transceiver,b);
-  }
-
-  return status;
+  external_txmux_set((XMMRegs_fine_delay_ctrl *)(InstancePtr->BaseAddress + XMMR_FINE_DELAY_CTRL_OFFSET),b);
 }
 
-int XMMRegs_MuxInOut_ExternalRxMux_Set(XMMRegs *InstancePtr, int transceiver, int b)
+void XMMRegs_MuxInOut_ExternalRxMux_Set(XMMRegs *InstancePtr, int b)
 {
-  int status = XST_SUCCESS;
-
-  if ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_MuxInOut_ExternalTxMux_Set\n");
-    status = XST_FAILURE;
-  }
-  else {
-    external_rxmux_set((XMMRegs_fine_delay_ctrl *)(InstancePtr->BaseAddress + XMMR_FINE_DELAY_CTRL_OFFSET),transceiver,b);
-  }
-
-  return status;
+  external_rxmux_set((XMMRegs_fine_delay_ctrl *)(InstancePtr->BaseAddress + XMMR_FINE_DELAY_CTRL_OFFSET),b);
 }
 
-int XMMRegs_MuxInOut_PllMonitor_Reset(XMMRegs *InstancePtr)
+void XMMRegs_MuxInOut_PllMonitor_Reset(XMMRegs *InstancePtr)
 {
   XMMRegs_fine_delay_ctrl *c;
   void *ba = InstancePtr->BaseAddress;
@@ -233,8 +179,6 @@ int XMMRegs_MuxInOut_PllMonitor_Reset(XMMRegs *InstancePtr)
 
 //  c->rst_pll_monitor = 1; // NUMEXO2 : reset_pll_monitor is not implemented any more
 //  c->rst_pll_monitor = 0;
-
-  return XST_SUCCESS;
 }
 
 int XMMRegs_MuxInOut_IsPllLocked(XMMRegs *InstancePtr)
@@ -387,7 +331,7 @@ int XMMRegs_MuxInOut_FineDelay_GradualSet(XMMRegs *InstancePtr, unsigned int del
 
 ************************************************************/
 
-int XMMRegs_MuxInOut_Setup(XMMRegs *InstancePtr)
+void XMMRegs_MuxInOut_Setup(XMMRegs *InstancePtr)
 {
   XMMRegs_ctrl *c;
   XMMRegs_fine_delay_ctrl *d;
@@ -398,18 +342,15 @@ int XMMRegs_MuxInOut_Setup(XMMRegs *InstancePtr)
 //  reset_pll_monitor( &(c->fine_delay) ); // NUMEXO2 : reset_pll_monitor is not implemented any more
 
   d = (XMMRegs_fine_delay_ctrl *)(ba + XMMR_FINE_DELAY_CTRL_OFFSET);
-  external_txmux_set( d, 0, 0 );
-  external_rxmux_set( d, 0, 0 );
-
-  return XST_SUCCESS;
+  external_txmux_set( d, 0 );
+  external_rxmux_set( d, 0 );
 }
 
-int XMMRegs_MuxInOut_Start(XMMRegs *InstancePtr)
+void XMMRegs_MuxInOut_Start(XMMRegs *InstancePtr)
 {
-  return XST_SUCCESS;
 }
 
-int XMMRegs_MuxInOut_Stop(XMMRegs *InstancePtr)
+void XMMRegs_MuxInOut_Stop(XMMRegs *InstancePtr)
 {
   XMMRegs_ctrl *c;
   XMMRegs_fine_delay_ctrl *d;
@@ -420,39 +361,28 @@ int XMMRegs_MuxInOut_Stop(XMMRegs *InstancePtr)
 //  reset_pll_monitor( &(c->fine_delay) ); // NUMEXO2 : reset_pll_monitor is not implemented any more
 
   d = (XMMRegs_fine_delay_ctrl *)(ba + XMMR_FINE_DELAY_CTRL_OFFSET);
-  external_txmux_set( d, 0, 0 );
-  external_rxmux_set( d, 0, 0 );
-
-  return XST_SUCCESS;
+  external_txmux_set( d, 0 );
+  external_rxmux_set( d, 0 );
 }  
 
-int XMMRegs_MuxInOut_Init(XMMRegs *InstancePtr)
+void XMMRegs_MuxInOut_Init(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
-
   DBG(DBLD, "MuxInOut_Init --->\n");
-  status |= XMMRegs_MuxInOut_Setup(InstancePtr);
-  status |= XMMRegs_MuxInOut_Start(InstancePtr);
+  XMMRegs_MuxInOut_Setup(InstancePtr);
+  XMMRegs_MuxInOut_Start(InstancePtr);
   DBG(DBLD, "---> MuxInOut_Init |\n");
-
-  return status;
 }
 
-int XMMRegs_MuxInOut_Reset(XMMRegs *InstancePtr)
+void XMMRegs_MuxInOut_Reset(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
-
-  status |= XMMRegs_MuxInOut_Stop(InstancePtr);
-  status |= XMMRegs_MuxInOut_Init(InstancePtr);
-
-  return status;
+  XMMRegs_MuxInOut_Stop(InstancePtr);
+  XMMRegs_MuxInOut_Init(InstancePtr);
 }
 
 void XMMRegs_MuxInOut_PrintAll(XMMRegs *InstancePtr)
 {
   DBG(DBLI, "\nPrintAll of MuxInOut :---------------------------------------------------------------\n");
   DBG(DBLI, "\t\t\t:\t  28 :   24 :   20 :   16 :   12 :    8 :    4 :    0\n");
-
   DBG(DBLI, "fine_delay_ctrl\t\t:\t"); 
   XMMRegs_PrintBinary(InstancePtr, XMMR_FINE_DELAY_CTRL_OFFSET);
 }

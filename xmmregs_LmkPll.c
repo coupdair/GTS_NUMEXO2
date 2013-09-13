@@ -118,7 +118,7 @@ int XMMRegs_LmkPll_FineDelay_GradualSet(XMMRegs *InstancePtr, unsigned int old_d
   DBG(DBLI, "LmkPll : you think it is     : %u\n", old_delay);
   DBG(DBLD, "LmkPll : step_size = %u, step_interval = %u microsec\n", step_size, step_interval);
 
-  status |= XMMRegs_MuxInOut_PllMonitor_Reset(InstancePtr);
+//  XMMRegs_MuxInOut_PllMonitor_Reset(InstancePtr); // NUMEXO2 : reset_pll_monitor is not implemented any more
   delay = old_delay;
   status |= XMMRegs_LmkPll_FineDelay_Set(InstancePtr, delay);
 
@@ -152,7 +152,7 @@ int XMMRegs_LmkPll_FineDelay_GradualSet(XMMRegs *InstancePtr, unsigned int old_d
     DBG(DBLI, "LmkPll : the final delay is : %u\n", XMMRegs_LmkPll_FineDelay_Read(InstancePtr) ); 
   }
 
-  status |= XMMRegs_MuxInOut_PllMonitor_Reset(InstancePtr); 
+//  XMMRegs_MuxInOut_PllMonitor_Reset(InstancePtr); // NUMEXO2 : reset_pll_monitor is not implemented any more
 
   return status;
 }

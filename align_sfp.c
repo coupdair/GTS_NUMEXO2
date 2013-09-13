@@ -13,12 +13,12 @@
 
 void txMuxExtSet(int transceiver, int b)
 {
-  XMMRegs_MuxInOut_ExternalTxMux_Set(&XMMRegsDriver, transceiver, b);
+  XMMRegs_MuxInOut_ExternalTxMux_Set(&XMMRegsDriver, b);
 }
 
 void rxMuxExtSet(int transceiver, int b)
 {
-  XMMRegs_MuxInOut_ExternalRxMux_Set(&XMMRegsDriver, transceiver, b);
+  XMMRegs_MuxInOut_ExternalRxMux_Set(&XMMRegsDriver, b);
 }
 
 void root_MgtForwardMgtBackward_MuxExtSet(void)

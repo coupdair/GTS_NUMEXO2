@@ -112,7 +112,7 @@ extern void XMMRegs_ClearStats(XMMRegs *InstancePtr);
 /* low level custom API */
 extern void XMMRegs_PrintBinary(XMMRegs *InstancePtr, unsigned int offset);
 extern void XMMRegs_PrintHex(XMMRegs *InstancePtr, unsigned int offset);
-extern unsigned int  XMMRegs_ReadRegister(XMMRegs *InstancePtr, unsigned int offset);
+extern unsigned int XMMRegs_ReadRegister(XMMRegs *InstancePtr, unsigned int offset);
 
 /* high level custom API */
 extern void XMMRegs_PrintAll(XMMRegs *InstancePtr);
@@ -176,20 +176,18 @@ extern void XMMRegs_Data_PrintAll(XMMRegs *InstancePtr);
 /***********************************************/
 /*  MuxInOut APIs                              */
 /***********************************************/
-extern int  XMMRegs_MuxInOut_Setup(XMMRegs *InstancePtr);
-extern int  XMMRegs_MuxInOut_Start(XMMRegs *InstancePtr);
-extern int  XMMRegs_MuxInOut_Stop(XMMRegs *InstancePtr);
-extern int  XMMRegs_MuxInOut_Init(XMMRegs *InstancePtr);
-extern int  XMMRegs_MuxInOut_Reset(XMMRegs *InstancePtr);
+extern void XMMRegs_MuxInOut_Setup(XMMRegs *InstancePtr);
+extern void XMMRegs_MuxInOut_Start(XMMRegs *InstancePtr);
+extern void XMMRegs_MuxInOut_Stop(XMMRegs *InstancePtr);
+extern void XMMRegs_MuxInOut_Init(XMMRegs *InstancePtr);
+extern void XMMRegs_MuxInOut_Reset(XMMRegs *InstancePtr);
 extern void XMMRegs_MuxInOut_PrintAll(XMMRegs *InstancePtr);
-extern int  XMMRegs_MuxInOut_PllMonitor_Reset(XMMRegs *InstancePtr);
+extern void XMMRegs_MuxInOut_PllMonitor_Reset(XMMRegs *InstancePtr);
 extern int  XMMRegs_MuxInOut_IsPllLocked(XMMRegs *InstancePtr);
-extern int  XMMRegs_MuxInOut_TriggerLed_Set(XMMRegs *InstancePtr);
-extern int  XMMRegs_MuxInOut_DefaultLed_Set(XMMRegs *InstancePtr);
-extern int  XMMRegs_MuxInOut_ExternalRxMux_Set(XMMRegs *InstancePtr, int transceiver, int b);
-extern int  XMMRegs_MuxInOut_ExternalTxMux_Set(XMMRegs *InstancePtr, int transceiver, int b);
-extern int  XMMRegs_MuxInOut_Tdc_Enable(XMMRegs *InstancePtr);
-extern int  XMMRegs_MuxInOut_Tdc_Disable(XMMRegs *InstancePtr);
+extern void XMMRegs_MuxInOut_ExternalRxMux_Set(XMMRegs *InstancePtr, int b);
+extern void XMMRegs_MuxInOut_ExternalTxMux_Set(XMMRegs *InstancePtr, int b);
+extern void XMMRegs_MuxInOut_Tdc_Enable(XMMRegs *InstancePtr);
+extern void XMMRegs_MuxInOut_Tdc_Disable(XMMRegs *InstancePtr);
 extern int  XMMRegs_MuxInOut_FineDelay_Set(XMMRegs *InstancePtr, unsigned int delay);
 extern unsigned int  XMMRegs_MuxInOut_FineDelay_Read(XMMRegs *InstancePtr);
 extern int  XMMRegs_MuxInOut_FineDelay_GradualSet(XMMRegs *InstancePtr, unsigned int delay_before, unsigned int delay_after);
