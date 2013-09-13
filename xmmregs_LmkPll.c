@@ -275,7 +275,7 @@ void XMMRegs_LmkPll_GlobalOutputEnable(XMMRegs *InstancePtr)
 
 *******************************************************************************/
 
-int  XMMRegs_LmkPll_Setup(XMMRegs *InstancePtr)
+int XMMRegs_LmkPll_Setup(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
   int i;
@@ -307,7 +307,7 @@ int  XMMRegs_LmkPll_Setup(XMMRegs *InstancePtr)
 }
 
 /* redundant with setup */
-int  XMMRegs_LmkPll_Start(XMMRegs *InstancePtr)
+int XMMRegs_LmkPll_Start(XMMRegs *InstancePtr)
 {
   XMMRegs_lmk_pll_ctrl *c = (XMMRegs_lmk_pll_ctrl *)(InstancePtr->BaseAddress + XMMR_LMK_PLL_CTRL_OFFSET);
 
@@ -320,7 +320,7 @@ int  XMMRegs_LmkPll_Start(XMMRegs *InstancePtr)
   return XST_SUCCESS;
 }
 
-int  XMMRegs_LmkPll_Stop(XMMRegs *InstancePtr)
+int XMMRegs_LmkPll_Stop(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
   int i;
@@ -336,7 +336,7 @@ int  XMMRegs_LmkPll_Stop(XMMRegs *InstancePtr)
   c->goe       = 0;
   c->sync_pll  = 0; 
 
-  status |= XMMRegs_LmkPll_ConfigReset(InstancePtr);
+  status = XMMRegs_LmkPll_ConfigReset(InstancePtr);
 
   for (i = 0; i < n; i++) {
     if (lmk_config_reg_default[i].r1r7.address == 4) {
@@ -347,26 +347,21 @@ int  XMMRegs_LmkPll_Stop(XMMRegs *InstancePtr)
   return status;
 }  
 
-
 int XMMRegs_LmkPll_Init(XMMRegs *InstancePtr)
 {
-  /* local variables */
   int status = XST_SUCCESS;
 
-  DBG(DBLD, "LmkPll_Init --->\n");
-  status |= XMMRegs_LmkPll_Setup(InstancePtr);
+  status  = XMMRegs_LmkPll_Setup(InstancePtr);
   status |= XMMRegs_LmkPll_Start(InstancePtr);
-  DBG(DBLD, "---> LmkPll_Init |\n");
 
   return status;
 }
 
 int XMMRegs_LmkPll_Reset(XMMRegs *InstancePtr)
 {
-  /* local variables */
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_LmkPll_Stop(InstancePtr);
+  status  = XMMRegs_LmkPll_Stop(InstancePtr);
   status |= XMMRegs_LmkPll_Init(InstancePtr);
 
   return status;
@@ -380,8 +375,6 @@ void XMMRegs_LmkPll_PrintAll(XMMRegs *InstancePtr)
   XMMRegs_PrintBinary(InstancePtr, XMMR_LMK_PLL_CTRL_OFFSET);
   DBG(DBLI, "lmk_pll_status\t\t:\t"); 
   XMMRegs_PrintBinary(InstancePtr, XMMR_LMK_PLL_STATUS_OFFSET);
-
-  return;
 }
 
 #undef DBG

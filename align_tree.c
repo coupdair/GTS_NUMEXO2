@@ -21,12 +21,12 @@ int treeSetup(int step)
 
     XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver);
 
-    status |= transCon(TRANSCEIVER_IS_CONNECTED, TRANSCEIVER_IS_CONNECTED, TRANSCEIVER_IS_CONNECTED, TRANSCEIVER_IS_CONNECTED);
+    status  = transCon(TRANSCEIVER_IS_CONNECTED, TRANSCEIVER_IS_CONNECTED, TRANSCEIVER_IS_CONNECTED, TRANSCEIVER_IS_CONNECTED);
     status |= transGtsTree(TRANSCEIVER_IS_IN_GTS_TREE, TRANSCEIVER_IS_IN_GTS_TREE, TRANSCEIVER_IS_IN_GTS_TREE, TRANSCEIVER_IS_IN_GTS_TREE);
     status |= transDigitizer(TRANSCEIVER_IS_NOT_CONNECTED_TO_DIGITIZER, TRANSCEIVER_IS_NOT_CONNECTED_TO_DIGITIZER, TRANSCEIVER_IS_NOT_CONNECTED_TO_DIGITIZER, TRANSCEIVER_IS_NOT_CONNECTED_TO_DIGITIZER);
 
     /* sends comma for alignment */
-    status |= XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, 0, ZERO_VECTOR, COMMA, COMMA_OFF, COMMA_ON);
+    XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, ZERO_VECTOR, COMMA, COMMA_OFF, COMMA_ON);
  
     status |= muxExtSet(LEAVE, USE_MGT, USE_MGT);
     status |= allRegMuxPathSet();
@@ -54,12 +54,12 @@ int treeSetup(int step)
     XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver);
 
     DBG(DBLD, "it considers itself as a LEAF or a FANIN-FANOUT\n");
-    status |= muxExtSet(LEAVE, USE_MGT, USE_MGT);
+    status  = muxExtSet(LEAVE, USE_MGT, USE_MGT);
     status |= allRegMuxPathSet();
     status |= clkSet(FANIN_FANOUT, RECOVERED_CLK, USE_MGT, USE_MGT, FORCE_SET, NON_BLOCKING); // sets the clock as if it was a FANIN-FANOUT
 
     /* sends COMMA again, indeed maybe the TX are not ready yet and have to align */
-    status |= XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, 0, ZERO_VECTOR, COMMA, COMMA_OFF, COMMA_ON);
+    XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, ZERO_VECTOR, COMMA, COMMA_OFF, COMMA_ON);
 
     break;
 
@@ -96,17 +96,21 @@ int treeStart(void)
 
   msb = *((unsigned int *)CARD_NUMBER_ADDRESS);
 
-  return XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, 0, msb, 0, COMMA_OFF, COMMA_OFF);
+  XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, msb, 0, COMMA_OFF, COMMA_OFF);
+
+  return XST_SUCCESS;
 }
 
 unsigned int treeRead(int transceiver)
 {
-  return XMMRegs_RocketIO_RxMgtdata_Read(&XMMRegsDriver, transceiver);
+  return XMMRegs_RocketIO_RxMgtdata_Read(&XMMRegsDriver);
 }
 
 int treeStop(void)
 {
-  return XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, 0, TEST_POLARITY, COMMA, COMMA_OFF, COMMA_ON);
+  XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, TEST_POLARITY, COMMA, COMMA_OFF, COMMA_ON);
+
+  return XST_SUCCESS;
 }
 
 #undef DBG

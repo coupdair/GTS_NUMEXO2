@@ -6,22 +6,14 @@
 
 #define DBG DBG_ALIGN_MGTDATA
 
-int mgtDataCommaSet(void) 
+void mgtDataCommaSet(void) 
 {
-  int status = XST_SUCCESS;
-  
-  status |= XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, 0, TEST_POLARITY, COMMA, COMMA_OFF, COMMA_ON);
-  
-  return status;
+  XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, TEST_POLARITY, COMMA, COMMA_OFF, COMMA_ON);
 }
 
-int mgtDataCommaUnSet(void) 
+void mgtDataCommaUnSet(void) 
 {
-  int status = XST_SUCCESS;
-  
-  status |= XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, 0, ZERO_VECTOR, ZERO_VECTOR, COMMA_OFF, COMMA_OFF);
-  
-  return status;
+  XMMRegs_RocketIO_MgtData_Set(&XMMRegsDriver, ZERO_VECTOR, ZERO_VECTOR, COMMA_OFF, COMMA_OFF);
 }
 
 #undef DBG

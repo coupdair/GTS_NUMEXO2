@@ -675,7 +675,6 @@ int XMMRegs_SelfTest(XMMRegs *InstancePtr)
 void XMMRegs_GetStats(XMMRegs *InstancePtr, XMMRegs_Stats *Stats)
 {
   *Stats = InstancePtr->Stats;
-  return;
 }
 
 void XMMRegs_ClearStats(XMMRegs *InstancePtr)
@@ -683,8 +682,6 @@ void XMMRegs_ClearStats(XMMRegs *InstancePtr)
   int i;
   unsigned char *p = (unsigned char *)(&InstancePtr->Stats);
   for(i=0; i<sizeof(XMMRegs_Stats); i++) p[i]=0;
-
-  return;
 }
 
 void XMMRegs_PrintAll(XMMRegs *InstancePtr)
@@ -694,13 +691,9 @@ void XMMRegs_PrintAll(XMMRegs *InstancePtr)
   XMMRegs_Data_PrintAll(InstancePtr);
   XMMRegs_MuxInOut_PrintAll(InstancePtr);
   XMMRegs_DataPath_PrintAll(InstancePtr);
-//  XMMRegs_TdcDebug_PrintAll(InstancePtr);
   XMMRegs_Trigger_PrintAll(InstancePtr);
   XMMRegs_RocketIO_PrintAll(InstancePtr);
   XMMRegs_ClockPath_PrintAll(InstancePtr);
-//  XMMRegs_LmkPll_PrintAll(InstancePtr);
-
-  return;
 }
 
 #undef DBG

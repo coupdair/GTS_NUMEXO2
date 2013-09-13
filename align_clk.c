@@ -56,48 +56,15 @@ int doesAlignClkApplyToTransceiver(int transceiver)
   return bool;
 }
 
-/* If at least one transceiver belonging to the same tile is in the GTS tree, 
-then refclk will be set to fulfill the alignment procedure */
-int doesAlignClkApplyToTile(int tile)
+void gtsReadySet(void)
 {
-  int bool = TRANSCEIVER_IS_NOT_IN_GTS_TREE;
-  int trans; 
-
-  for (trans = 2*tile; trans <= 2*tile+1; trans++) {
-    bool |= XMMRegs_IsTransceiverInGtsTree(&XMMRegsDriver, trans);
-  }
-
-  return bool;
+  XMMRegs_Trigger_GtsReady_Set(&XMMRegsDriver);
 }
 
-int gtsReadySet(void)
+void gtsReadyUnSet(void)
 {
-  return XMMRegs_Trigger_GtsReady_Set(&XMMRegsDriver);
+  XMMRegs_Trigger_GtsReady_UnSet(&XMMRegsDriver);
 }
-
-int gtsReadyUnSet(void)
-{
-  return XMMRegs_Trigger_GtsReady_UnSet(&XMMRegsDriver);
-}
-
-int isPllLocked(void)
-{
-  return XMMRegs_MuxInOut_IsPllLocked(&XMMRegsDriver);
-}   
-
-int isDcmLocked(int usrclk)
-{
-  if (usrclk == RECOVERED_CLK)
-    return XMMRegs_ClockPath_IsFbDcmLocked(&XMMRegsDriver);
-  else if (usrclk == MICTOR_CLK)
-    return XMMRegs_ClockPath_IsMictorDcmLocked(&XMMRegsDriver);
-  else if (usrclk == LOCAL_CLK) 
-    return DCM_LOCKED;
-  else {
-    DBG(DBLE, "ERROR : out of range for usrclk in isDcmLocked\n");
-    return DCM_NOT_LOCKED;
-  }
-}   
 
 int usrClkLocalSet(void)
 {
@@ -106,136 +73,20 @@ int usrClkLocalSet(void)
 
 int usrClkRecoveredSet(void)
 {
-  int status = XST_SUCCESS;
-
-  status |= XMMRegs_ClockPath_UserLogicClock_Set(&XMMRegsDriver, RECOVERED_CLK);
-
-//  while ( isDcmLocked(RECOVERED_CLK) != DCM_LOCKED )
-//      loopAction("WAIT : for fb DCM to lock");
-
-  return status;
+  return XMMRegs_ClockPath_UserLogicClock_Set(&XMMRegsDriver, RECOVERED_CLK);
 }
 
 int usrClkMictorSet(void)
 {
-  int status = XST_SUCCESS;
-
-  status |= XMMRegs_ClockPath_UserLogicClock_Set(&XMMRegsDriver, MICTOR_CLK);
-
-//  while ( isDcmLocked(MICTOR_CLK) != DCM_LOCKED )
-//      loopAction("WAIT : for mictor DCM to lock");
-
-  return status;
+  return XMMRegs_ClockPath_UserLogicClock_Set(&XMMRegsDriver, MICTOR_CLK);
 }
 
-/* looks if the LMK is locked and if the DCM taking the carrier card is locked */
-int isCarrierClkReady(int usrclk)
-{
-  if ( ( alignModeRead() == CARRIER_INCLUDED ) && (usrclk == MICTOR_CLK) ) {
-    return XMMRegs_Trigger_CarrierLmkPllLock_Read(&XMMRegsDriver);
-  }
-  else if ( ( alignModeRead() == CARRIER_INCLUDED ) && (usrclk != MICTOR_CLK) ) {
-    DBG(DBLW, "WARNING : the carrier is included, but you don't use MICTOR_CLK in the leaf\n");
-    return CLK_CARRIER_READY;
-  }
-  else if ( ( alignModeRead() != CARRIER_INCLUDED ) && (usrclk != MICTOR_CLK) ) {
-    return CLK_CARRIER_READY;
-  }
-  else if ( ( alignModeRead() != CARRIER_INCLUDED ) && (usrclk == MICTOR_CLK) ) {
-    DBG(DBLW, "WARNING (isCarrierClkReady): the LLP carrier is not included\n");
-    DBG(DBLW, "Ignore this warning if, on VME Carrier, you have correctly made the clock loopback through SMA cables\n");
-    DBG(DBLW, "If the carrier is a LLP Carrier, before using this function, you have to launch  : includeCarrierForAlign()\n"); 
-    return CLK_CARRIER_READY; /* there is no check of the presence of the SMA cables */
-  }
-  else {
-    DBG(DBLE, "STRANGE : in isCarrierClkReady\n");
-    return CLK_CARRIER_READY;
-  }
-}   
-
-/* looks if the LMK is locked and if the DCM taking the carrier card is locked */
-int isCarrierClkNotReady(int usrclk)
-{
-  if ( ( alignModeRead() == CARRIER_INCLUDED ) && (usrclk == LOCAL_CLK) ) {
-    return XMMRegs_Trigger_CarrierLmkPllLock_Read(&XMMRegsDriver);
-  }
-  else if ( ( alignModeRead() != CARRIER_INCLUDED ) && (usrclk == LOCAL_CLK) ) {
-    return CLK_CARRIER_NOT_READY;
-  }
-  else {
-    DBG(DBLW, "WARNING : in isCarrierClkNotReady : I would expect usrclk = LOCAL_CLK\n");
-    return CLK_CARRIER_NOT_READY;
-  }
-}   
-
-int refClkDiagnose(void) {
-  return 1; // NUMEXO2
+void gtxReset(void) {
+  if ( doesAlignClkApplyToTransceiver(0) ) XMMRegs_RocketIO_Gtx_Reset(&XMMRegsDriver);
 }
 
-void txSystemReset(int transceiver) {
-  if ( doesAlignClkApplyToTransceiver(transceiver) ) XMMRegs_RocketIO_TxSystem_Reset(&XMMRegsDriver, transceiver);
-}
-
-void rxSystemReset(int transceiver) {
-  if ( doesAlignClkApplyToTransceiver(transceiver) ) XMMRegs_RocketIO_RxSystem_Reset(&XMMRegsDriver, transceiver); 
-}
-
-void txSystemInit(int transceiver) {
-  if ( doesAlignClkApplyToTransceiver(transceiver) ) XMMRegs_RocketIO_TxSystem_Init(&XMMRegsDriver, transceiver); 
-}
-
-void rxSystemInit(int transceiver) {
-  if ( doesAlignClkApplyToTransceiver(transceiver) ) XMMRegs_RocketIO_RxSystem_Init(&XMMRegsDriver, transceiver); 
-}
-
-int txSystemStatus(int transceiver) {
-  if ( doesAlignClkApplyToTransceiver(transceiver) )
-    return XMMRegs_RocketIO_TxSystem_Status(&XMMRegsDriver, transceiver);
-  else
-    return READY; 
-}
-
-int rxSystemStatus(int transceiver) {
-  if ( doesAlignClkApplyToTransceiver(transceiver) )
-    return XMMRegs_RocketIO_RxSystem_Status(&XMMRegsDriver, transceiver);
-  else
-    return READY; 
-}
-
-void txSystemResetAll(void) {
-  if ( doesAlignClkApplyToTransceiver(0) ) XMMRegs_RocketIO_TxSystem_Reset(&XMMRegsDriver, 0); 
-}
-
-void rxSystemResetAll(void) {
-  if ( doesAlignClkApplyToTransceiver(0) ) XMMRegs_RocketIO_RxSystem_Reset(&XMMRegsDriver, 0); 
-}
-
-void txSystemInitAll(void) {
-  if ( doesAlignClkApplyToTransceiver(0) ) XMMRegs_RocketIO_TxSystem_Init(&XMMRegsDriver, 0); 
-}
-
-void rxSystemInitAll(void) {
-  if ( doesAlignClkApplyToTransceiver(0) ) XMMRegs_RocketIO_RxSystem_Init(&XMMRegsDriver, 0); 
-}
-
-int txSystemStatusAll(void) {
-  int status = READY;
-
-  if ( doesAlignClkApplyToTransceiver(0) ) {
-    if ( XMMRegs_RocketIO_TxSystem_Status(&XMMRegsDriver, 0) != READY ) status = NOT_READY;
-  }
-
-  return status; 
-}
-
-int rxSystemStatusAll(void) {
-  int status = READY;
-
-  if ( doesAlignClkApplyToTransceiver(0) ) {
-    if ( XMMRegs_RocketIO_RxSystem_Status(&XMMRegsDriver, 0) != READY ) status = NOT_READY;
-  }
-
-  return status; 
+void gtxInit(void) {
+  if ( doesAlignClkApplyToTransceiver(0) ) XMMRegs_RocketIO_Gtx_Init(&XMMRegsDriver); 
 }
 
 /************************************************************
@@ -282,17 +133,11 @@ int rawClkDiagnose(void) {
 
 ************************************************************/
 
-/********************  leave GTS   *************************/
-
 int leave_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode) {
   int status = XST_SUCCESS;
   int raw_clk_changed = FALSE;
 
   DBG(DBLD, "leave_MgtForwardMgtBackward_ClkSet launched : usrclk = %d\n", usrclk );
-
-  rxSystemInit(MASTER_TRANSCEIVER);
-
-  txSystemReset(MASTER_TRANSCEIVER);
 
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
@@ -306,7 +151,7 @@ int leave_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode
 
       if ( alignModeRead() == CARRIER_INCLUDED ) {
         /* one says to the carrier that the clock sent is good */
-        status |= gtsReadySet();
+        gtsReadySet();
       }
 
       status |= usrClkSet(usrclk);
@@ -325,9 +170,6 @@ int leave_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode
       DBG(DBLE, "ERROR : wrong value of usrclk=%d", usrclk);
       return XST_FAILURE;
   }
-
-  txSystemInitAll();
-  rxSystemInitAll();
 
   DBG(DBLD, "leave_MgtForwardMgtBackward_ClkSet done\n" );
 
@@ -342,12 +184,8 @@ int leave_NoMgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
 
   if ( alignModeRead() == CARRIER_INCLUDED ) {
     /* one says to the carrier that the clock sent is going to be unlocked */
-    status |= gtsReadyUnSet();
+    gtsReadyUnSet();
   }  
-
-  rxSystemInit(MASTER_TRANSCEIVER);
-
-  txSystemReset(MASTER_TRANSCEIVER);
 
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
@@ -361,7 +199,7 @@ int leave_NoMgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
 
       if ( alignModeRead() == CARRIER_INCLUDED ) {
         /* one says to the carrier that the clock sent is good */
-        status |= gtsReadySet();
+        gtsReadySet();
       }
 
       status |= usrClkSet(usrclk);
@@ -381,9 +219,6 @@ int leave_NoMgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
       return XST_FAILURE;
   }
 
-  txSystemInitAll();
-  rxSystemInitAll();
-
   DBG(DBLD, "leave_NoMgtForwardMgtBackward_ClkSet done\n" );
 
   return status;
@@ -394,10 +229,6 @@ int leave_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
   int raw_clk_changed = FALSE;  
 
   DBG(DBLD, "leave_MgtForwardNoMgtBackward_ClkSet launched : usrclk = %d\n", usrclk );
-
-  rxSystemInit(MASTER_TRANSCEIVER);
-
-  txSystemResetAll(); /* reset of all active TX PMAs */
 
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
@@ -411,7 +242,7 @@ int leave_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
 
       if ( alignModeRead() == CARRIER_INCLUDED ) {
         /* one says to the carrier that the clock sent is good */
-        status |= gtsReadySet();
+        gtsReadySet();
       }
 
       status |= usrClkSet(usrclk);
@@ -445,11 +276,8 @@ int leave_NoMgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_
 
   if ( alignModeRead() == CARRIER_INCLUDED ) {
     /* one says to the carrier that the clock sent is going to be unlocked */
-    status |= gtsReadyUnSet();
+    gtsReadyUnSet();
   }  
-
-  txSystemResetAll(); /* reset of all active TX PMAs */
-  rxSystemResetAll(); /* reset of all active RX PMAs */
 
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     status |= rawClkSet(LOCAL_CLK);
@@ -478,10 +306,6 @@ int faninfanout_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int bloc
 
   DBG(DBLD, "faninfanout_MgtForwardMgtBackward_ClkSet launched : usrclk = %d\n", usrclk );
 
-  rxSystemInit(MASTER_TRANSCEIVER);
-
-  txSystemReset(MASTER_TRANSCEIVER);
-
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
     raw_clk_changed = TRUE;
@@ -500,9 +324,6 @@ int faninfanout_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int bloc
     }
   }
 
-  txSystemInitAll();
-  rxSystemInitAll();
-
   DBG(DBLD, "faninfanout_MgtForwardMgtBackward_ClkSet done\n");
 
   return status;
@@ -513,10 +334,6 @@ int faninfanout_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int bl
   int raw_clk_changed = FALSE;
 
   DBG(DBLD, "faninfanout_MgtForwardNoMgtBackward_ClkSet launched : usrclk = %d\n", usrclk );
-
-  rxSystemInit(MASTER_TRANSCEIVER);
-
-  txSystemResetAll(); /* reset of all active TX PMAs */
 
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
@@ -552,9 +369,6 @@ int faninfanout_NoMgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int 
 
   DBG(DBLD, "faninfanout_NoMgtForwardNoMgtBackward_ClkSet launched : usrclk = %d\n", usrclk );
 
-  txSystemResetAll(); /* reset of all active TX PMAs */
-  rxSystemResetAll(); /* reset of all active RX PMAs */
-
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     status |= rawClkSet(LOCAL_CLK);
   }
@@ -585,12 +399,8 @@ int root_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode)
 
   DBG(DBLD, "root_MgtForwardMgtBackward_ClkSet launched : usrclk = %d\n", usrclk );
 
-  /* We don't reset the tx rocketIOs, indeed if this function is used by mistake,
-  a reset would destroy the clocking of the all GTS tree */
-
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     rawClkSet(LOCAL_CLK);
-    txSystemResetAll(); 
 
     if (force_set == DONT_FORCE_SET) {
       DBG(DBLW, "WARNING : forward = USE_MGT and backward = USE_MGT in root node\n");
@@ -611,10 +421,6 @@ int root_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode)
       return XST_FAILURE;
   }
 
-  txSystemInitAll(); 
-  rxSystemResetAll(); 
-  rxSystemInitAll(); 
-
   DBG(DBLD, "root_MgtForwardMgtBackward_ClkSet done\n");
 
   return status;
@@ -625,9 +431,6 @@ int root_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mod
   int status = XST_SUCCESS;
 
   DBG(DBLD, "root_MgtForwardNoMgtBackward_ClkSet launched : usrclk = %d\n", usrclk );
-
-  txSystemResetAll(); /* reset of all active TX PMAs */
-  rxSystemResetAll(); 
 
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     status |= rawClkSet(LOCAL_CLK);
@@ -645,8 +448,6 @@ int root_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mod
       return XST_FAILURE;
   }
 
-  txSystemInitAll(); /* note that if the system has not been previously reset because rawClkDiagnose() == LOCAL_CLK (see 10 rigs above), this will not reset the tx system */
-
   DBG(DBLD, "root_MgtForwardNoMgtBackward_ClkSet done\n");
 
   return status;
@@ -657,9 +458,6 @@ int root_NoMgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_m
   int status = XST_SUCCESS;
 
   DBG(DBLD, "root_NoMgtForwardNoMgtBackward_ClkSet launched : usrclk = %d\n", usrclk );
-
-  txSystemResetAll(); /* reset of all active TX PMAs */
-  rxSystemResetAll(); /* reset of all active RX PMAs */
 
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     status |= rawClkSet(LOCAL_CLK);

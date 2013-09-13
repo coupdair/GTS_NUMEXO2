@@ -107,24 +107,20 @@ int XMMRegs_Trigger_Leave_TestLoopback_Set(XMMRegs *InstancePtr)
   return XST_SUCCESS;
 }
 
-int  XMMRegs_Trigger_GtsReady_Set(XMMRegs *InstancePtr)
+void XMMRegs_Trigger_GtsReady_Set(XMMRegs *InstancePtr)
 {
   XMMRegs_trigger_ctrl *c;
 
   c = (XMMRegs_trigger_ctrl *) (InstancePtr->BaseAddress + XMMR_TRIGGER_CTRL_OFFSET);
   c->gts_ready = 1;
-
-  return XST_SUCCESS;
 }
 
-int  XMMRegs_Trigger_GtsReady_UnSet(XMMRegs *InstancePtr)
+void XMMRegs_Trigger_GtsReady_UnSet(XMMRegs *InstancePtr)
 {
   XMMRegs_trigger_ctrl *c;
 
   c = (XMMRegs_trigger_ctrl *) (InstancePtr->BaseAddress + XMMR_TRIGGER_CTRL_OFFSET);
   c->gts_ready = 0;
-
-  return XST_SUCCESS;
 }
 
 int XMMRegs_Trigger_Leave_Test_Set(XMMRegs *InstancePtr)
@@ -176,8 +172,8 @@ int XMMRegs_Trigger_Leave_CarrierRequest_Set(XMMRegs *InstancePtr)
   }
 
   c->rst_core_uP = 1;
-//  c->loopback_enable = 0;
-  c->loopback_enable = 1; // pour GTS_LEAF sur ML507, F. Saillant le 4 septembre 2012
+  c->loopback_enable = 0; // pour GTS_LEAF sur NUMEXO2, F. Saillant le 13 septembre 2013
+//  c->loopback_enable = 1; // pour GTS_LEAF sur ML507, F. Saillant le 4 septembre 2012
   c->test_enable = 0;
 
   ci->mask_L1A_gate = 1;

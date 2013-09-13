@@ -67,7 +67,7 @@ int syncToSlaveSyncSet(int forward, int transceiver)
 
 ************************************************************/
 
-int muxSyncSet(int GTStype, int forward, int transceiver)
+int muxSyncSet(int GTStype, int forward)
 {
   int status = XST_SUCCESS;
   int t;
@@ -78,10 +78,10 @@ int muxSyncSet(int GTStype, int forward, int transceiver)
 
   switch (GTStype) {
     case ROOT :
-      status |= syncToSlaveSyncSet(forward, transceiver);
+      status |= syncToSlaveSyncSet(forward, 0);
       break;
     case FANIN_FANOUT :
-      status |= masterToSlaveSyncSet(forward, transceiver);
+      status |= masterToSlaveSyncSet(forward, 0);
       break;
     case LEAVE :
       status |= masterToMasterSyncSet(forward);
@@ -125,7 +125,7 @@ int allRegMuxPathSet(void)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
+  status  = XMMRegs_DataPath_UseSync_UnSet(&XMMRegsDriver);
   status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 0);
   status |= XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0);
 

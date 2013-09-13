@@ -23,13 +23,9 @@ int excludeCarrierForAlign(void)
 
 int alignStart(void)
 {
-    return gtsReadyUnSet();
-}
+  gtsReadyUnSet();
 
-int clockReadyForCarrier(void)
-{
-  return gtsReadySet();
-  /* it has been set ready before already for the GTS communicating with the carrier */
+  return XST_SUCCESS;
 }
 
 /************************************************************
@@ -96,7 +92,7 @@ int alignSet(int GTStype, int forward)
   }
 
   status  = muxExtSet(GTStype, USE_MGT, BYPASS_MGT); // NUMEXO2 LEAF : RX external mux is always 00
-  status |= mgtDataCommaSet();
+  mgtDataCommaSet();
   status |= clkSet(GTStype, usrclk, forward, BYPASS_MGT, FORCE_SET, BLOCKING);
 
   return status;
@@ -137,7 +133,7 @@ int alignTdcSet(int GTStype, int forward, int transceiver, int newcal)
   status  = XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
   status |= XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 5); // NUMEXO2
 
-  status = muxSyncSet(GTStype, forward, transceiver);
+  status = muxSyncSet(GTStype, forward);
 
   if ( (GTStype == ROOT) && (newcal == DO_NEW_CAL) ) {
     status |= tdcSet(measure, debug, delay);

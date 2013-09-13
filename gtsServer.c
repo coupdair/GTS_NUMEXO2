@@ -47,6 +47,7 @@ int main (int argc, char *argv[])
   struct ifconf ifconf;
   struct ifreq ifreqs[2];
   int fd;
+  XMMRegs_lmk_pll_ctrl *c;
 
   memset( (void *)&ifconf, 0, sizeof(ifconf) );
 
@@ -118,7 +119,12 @@ int main (int argc, char *argv[])
 
   XMMRegs_Reg_Init(&XMMRegsDriver);
 
-  XMMRegs_RocketIO_RxSystem_Reset(&XMMRegsDriver, 0);
+  c = (XMMRegs_lmk_pll_ctrl *)(XMMRegsDriver.BaseAddress + XMMR_LMK_PLL_CTRL_OFFSET);
+
+  c->hw_ctrl = 1;
+  c->hw_init_conf = 1;
+
+  XMMRegs_RocketIO_Gtx_Reset(&XMMRegsDriver);
 
   logAnswer();
 

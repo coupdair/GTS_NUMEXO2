@@ -132,11 +132,7 @@ int XMMRegs_Reg_WriteField(XMMRegs *InstancePtr, char *reg_name, char *field_nam
 
 int XMMRegs_Reg_Setup(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
-
-  status |= XMMRegs_Reg_Associate(InstancePtr, XREG_SETUP);
-
-  return status;
+  return XMMRegs_Reg_Associate(InstancePtr, XREG_SETUP);
 }
 
 int XMMRegs_Reg_Start(XMMRegs *InstancePtr)
@@ -153,7 +149,7 @@ int XMMRegs_Reg_Init(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_Reg_Setup(InstancePtr);
+  status  = XMMRegs_Reg_Setup(InstancePtr);
   status |= XMMRegs_Reg_Start(InstancePtr);
 
   return status;
@@ -163,7 +159,7 @@ int XMMRegs_Reg_Reset(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_Reg_Stop(InstancePtr);
+  status  = XMMRegs_Reg_Stop(InstancePtr);
   status |= XMMRegs_Reg_Init(InstancePtr);
 
   return status;

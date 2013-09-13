@@ -41,18 +41,13 @@ extern int alignMeas(int forward, int nmes);
 
 /* align_clk */
 
-extern int isPllLocked(void);
-extern int rxSystemStatus(int transceiver);
-extern int txSystemStatusAll(void);
 extern int clkSet(int GTStype, int usrclk, int forward, int backward, int force_set, int block_mode);
-extern int gtsReadySet(void);
-extern int gtsReadyUnSet(void);
-
-/* align_delay */
+extern void gtsReadySet(void);
+extern void gtsReadyUnSet(void);
 
 /* align_path */
 
-extern int muxSyncSet(int GTStype, int forward, int transceiver);
+extern int muxSyncSet(int GTStype, int forward);
 extern int treeMuxPathSet(void);
 extern int triggerMuxPathSet(int GTStype);
 
@@ -62,8 +57,8 @@ extern int muxExtSet(int GTStype, int forward, int backward);
 
 /* align_mgtdata */
 
-extern int mgtDataCommaSet(void);
-extern int mgtDataCommaUnSet(void);
+extern void mgtDataCommaSet(void);
+extern void mgtDataCommaUnSet(void);
 
 /* align_tdc */
 

@@ -218,9 +218,9 @@ int triggerSetup(int GTStype, int step)
       XMMRegs_RocketIO_TriggerRstCarrier_Set(&XMMRegsDriver);
 
       /* one sends comma for the alignment */
-      status  = mgtDataCommaSet();
+      mgtDataCommaSet();
   
-      status |= muxExtSet(GTStype, USE_MGT, USE_MGT);  
+      status  = muxExtSet(GTStype, USE_MGT, USE_MGT);  
       status |= allRegMuxPathSet();
       status |= clkSet(GTStype, usrclk, USE_MGT, USE_MGT, DONT_FORCE_SET, BLOCKING);
   
@@ -249,8 +249,8 @@ int triggerSetup(int GTStype, int step)
 
       XMMRegs_RocketIO_TriggerRstCarrier_Unset(&XMMRegsDriver);
 
-      status  = mgtDataCommaUnSet();
-      status |= triggerPathSet(GTStype);
+      mgtDataCommaUnSet();
+      status = triggerPathSet(GTStype);
 
       break;
   }
@@ -300,8 +300,6 @@ int counterRootSetup(int GTStype)
 {
   int status = XST_SUCCESS;
   int usrclk;
-  int force_set = DONT_FORCE_SET;
-  int block_mode = BLOCKING;
   
   if ( (GTStype != ROOT) && (GTStype != FANIN_FANOUT) && (GTStype != LEAVE) ) {
     DBG(DBLE, "ERROR : out of range on GTStype in function triggerSet");
@@ -331,11 +329,11 @@ int counterRootSetup(int GTStype)
   }
   
   /* one sends comma for the alignment of the backward link */
-  status |= mgtDataCommaSet();
+  mgtDataCommaSet();
   
-  status |= muxExtSet(GTStype, USE_MGT, USE_MGT);  
+  status  = muxExtSet(GTStype, USE_MGT, USE_MGT);  
   status |= allRegMuxPathSet();
-  status |= clkSet(GTStype, usrclk, USE_MGT, USE_MGT, force_set, block_mode);
+  status |= clkSet(GTStype, usrclk, USE_MGT, USE_MGT, DONT_FORCE_SET, BLOCKING);
   
   return status;
 }
@@ -371,8 +369,8 @@ int counterRootStart(int GTStype)
   }
   
   /* one inactivates the commaalign */
-  status |= mgtDataCommaUnSet();
-  status |= allFifoMuxPathSet(GTStype);
+  mgtDataCommaUnSet();
+  status = allFifoMuxPathSet(GTStype);
   
   return status;
 }

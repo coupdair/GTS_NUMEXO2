@@ -79,6 +79,11 @@ static void init_gt(XMMRegs_gt_ctrl *gt)
   gt->gtx_reset = 0;
 }
 
+static void reset_gt(XMMRegs_gt_ctrl *gt)
+{
+  gt->gtx_reset = 1;
+}
+
 static int status_gt_rx(XMMRegs_gt_status *gt_status)
 {
   int status;
@@ -119,11 +124,6 @@ static int status_gt_tx(XMMRegs_gt_status *gt_status)
 
 //  return status;
   return C_READY; // GTS_LEAF on NUMEXO2
-}
-
-static void reset_gt(XMMRegs_gt_ctrl *gt)
-{
-  gt->gtx_reset = 1;
 }
 
 static void init_drp_addr(XMMRegs_drp_addr_ctrl *drp_addr)
@@ -182,8 +182,8 @@ int XMMRegs_RocketIO_CommaAlign_Diagnose(XMMRegs *InstancePtr)
   {
 // F. Saillant le 30 novembre 2012 : on autorise aussi COMMA (0x00BC) car c'est ce que les mezzanines GTS v3 envoient ...
 
-//    if ((s->rxcommadet == 1) && (s->rxchariscomma == 1) && ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, transceiver) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, transceiver) == COMMA)))
-    if ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, 0) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr, 0) == COMMA))
+//    if ((s->rxcommadet == 1) && (s->rxchariscomma == 1) && ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr) == COMMA)))
+    if ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr) == COMMA))
     {
       return COMMA_DETECTED;
     }
@@ -192,19 +192,16 @@ int XMMRegs_RocketIO_CommaAlign_Diagnose(XMMRegs *InstancePtr)
   return COMMA_NOT_DETECTED;
 }
 
-unsigned int XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr, int transceiver)
+unsigned int XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr)
 {
   XMMRegs_rxmgtdata_status *s;
   unsigned int val;
 
-  s = (XMMRegs_rxmgtdata_status *)(InstancePtr->BaseAddress + XMMR_GT_RXDATA_OFFSET + (unsigned int)(4 * floor(transceiver/2)));
+  s = (XMMRegs_rxmgtdata_status *)(InstancePtr->BaseAddress + XMMR_GT_RXDATA_OFFSET);
 
-  if ( (transceiver%2) == 0)
-    val = s->t0; /* one takes the 16 LSB bits */
-  else 
-    val = s->t1; /* the 16 MSB bits */
+  val = s->t0; /* NUMEXO2 : one takes the 16 LSB bits */
 
-  DBG(DBLD, "RXDATA(transceiver %d) = 0x%04X\n", transceiver, val);
+  DBG(DBLD, "RXDATA = 0x%04X\n", val);
 
   return val;
 }
@@ -230,7 +227,7 @@ void XMMRegs_RocketIO_RefClk_Set(XMMRegs *InstancePtr)
 
 ************************************************************/
 
-void XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr, int transceiver)
+void XMMRegs_RocketIO_Gtx_Stop(XMMRegs *InstancePtr)
 {
   XMMRegs_gt_ctrl *gt;
 
@@ -239,16 +236,7 @@ void XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr, int transceiver)
   reset_gt(gt);
 }
 
-int XMMRegs_RocketIO_RxSystem_Stop(XMMRegs *InstancePtr, int transceiver)
-{
-  XMMRegs_gt_ctrl *gt;
-
-  gt = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress +  XMMR_GT_CTRL_OFFSET);
-
-  reset_gt(gt);
-}
-
-void XMMRegs_RocketIO_TxSystem_Init(XMMRegs *InstancePtr, int transceiver)
+void XMMRegs_RocketIO_Gtx_Init(XMMRegs *InstancePtr)
 {
   XMMRegs_gt_ctrl *gt;
 
@@ -257,25 +245,10 @@ void XMMRegs_RocketIO_TxSystem_Init(XMMRegs *InstancePtr, int transceiver)
   init_gt(gt);
 }
 
-void XMMRegs_RocketIO_RxSystem_Init(XMMRegs *InstancePtr, int transceiver)
+void XMMRegs_RocketIO_Gtx_Reset(XMMRegs *InstancePtr)
 {
-  XMMRegs_gt_ctrl *gt;
-
-  gt = (XMMRegs_gt_ctrl *)(InstancePtr->BaseAddress + XMMR_GT_CTRL_OFFSET);
-
-  init_gt(gt);
-}
-
-void XMMRegs_RocketIO_TxSystem_Reset(XMMRegs *InstancePtr, int transceiver)
-{
-  XMMRegs_RocketIO_TxSystem_Stop(InstancePtr, transceiver);
-  XMMRegs_RocketIO_TxSystem_Init(InstancePtr, transceiver);
-}
-
-void XMMRegs_RocketIO_RxSystem_Reset(XMMRegs *InstancePtr, int transceiver)
-{
-  XMMRegs_RocketIO_RxSystem_Stop(InstancePtr, transceiver);
-  XMMRegs_RocketIO_RxSystem_Init(InstancePtr, transceiver);
+  XMMRegs_RocketIO_Gtx_Stop(InstancePtr);
+  XMMRegs_RocketIO_Gtx_Init(InstancePtr);
 }
 
 int XMMRegs_RocketIO_TxSystem_Status(XMMRegs *InstancePtr, int transceiver)
@@ -302,24 +275,14 @@ int XMMRegs_RocketIO_RxSystem_Status(XMMRegs *InstancePtr, int transceiver)
   return system_status;
 }
 
-int XMMRegs_RocketIO_MgtData_Set(XMMRegs *InstancePtr, int transceiver, unsigned int msb, unsigned int lsb, unsigned char comma_msb, unsigned char comma_lsb)
+void XMMRegs_RocketIO_MgtData_Set(XMMRegs *InstancePtr, unsigned int msb, unsigned int lsb, unsigned char comma_msb, unsigned char comma_lsb)
 {
   XMMRegs_txmgtdata_ctrl *reg;
   void *ba = InstancePtr->BaseAddress;
 
   reg = (XMMRegs_txmgtdata_ctrl *)(ba +  XMMR_MGT_REGDATA_CTRL_OFFSET);
 
-  if ( ( (transceiver < TRANSCEIVER_0) || (transceiver > TRANSCEIVER_3) ) ||
-       ( (msb > 0xFF) || (lsb > 0xFF) ) ||
-       ( (comma_msb != COMMA_ON) && (comma_msb != COMMA_OFF) ) ||
-       ( (comma_lsb != COMMA_ON) && (comma_lsb != COMMA_OFF) ) ) {
-    DBG(DBLE, "ERROR : out of range in function XMMRegs_RocketIO_MgtData_Set\n");
-    return XST_FAILURE;
-  }
-
   set_regdata(reg, msb, lsb, comma_msb, comma_lsb);
-
-  return XST_SUCCESS; 
 }
 
 void XMMRegs_RocketIO_TriggerRstCarrier_Set(XMMRegs *InstancePtr)
