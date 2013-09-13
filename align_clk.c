@@ -452,21 +452,15 @@ int leave_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode
 
   status |= rxSystemInit(MASTER_TRANSCEIVER);
 
-//  while ( ( isPllLocked() == PLL_NOT_LOCKED ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//    loopAction("WAIT : for gts_pll to lock, and rx(MASTER_TRANS) to be ready"); /* wait for the external PLL to be locked with the current LMK_PLL setting and for the RX master transceiver to be ready */
   while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
     loopAction("WAIT : for rx(MASTER_TRANS) to be ready"); /* wait for the RX master transceiver to be ready */
 
   status |= txSystemReset(MASTER_TRANSCEIVER);
-//  status |= rxSystemResetAllExcept(MASTER_TRANSCEIVER);
 
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
     raw_clk_changed = TRUE;
     rawClkSet(MASTER_CLK); /* one feeds the LMK_PLL with the clock recovered from the master transceiver */
-
-//    while ( ( isPllLocked() == PLL_NOT_LOCKED) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for gts_pll to lock, and rx(MASTER_TRANS) to be ready, after the switch of rawclk to MASTER_CLK");
 
     while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
       loopAction("WAIT : for rx(MASTER_TRANS) to be ready, after the switch of rawclk to MASTER_CLK");
@@ -480,12 +474,6 @@ int leave_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode
         /* one says to the carrier that the clock sent is good */
         status |= gtsReadySet();
       }
-
-//      while ( ( isPllLocked() == PLL_NOT_LOCKED ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) || ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY ) )
-//        loopAction("WAIT : for the READY signal from the carrier before setting usrclk\n");
-
-//      while ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY )
-//        loopAction("WAIT : for the READY signal from the carrier before setting usrclk\n");
 
       status |= usrClkSet(usrclk);
       break;
@@ -506,41 +494,6 @@ int leave_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode
 
   status |= txSystemInitAll();
   status |= rxSystemInitAll();
-
-  if (raw_clk_changed == TRUE)
-  {
-    status |= rxPcsReset(MASTER_TRANSCEIVER); /* the RX PCS fifo of the master RocketIO may have become full
-    due to mismatches between the local and the recovered clock. This corrects for it. */
-    status |= rxPcsInit(MASTER_TRANSCEIVER);
-  }
-
-//  if (block_mode == BLOCKING)
-//  {
-//    while (  ( isPllLocked() == PLL_NOT_LOCKED ) 
-//          || ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY )
-//          || ( isDcmLocked(usrclk) != DCM_LOCKED )
-//          || ( txSystemStatusAll() != READY ) 
-//          || ( rxSystemStatusAll() != READY ) )
-//     loopAction("WAIT : for pll, dcm, all tx and rx, and for carrier to be ready, blocking mode, EOf");
-//  }
-//  else {
-//    while (  ( isPllLocked() == PLL_NOT_LOCKED ) 
-//          || ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY )
-//          || ( isDcmLocked(usrclk) != DCM_LOCKED )
-//          || ( txSystemStatusAll() != READY ) 
-//          || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for pll, dcm, rx(MASTER_TRANS) and all tx, and for carrier to be ready, EOf");
-//  }
-
-//  if (block_mode == BLOCKING)
-//  {
-//    while ( ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY ) || ( txSystemStatusAll() != READY ) || ( rxSystemStatusAll() != READY ) )
-//     loopAction("WAIT : for all tx and rx, and for carrier to be ready, blocking mode, EOf");
-//  }
-//  else {
-//    while ( ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY ) || ( txSystemStatusAll() != READY ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for rx(MASTER_TRANS) and all tx, and for carrier to be ready, EOf");
-//  }
 
   if (block_mode == BLOCKING)
   {
@@ -570,22 +523,15 @@ int leave_NoMgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
 
   status |= rxSystemInit(MASTER_TRANSCEIVER);
 
-//  while ( ( isPllLocked() == PLL_NOT_LOCKED ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//    loopAction("WAIT : for gts_pll to lock, and rx(MASTER_TRANS) to be ready"); /* wait for the external PLL to be locked with the currentLMK_PLL setting and for the RX master transceiver to be ready */
-
   while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
     loopAction("WAIT : for rx(MASTER_TRANS) to be ready"); /* wait for the RX master transceiver to be ready */
 
   status |= txSystemReset(MASTER_TRANSCEIVER);
-//  status |= rxSystemResetAllExcept(MASTER_TRANSCEIVER);
 
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
     raw_clk_changed = TRUE;
     rawClkSet(MASTER_CLK); /* one feeds the LMK_PLL with the clock recovered from the master transceiver */
-
-//    while ( ( isPllLocked() == PLL_NOT_LOCKED) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for gts_pll to lock, and rx(MASTER_TRANS) to be ready, after the switch of rawclk to MASTER_CLK");
 
     while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
       loopAction("WAIT : for rx(MASTER_TRANS) to be ready, after the switch of rawclk to MASTER_CLK");
@@ -599,12 +545,6 @@ int leave_NoMgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
         /* one says to the carrier that the clock sent is good */
         status |= gtsReadySet();
       }
-
-//      while ( ( isPllLocked() == PLL_NOT_LOCKED ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) || ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY ) )
-//        loopAction("WAIT : for the READY signal from the carrier before setting usrclk\n");
-
-//      while ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY )
-//        loopAction("WAIT : for the READY signal from the carrier before setting usrclk\n");
 
       status |= usrClkSet(usrclk);
       break;
@@ -625,41 +565,6 @@ int leave_NoMgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
 
   status |= txSystemInitAll();
   status |= rxSystemInitAll();
-
-  if (raw_clk_changed == TRUE)
-  {
-    status |= rxPcsReset(MASTER_TRANSCEIVER); /* the RX PCS fifo of the master RocketIO may have become full
-    due to mismatches between the local and the recovered clock. This corrects for it. */
-    status |= rxPcsInit(MASTER_TRANSCEIVER);
-  }
-
-//  if (block_mode == BLOCKING)
-//  {
-//    while (  ( isPllLocked() == PLL_NOT_LOCKED ) 
-//          || ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY )
-//          || ( isDcmLocked(usrclk) != DCM_LOCKED )
-//          || ( txSystemStatusAll() != READY ) 
-//          || ( rxSystemStatusAll() != READY ) )
-//     loopAction("WAIT : for pll, dcm, all tx and rx, and for carrier to be ready, blocking mode, EOf");
-//  }
-//  else {
-//    while (  ( isPllLocked() == PLL_NOT_LOCKED ) 
-//          || ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY )
-//          || ( isDcmLocked(usrclk) != DCM_LOCKED )
-//          || ( txSystemStatusAll() != READY ) 
-//          || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for pll, dcm, rx(MASTER_TRANS) and all tx, and for carrier to be ready, EOf");
-//  }
-
-//  if (block_mode == BLOCKING)
-//  {
-//    while ( ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY ) || ( txSystemStatusAll() != READY ) || ( rxSystemStatusAll() != READY ) )
-//     loopAction("WAIT : for all tx and rx, and for carrier to be ready, blocking mode, EOf");
-//  }
-//  else {
-//    while ( ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY ) || ( txSystemStatusAll() != READY ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for rx(MASTER_TRANS) and all tx, and for carrier to be ready, EOf");
-//  }
 
   if (block_mode == BLOCKING)
   {
@@ -684,22 +589,15 @@ int leave_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
 
   status |= rxSystemInit(MASTER_TRANSCEIVER);
 
-//  while ( ( isPllLocked() == PLL_NOT_LOCKED ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for gts_pll to lock, and rx(MASTER_TRANS) to be ready"); /* wait for the external PLL to be locked with the current reference clock and for the RX master transceiver to be ready */
-
   while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
       loopAction("WAIT : for rx(MASTER_TRANS) to be ready"); /* wait for the RX master transceiver to be ready */
 
   status |= txSystemResetAll(); /* reset of all active TX PMAs */
-//  status |= rxSystemResetAllExcept(MASTER_TRANSCEIVER); /* reset of all active RX PMAs except the master transceiver one */
 
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
     raw_clk_changed = TRUE;
     rawClkSet(MASTER_CLK); /* one feed the LMK_PLL with the clock recovered from the master transceiver */
-
-//    while ( ( isPllLocked() == PLL_NOT_LOCKED) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for gts_pll to lock, and rx(MASTER_TRANS) to be ready, after the switch of rawclk to MASTER_CLK");
 
     while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
       loopAction("WAIT : for rx(MASTER_TRANS) to be ready, after the switch of rawclk to MASTER_CLK");
@@ -713,12 +611,6 @@ int leave_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
         /* one says to the carrier that the clock sent is good */
         status |= gtsReadySet();
       }
-
-//      while (  ( isPllLocked() == PLL_NOT_LOCKED ) || ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY ) )
-//        loopAction("WAIT : for the READY signal from the carrier before setting usrclk\n");
-
-//      while ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY )
-//        loopAction("WAIT : for the READY signal from the carrier before setting usrclk\n");
 
       status |= usrClkSet(usrclk);
       break;
@@ -737,22 +629,6 @@ int leave_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
       DBG(DBLE, "ERROR : wrong value of usrclk=%d in leave_MgtForwardNoMgtBackward_ClkSet\n", usrclk);
       return XST_FAILURE;
   }
-
-  if (raw_clk_changed == TRUE)
-  {
-    status |= rxPcsReset(MASTER_TRANSCEIVER); /* the RX PCS fifo of the master RocketIO may have become full
-    due to mismatches between the local and the recovered clock. This corrects for it. */
-    status |= rxPcsInit(MASTER_TRANSCEIVER);
-  }
-
-//  while (  ( isPllLocked() == PLL_NOT_LOCKED ) 
-//        || ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY )
-//        || ( isDcmLocked(usrclk) != DCM_LOCKED )
-//        || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//    loopAction("WAIT : for pll, dcm, all rx, and for carrier to be ready, EOf");
-
-//  while ( ( isCarrierClkReady(usrclk) != CLK_CARRIER_READY ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//    loopAction("WAIT : for rx, and for carrier to be ready, EOf");
 
   while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
     loopAction("WAIT : for rx to be ready, EOf");
@@ -778,10 +654,6 @@ int leave_NoMgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_
 
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     status |= rawClkSet(LOCAL_CLK);
-//    status |= XMMRegs_LmkPll_Reset(&XMMRegsDriver);
-
-//    while ( isPllLocked() == PLL_NOT_LOCKED ) 
-//      loopAction("WAIT : that gts_pll locks"); /* wait for the external PLL to be locked with the current reference */
   }
 
   switch (usrclk) {
@@ -794,12 +666,6 @@ int leave_NoMgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_
     default :
       DBG(DBLE, "ERROR : wrong value of usrclk=%d in leave_NoMgtForwardNoMgtBackward_ClkSet", usrclk);
       return XST_FAILURE;
-  }
-
-  if ( alignModeRead() == CARRIER_INCLUDED ) {
-    /* one waits for the LMK_PLL of the carrier to unlock */
-//    while ( isCarrierClkNotReady(usrclk) != CLK_CARRIER_NOT_READY ) 
-//      loopAction("WAIT : for carrier to send the CLK_NOT_READY signal");
   }
 
   DBG(DBLD, "leave_NoMgtForwardNoMgtBackward_ClkSet done\n");
@@ -818,22 +684,15 @@ int faninfanout_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int bloc
 
   status |= rxSystemInit(MASTER_TRANSCEIVER);
 
-//  while ( ( isPllLocked() == PLL_NOT_LOCKED ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//    loopAction("WAIT : for gts pll to lock, and rx of MASTER_TRANSCEIVER to be ready"); /* wait for the external PLL to be locked with the current reference clock and for the RX master transceiver to be ready */
-
   while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
     loopAction("WAIT : for rx of MASTER_TRANSCEIVER to be ready"); /* wait for the RX master transceiver to be ready */
 
   status |= txSystemReset(MASTER_TRANSCEIVER);
-//  status |= rxSystemResetAllExcept(MASTER_TRANSCEIVER);
 
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
     raw_clk_changed = TRUE;
     rawClkSet(MASTER_CLK); /* one feeds the LMK_PLL with the clock recovered from the master transceiver */
-
-//    while ( ( isPllLocked() == PLL_NOT_LOCKED) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for gts pll to lock, and rx of MASTER_TRANSCEIVER to be ready after the switch of rawclk to MASTER_CLK");
 
     while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
       loopAction("WAIT : for rx of MASTER_TRANSCEIVER to be ready after the switch of rawclk to MASTER_CLK");
@@ -851,34 +710,8 @@ int faninfanout_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int bloc
     }
   }
 
-//  while ( (isPllLocked() == PLL_NOT_LOCKED) || (isDcmLocked(usrclk) != DCM_LOCKED) )
-//    loopAction("WAIT : for a stable input clock and fb dcm locked"); /* one waits for a stable clock */
-
   status |= txSystemInitAll();
   status |= rxSystemInitAll();
-
-  if (raw_clk_changed == TRUE)
-  {
-    status |= rxPcsReset(MASTER_TRANSCEIVER); /* the RX PCS fifo of the master RocketIO may have become full
-    due to mismatches between the local and the recovered clock. This corrects for it. */
-    status |= rxPcsInit(MASTER_TRANSCEIVER);
-  }
-
-//  if (block_mode == BLOCKING)
-//  {
-//    while (  ( isPllLocked() == PLL_NOT_LOCKED ) 
-//               || ( isDcmLocked(usrclk) != DCM_LOCKED )
-//               || ( txSystemStatusAll() != READY ) 
-//               || ( rxSystemStatusAll() != READY ) 
-//          ) loopAction("WAIT : that dcm, pll, all rx and tx are ready, blocking mode, EOf");
-//  }
-//  else {
-//    while ( ( isPllLocked() == PLL_NOT_LOCKED) 
-//            || ( isDcmLocked(usrclk) != DCM_LOCKED )
-//            || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) 
-//            || ( txSystemStatusAll() != READY ) )
-//            loopAction("WAIT : that dcm, pll, rx(MASTER_TRANS) and all tx are ready, EOf");
-//  }
 
   if (block_mode == BLOCKING)
   {
@@ -903,22 +736,15 @@ int faninfanout_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int bl
 
   status |= rxSystemInit(MASTER_TRANSCEIVER);
 
-//  while ( ( isPllLocked() == PLL_NOT_LOCKED ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//    loopAction("WAIT : for gts_pll to lock and rx(MASTER_TRANS) to be ready"); 
-
   while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
     loopAction("WAIT : for rx(MASTER_TRANS) to be ready"); 
 
   status |= txSystemResetAll(); /* reset of all active TX PMAs */
-//  status |= rxSystemResetAllExcept(MASTER_TRANSCEIVER); /* reset of all active RX PMAs except the master transceiver one */
 
   if ( (rawClkDiagnose() != MASTER_CLK) || (force_set == FORCE_SET) ) 
   {
     raw_clk_changed = TRUE;
     rawClkSet(MASTER_CLK); /* one feed the LMK_PLL with the clock recovered from the master transceiver */
-
-//    while ( ( isPllLocked() == PLL_NOT_LOCKED) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//      loopAction("WAIT : for gts_pll to lock and rx(MASTER_TRANS) to be ready"); 
 
     while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
       loopAction("WAIT : for rx(MASTER_TRANS) to be ready after the switch of rawclk to MASTER_CLK"); 
@@ -941,21 +767,6 @@ int faninfanout_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int bl
       return XST_FAILURE;
   }
 
-//  while ( (isPllLocked() == PLL_NOT_LOCKED) || (isDcmLocked(usrclk) != DCM_LOCKED) )
-//    loopAction("WAIT : for a stable input clock and fb dcm locked"); /* one waits for a stable clock */
-
-//  status |= txSystemInitAllExcept(MASTER_TRANSCEIVER);
-
-  if (raw_clk_changed == TRUE)
-  {
-    status |= rxPcsReset(MASTER_TRANSCEIVER); /* the RX PCS fifo of the master RocketIO may have become full
-    due to mismatches between the local and the recovered clock. This corrects for it. */
-    status |= rxPcsInit(MASTER_TRANSCEIVER);
-  }
-
-//  while ( ( isPllLocked() == PLL_NOT_LOCKED ) || ( isDcmLocked(usrclk) != DCM_LOCKED ) || ( rxSystemStatus(MASTER_TRANSCEIVER) != READY ) )
-//    loopAction("WAIT : that dcm, pll, tx(except MASTER_TRANS) and rx(MASTER_TRANS) are ready, EOf");
-
   while ( rxSystemStatus(MASTER_TRANSCEIVER) != READY )
     loopAction("WAIT : that rx(MASTER_TRANS) is ready, EOf");
 
@@ -975,9 +786,6 @@ int faninfanout_NoMgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int 
 
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     status |= rawClkSet(LOCAL_CLK);
-
-//    while ( isPllLocked() == PLL_NOT_LOCKED )
-//      loopAction("WAIT : that gts_pll locks");
   }
 
   switch (usrclk) {
@@ -1014,15 +822,12 @@ int root_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode)
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     status |= rawClkSet(LOCAL_CLK);
     status |= txSystemResetAll(); 
-//    status |= XMMRegs_LmkPll_Reset(&XMMRegsDriver);
+
     if (force_set == DONT_FORCE_SET) {
       DBG(DBLW, "WARNING : forward = USE_MGT and backward = USE_MGT in root node\n");
       DBG(DBLW, "while rawclk != LOCAL_CLK; it is not the correct way to initialize the GTS tree\n");
       status = XST_FAILURE;
     }
-
-//    while ( isPllLocked() == PLL_NOT_LOCKED )
-//      loopAction("WAIT : for external PLL to lock");
   }
 
   switch (usrclk) {
@@ -1045,11 +850,7 @@ int root_MgtForwardMgtBackward_ClkSet(int usrclk, int force_set, int block_mode)
     while ( ( txSystemStatusAll() != READY ) || ( rxSystemStatusAll() != READY ) )
       loopAction("WAIT : for tx and rx to be ready, blocking mode, EOf");
   }
-/*
-  else {
-    while ( txSystemStatusAllExcept(MASTER_TRANSCEIVER) != READY ) loopAction("WAIT : for tx (except MASTER transceiver) to be ready, EOf");
-  }
-*/
+
   DBG(DBLD, "root_MgtForwardMgtBackward_ClkSet done\n");
 
   return status;
@@ -1066,9 +867,6 @@ int root_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mod
 
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     status |= rawClkSet(LOCAL_CLK);
-
-//    while ( isPllLocked() == PLL_NOT_LOCKED)
-//      loopAction("WAIT : for external PLL to lock");
   }
 
   switch (usrclk) {
@@ -1089,11 +887,7 @@ int root_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mod
     while ( txSystemStatusAll() != READY )
       loopAction("WAIT : for tx system to be ready, blocking, EOf");
   }
-/*
-  else {
-    while ( txSystemStatusAllExcept(MASTER_TRANSCEIVER) != READY ) loopAction("WAIT : for tx (except MASTER transceiver) to be ready, EOf");
-  }
-*/
+
   DBG(DBLD, "root_MgtForwardNoMgtBackward_ClkSet done\n");
 
   return status;
@@ -1110,8 +904,6 @@ int root_NoMgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_m
 
   if ( (rawClkDiagnose() != LOCAL_CLK) || (force_set == FORCE_SET) ) {
     status |= rawClkSet(LOCAL_CLK);
-
-//    while ( isPllLocked() == PLL_NOT_LOCKED ) ;
   }
 
   switch (usrclk) {
@@ -1175,10 +967,6 @@ int leaveClkSet(int usrclk, int forward, int backward, int force_set, int block_
     status |= leave_MgtForwardNoMgtBackward_ClkSet(usrclk, force_set, block_mode);
   }
   else if ( (forward == BYPASS_MGT) && (backward == USE_MGT) ) {
-//    DBG(DBLE, "ERROR : forward = BYPASS_MGT, backward = USE_MGT\n");
-//    DBG(DBLE, "This mode should never be found in the GTS system\n");
-//    status = XST_FAILURE;
-
     status |= leave_NoMgtForwardMgtBackward_ClkSet(usrclk, force_set, block_mode);
   }
   else if ( (forward == BYPASS_MGT) && (backward == BYPASS_MGT) ) {

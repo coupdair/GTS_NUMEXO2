@@ -238,7 +238,7 @@ int XMMRegs_RocketIO_RefClkTX_Set(XMMRegs *InstancePtr, int tile, unsigned char 
   drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
 
-  set_word_drp(drp_addr, drp, drp_status, 0, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
+  set_word_drp(drp_addr, drp, drp_status, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
 
   return XST_SUCCESS;
 }
@@ -255,7 +255,7 @@ int XMMRegs_RocketIO_RefClkRX_Set(XMMRegs *InstancePtr, int transceiver, unsigne
   drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
   drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
 
-  set_word_drp(drp_addr, drp, drp_status, 0, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
+  set_word_drp(drp_addr, drp, drp_status, 0x04, 0xA0E9); // for GTS LEAF NUMEXO2 (Virtex5)
 
   return XST_SUCCESS;
 }
@@ -683,7 +683,7 @@ int XMMRegs_RocketIO_Init(XMMRegs *InstancePtr)
   int status = XST_SUCCESS;
 
 //  DBG(DBLD, "RocketIO_Init --->\n");
-  status |= XMMRegs_RocketIO_Setup(InstancePtr);
+  status  = XMMRegs_RocketIO_Setup(InstancePtr);
   status |= XMMRegs_RocketIO_Start(InstancePtr);
 //  DBG(DBLD, "---> RocketIO_Init |\n");
 
@@ -694,7 +694,7 @@ int XMMRegs_RocketIO_Reset(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_RocketIO_Stop(InstancePtr);
+  status  = XMMRegs_RocketIO_Stop(InstancePtr);
   status |= XMMRegs_RocketIO_Init(InstancePtr);
 
   return status;
