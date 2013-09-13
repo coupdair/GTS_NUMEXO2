@@ -245,7 +245,6 @@ extern int  XMMRegs_RocketIO_RefClkRX_Diagnose (XMMRegs *InstancePtr, int transc
 extern int  XMMRegs_RocketIO_RefClkTX_Diagnose (XMMRegs *InstancePtr, int tile);
 extern int  XMMRegs_RocketIO_CommaAlign_Diagnose (XMMRegs *InstancePtr, int transceiver);
 extern unsigned int  XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr, int transceiver);
-extern int  XMMRegs_RocketIO_DrpWord_Read(XMMRegs *InstancePtr, int transceiver, unsigned char DADDR);
 extern int  XMMRegs_RocketIO_TxSystem_Reset(XMMRegs *InstancePtr, int transceiver);
 extern int  XMMRegs_RocketIO_RxSystem_Reset(XMMRegs *InstancePtr, int transceiver);
 extern int  XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr, int transceiver);

@@ -235,23 +235,6 @@ static void set_word_drp(XMMRegs_drp_addr_ctrl *drp_addr, XMMRegs_drp_ctrl *drp,
 
 ************************************************************/
 
-int XMMRegs_RocketIO_DrpWord_Read(XMMRegs *InstancePtr, unsigned char DADDR)
-{
-  XMMRegs_drp_status *drp_status;
-  XMMRegs_drp_addr_ctrl *drp_addr;
-  XMMRegs_drp_ctrl *drp;
-  void *ba;
-
-  ba = InstancePtr->BaseAddress;
-  drp_status = (XMMRegs_drp_status *)(ba + XMMR_GT_DRP_STATUS_OFFSET);
-  drp_addr = (XMMRegs_drp_addr_ctrl *)(ba + XMMR_GT_DRP_ADDR_CTRL_OFFSET);
-  drp = (XMMRegs_drp_ctrl *)(ba + XMMR_GT_DRP_CTRL_OFFSET);
-
-  read_word_drp(drp_addr, drp, drp_status, DADDR);
-
-  return XST_SUCCESS;
-}
-
 int XMMRegs_RocketIO_RefClkRX_Diagnose (XMMRegs *InstancePtr, int transceiver)
 {
   return 1; // NUMEXO2
