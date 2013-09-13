@@ -191,26 +191,22 @@ unsigned int XMMRegs_DataPath_CoarseDelay_Read(XMMRegs *InstancePtr)
   return dp_delay->delay;
 }
 
-int XMMRegs_DataPath_Digitizer_Connect(XMMRegs *InstancePtr, int trans)
+void XMMRegs_DataPath_Digitizer_Connect(XMMRegs *InstancePtr)
 {
   XMMRegs_dp_mux_ctrl *d;
 
   d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
   d->mux_digitizer_gts_tree = 1;
-
-  return XST_SUCCESS;
 }
 
-int XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr, int trans)
+void XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr)
 {
   XMMRegs_dp_mux_ctrl *d;
 
   d = (XMMRegs_dp_mux_ctrl *)(InstancePtr->BaseAddress +  XMMR_DP_MUX_CTRL_OFFSET);
 
   d->mux_digitizer_gts_tree = 0;
-
-  return XST_SUCCESS;
 }
 
 /************************************************************
@@ -234,12 +230,10 @@ int XMMRegs_DataPath_Setup(XMMRegs *InstancePtr)
   dp_mux->mux_digitizer_gts_tree = 0;
   dp_mux->sfp_txmux_sync_select = 0;
 
-  status = set_coarse_delay(dp_delay, 0);
-
-  return status;
+  return set_coarse_delay(dp_delay, 0);
 }
 
-int  XMMRegs_DataPath_Stop(XMMRegs *InstancePtr)
+int XMMRegs_DataPath_Stop(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
   XMMRegs_dp_mux_ctrl *dp_mux;  
@@ -254,35 +248,30 @@ int  XMMRegs_DataPath_Stop(XMMRegs *InstancePtr)
   dp_mux->mux_digitizer_gts_tree = 0;
   dp_mux->sfp_txmux_sync_select = 0;
 
-  status = set_coarse_delay(dp_delay, 0);
-
-  return status;
+  return set_coarse_delay(dp_delay, 0);
 }
 
-int  XMMRegs_DataPath_Start(XMMRegs *InstancePtr)
+void XMMRegs_DataPath_Start(XMMRegs *InstancePtr)
 {
-  int status = XST_SUCCESS;
-
-  return status;
 }
 
-int  XMMRegs_DataPath_Init(XMMRegs *InstancePtr)
+int XMMRegs_DataPath_Init(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
   DBG(DBLD, "DataPath_Init --->\n");
-  status |= XMMRegs_DataPath_Setup(InstancePtr);
-  status |= XMMRegs_DataPath_Start(InstancePtr);
+  status = XMMRegs_DataPath_Setup(InstancePtr);
+  XMMRegs_DataPath_Start(InstancePtr);
   DBG(DBLD, "---> DataPath_Init |\n");
 
   return status;
 }
 
-int  XMMRegs_DataPath_Reset(XMMRegs *InstancePtr)
+int XMMRegs_DataPath_Reset(XMMRegs *InstancePtr)
 {
   int status = XST_SUCCESS;
 
-  status |= XMMRegs_DataPath_Stop(InstancePtr);
+  status  = XMMRegs_DataPath_Stop(InstancePtr);
   status |= XMMRegs_DataPath_Init(InstancePtr);
 
   return status;
@@ -290,34 +279,14 @@ int  XMMRegs_DataPath_Reset(XMMRegs *InstancePtr)
 
 void XMMRegs_DataPath_PrintAll(XMMRegs *InstancePtr)
 {
-  int i;
-
   DBG(DBLI, "\nPrintAll of DataPath :---------------------------------------------------------------\n");
   DBG(DBLI, "mgt_regdata_ctrl\t:\t");
   XMMRegs_PrintHex(InstancePtr, XMMR_MGT_REGDATA_CTRL_OFFSET );
-
   DBG(DBLI, "\t\t\t:\t  28 :   24 :   20 :   16 :   12 :    8 :    4 :    0\n");
   DBG(DBLI, "dp_mux_ctrl\t\t:\t");
   XMMRegs_PrintBinary(InstancePtr, XMMR_DP_MUX_CTRL_OFFSET);
-/*
-  DBG(DBLI, "dp_ulinkmux_ctrl\t:\t");
-  XMMRegs_PrintBinary(InstancePtr, XMMR_DP_ULINKMUX_CTRL_OFFSET);
-  DBG(DBLI, "dp_sync_logic_ctrl\t:\t");
-  XMMRegs_PrintBinary(InstancePtr, XMMR_DP_SYNC_LOGIC_CTRL_OFFSET);
-*/
-/*
-  DBG(DBLI, "dp_tdc_ctrl\t\t:\t");
-  XMMRegs_PrintBinary(InstancePtr, XMMR_DP_TDC_CTRL_OFFSET);
-*/
   DBG(DBLI, "dp_delay_ctrl\t\t:\t");
   XMMRegs_PrintBinary(InstancePtr, XMMR_DP_DELAY_CTRL_OFFSET);
-/*
-  DBG(DBLI, "dp_digitizer_ctrl\t:\t");
-  XMMRegs_PrintBinary(InstancePtr, XMMR_DP_DIGITIZER_CTRL_OFFSET);
-  DBG(DBLI, "dp_access_mgt_ctrl\t:\t");
-  XMMRegs_PrintBinary(InstancePtr, XMMR_DP_ACCESS_MGT_CTRL_OFFSET);
-*/
-  return;
 }
 
 #undef DBG

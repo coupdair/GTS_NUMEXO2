@@ -74,7 +74,7 @@ int muxSyncSet(int GTStype, int forward)
 
   XMMRegs_DataPath_UseSync_Set(&XMMRegsDriver);
 
-  XMMRegs_DataPath_Digitizer_Disconnect(&XMMRegsDriver, 0);
+  XMMRegs_DataPath_Digitizer_Disconnect(&XMMRegsDriver);
 
   switch (GTStype) {
     case ROOT :

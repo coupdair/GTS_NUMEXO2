@@ -252,7 +252,7 @@ extern int  XMMRegs_RocketIO_RxSystem_Status(XMMRegs *InstancePtr);
 /*  DataPath APIs                              */
 /***********************************************/
 extern int  XMMRegs_DataPath_Setup(XMMRegs *InstancePtr);
-extern int  XMMRegs_DataPath_Start(XMMRegs *InstancePtr);
+extern void XMMRegs_DataPath_Start(XMMRegs *InstancePtr);
 extern int  XMMRegs_DataPath_Stop(XMMRegs *InstancePtr);
 extern int  XMMRegs_DataPath_Init(XMMRegs *InstancePtr);
 extern int  XMMRegs_DataPath_Reset(XMMRegs *InstancePtr);
@@ -268,8 +268,8 @@ extern int  XMMRegs_DataPath_UseSync_MasterToMaster_Set(XMMRegs *InstancePtr, in
 extern int  XMMRegs_DataPath_UseSync_MasterToSlave_Set(XMMRegs *InstancePtr, int forward);
 extern int  XMMRegs_DataPath_UseSync_SyncToSlave_Set(XMMRegs *InstancePtr, int forward);
 extern void XMMRegs_DataPath_OneSweep_Do(XMMRegs *InstancePtr);
-extern int  XMMRegs_DataPath_Digitizer_Connect(XMMRegs *InstancePtr, int trans);
-extern int  XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr, int trans);
+extern void XMMRegs_DataPath_Digitizer_Connect(XMMRegs *InstancePtr);
+extern void XMMRegs_DataPath_Digitizer_Disconnect(XMMRegs *InstancePtr);
 
 /***********************************************/
 /*  Trigger APIs                               */

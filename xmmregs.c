@@ -587,7 +587,7 @@ int XMMRegs_Start(XMMRegs *InstancePtr)
   status |= XMMRegs_Settings_Start(InstancePtr);
   XMMRegs_MuxInOut_Start(InstancePtr);
   status |= XMMRegs_ClockPath_Start(InstancePtr);
-  status |= XMMRegs_DataPath_Start(InstancePtr);
+  XMMRegs_DataPath_Start(InstancePtr);
   status |= XMMRegs_Trigger_Start(InstancePtr);
   XMMRegs_RocketIO_Start(InstancePtr);
   status |= XMMRegs_Data_Start(InstancePtr);
@@ -658,7 +658,7 @@ int  XMMRegs_Update(XMMRegs *InstancePtr)
   status |= XMMRegs_Settings_Start(InstancePtr);
   XMMRegs_MuxInOut_Start(InstancePtr);
   status |= XMMRegs_ClockPath_Start(InstancePtr);
-  status |= XMMRegs_DataPath_Start(InstancePtr);
+  XMMRegs_DataPath_Start(InstancePtr);
   status |= XMMRegs_Trigger_Start(InstancePtr);
   XMMRegs_RocketIO_Start(InstancePtr);
   status |= XMMRegs_Data_Start(InstancePtr); 
