@@ -31,24 +31,6 @@ static void print_u16_binary(unsigned short *ba)
   DBG(DBLD, "\n");
 }
 
-static unsigned int set_drp_choice(int transceiver)
-{
-  switch (transceiver) 
-  {
-  case NO_TRANSCEIVER :
-  	return 0;
-  case TRANSCEIVER_0 : 
-	return 1;
-  case TRANSCEIVER_1 : case TRANSCEIVER_2 : case TRANSCEIVER_3 :
-	return (1<<transceiver);
-  default :
-        DBG(DBLE, "ERROR : in function set_drp_choice\n");
-        DBG(DBLE, "ERROR : transceiver out of range\n");
-        DBG(DBLE, "ERROR : transceiver = %d\n", transceiver);
-	return 0;
-  }  
-}
-
 static void set_regdata(XMMRegs_txmgtdata_ctrl *reg, unsigned int msb, unsigned int lsb, unsigned char comma_msb, unsigned char comma_lsb)
 {
   /* order matters */
