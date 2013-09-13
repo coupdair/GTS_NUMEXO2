@@ -31,15 +31,6 @@ static void print_u16_binary(unsigned short *ba)
   DBG(DBLD, "\n");
 }
 
-static int read_u16_bit(unsigned short val, unsigned char bit_pos)
-{ 
-  unsigned short tmp;
-
-  tmp = val << (15 - bit_pos);
-  tmp = tmp >> 15;
-  return (int)tmp;
-}
-
 static unsigned int set_drp_choice(int transceiver)
 {
   switch (transceiver) 
