@@ -121,7 +121,6 @@ int fineDelaySetNow(unsigned int fine_delay)
   return status;
 }
 
-
 int coarseDelaySet(unsigned int coarse_delay)
 {
   int status = XST_SUCCESS;
