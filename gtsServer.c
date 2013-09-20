@@ -33,7 +33,7 @@ unsigned int Scratch[128];
 
 unsigned int XSPIScratch[0x4000];
 
-unsigned int cardNumber = 192;
+unsigned int cardNumber = 225;
 
 extern int gtsCliSock;
 
