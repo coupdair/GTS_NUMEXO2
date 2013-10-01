@@ -19,6 +19,7 @@ int	cmd_rxSystemIsReady (void*);
 int	cmd_treeRead (void*);
 int	cmd_treeStop (void*);
 int	cmd_excludeCarrierForAlign (void*);
+int	cmd_includeCarrierForAlign (void*);
 int	cmd_alignStart (void*);
 int	cmd_fineDelaySetNow (void*);
 int	cmd_fineDelaySet (void*);
@@ -66,6 +67,7 @@ GTScommands	gtsCommands [MaxGtsCommands] = {
 	{"%s %d",				"treeRead",					cmd_treeRead},
 	{"%s",					"treeStop",					cmd_treeStop},
 	{"%s",					"excludeCarrierForAlign",	cmd_excludeCarrierForAlign},
+	{"%s",					"includeCarrierForAlign",	cmd_includeCarrierForAlign},
 	{"%s",					"alignStart",				cmd_alignStart},
 	{"%s %d",				"fineDelaySetNow",			cmd_fineDelaySetNow},
 	{"%s %d",				"fineDelaySet",				cmd_fineDelaySet},
@@ -362,6 +364,11 @@ int	cmd_treeStop (void * param)
 int	cmd_excludeCarrierForAlign (void * param)
 {
 	return excludeCarrierForAlign();
+}
+
+int	cmd_includeCarrierForAlign (void * param)
+{
+	return includeCarrierForAlign();
 }
 
 int	cmd_alignStart (void * param)
