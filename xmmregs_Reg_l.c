@@ -194,5 +194,13 @@ int XMMRegs_Reg_Associate(XMMRegs *InstancePtr, int config)
       FIELD( LLP_Carrier_is_here   )
       FIELD( LMK_PLL_locked        )
       FIELD( sw_reset_from_carrier )
+  NEXT
+    REG(req_bkp_rate_status, XMMR_REQ_BKP_RATE_STATUS_OFFSET, 1)
+      FIELD( bkp_rate         )
+      FIELD( req_rate         )
+  NEXT
+    REG(val_rej_rate_status, XMMR_VAL_REJ_RATE_STATUS_OFFSET, 1)
+      FIELD( rej_rate         )
+      FIELD( val_rate         )
   END
 }
