@@ -437,10 +437,12 @@ int XMMRegs_Settings_Setup(XMMRegs *InstancePtr)
 
   if ( XMMRegs_Trigger_CarrierType_Read(InstancePtr) == LLP_CARRIER_IS_CARRIER ) {
     DBG(DBLI, "LLP Carrier detected => LLP_Carrier is included for the alignment\n");
+    printf("LLP Carrier detected => LLP_Carrier is included for the alignment\n");
     status |= XMMRegs_AlignMode_Set(InstancePtr, CARRIER_INCLUDED);
   }
   else {
     DBG(DBLI, "VME Carrier detected => Carrier is excluded for the alignment\n");
+    printf("VME Carrier detected => Carrier is excluded for the alignment\n");
     status |= XMMRegs_AlignMode_Set(InstancePtr, CARRIER_EXCLUDED);
   }
 
