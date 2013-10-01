@@ -14,7 +14,7 @@ enum GtsCommands {
 
 	TreeSetup, TreeStart, RxSystemIsReady, TreeRead, TreeStop,
 
-	ExcludeCarrierForAlign, AlignStart, FineDelaySetNow,
+	ExcludeCarrierForAlign, IncludeCarrierForAlign, AlignStart, FineDelaySetNow,
 	FineDelaySet, CoarseDelaySet, AlignSet, AlignTdcSet,
 
 	PrintBinary, SetOutputFileName, AlignMeas, TdcSet, TdcMeas,
