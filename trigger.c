@@ -300,7 +300,7 @@ int counterRootSetup(int GTStype)
 {
   int status = XST_SUCCESS;
   int usrclk;
-  
+
   if ( (GTStype != ROOT) && (GTStype != FANIN_FANOUT) && (GTStype != LEAVE) ) {
     DBG(DBLE, "ERROR : out of range on GTStype in function triggerSet");
     return XST_FAILURE; 
