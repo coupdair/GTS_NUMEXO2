@@ -253,9 +253,12 @@ int leave_MgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_mo
       break;
 
     case LOCAL_CLK :
+/*
       DBG(DBLW, "WARNING : you use the local clk as usrclk, but the recovered clock as refclk\n");
       DBG(DBLW, "It is not the correct way to initialize the GTS tree\n");
       status = XST_FAILURE;
+*/
+      status |= usrClkSet(usrclk);
       break;
 
     default :
@@ -285,11 +288,17 @@ int leave_NoMgtForwardNoMgtBackward_ClkSet(int usrclk, int force_set, int block_
 
   switch (usrclk) {
     case MICTOR_CLK : case RECOVERED_CLK:
+/*
       DBG(DBLE, "ERROR : you can't use the recovered (or mictor) clock when the leaf is in BYPASS_MGT/SFP mode\n");
-      return XST_FAILURE;
+      status = XST_FAILURE;
+*/
+      status |= usrClkSet(usrclk);
+      break;
+
     case LOCAL_CLK :
       status |= usrClkSet(usrclk);
       break;
+
     default :
       DBG(DBLE, "ERROR : wrong value of usrclk=%d in leave_NoMgtForwardNoMgtBackward_ClkSet", usrclk);
       return XST_FAILURE;
