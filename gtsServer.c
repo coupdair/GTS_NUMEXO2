@@ -62,7 +62,7 @@ int main (int argc, char *argv[])
 
   inet_ntop( AF_INET, &(((struct sockaddr_in *)&(ifreqs[1].ifr_addr))->sin_addr), ip, INET_ADDRSTRLEN );
 
-  printf("IP address : %s\n", ip);
+  printf("\nIP address : %s\n", ip);
 
   cardNumber = ((struct sockaddr_in *)&(ifreqs[1].ifr_addr))->sin_addr.s_addr & 0xFF;
 
