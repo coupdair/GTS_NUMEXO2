@@ -131,7 +131,8 @@ int alignTdcSet(int GTStype, int forward, int transceiver, int newcal)
   }
 
   XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
-  XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 5); // NUMEXO2
+//  XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 5); // NUMEXO2
+  XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 0); // NUMEXO2
 
   status = muxSyncSet(GTStype, forward);
 
