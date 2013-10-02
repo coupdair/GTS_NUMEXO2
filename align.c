@@ -125,14 +125,14 @@ int alignTdcSet(int GTStype, int forward, int transceiver, int newcal)
 
   if (forward == USE_MGT) {
     measure = MEAS2;
+    XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 0); // LEAF NUMEXO2
   }
   else { /* forward == BYPASS_MGT */
     measure = MEAS1;
+    XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 1); // LEAF NUMEXO2
   }
 
-  XMMRegs_DataPath_AllRxmux_Set(&XMMRegsDriver, 1); // NUMEXO2
-//  XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 5); // NUMEXO2
-  XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 0); // NUMEXO2
+  XMMRegs_DataPath_AllTxmux_Set(&XMMRegsDriver, 1); // LEAF NUMEXO2
 
   status = muxSyncSet(GTStype, forward);
 
