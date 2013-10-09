@@ -31,81 +31,83 @@ int fineDelaySet(unsigned int total_delay)
     return XST_FAILURE;
   }
 
-  /************ reading of the old delay values ********************************/
+//   /************ reading of the old delay values ********************************/
+// 
+//   old_delay_DelayLine = XMMRegs_MuxInOut_FineDelay_Read(&XMMRegsDriver);
+//   old_delay_LmkPll    = XMMRegs_LmkPll_FineDelay_Read(&XMMRegsDriver);
+//   old_total_delay     = XMMRegs_Data_TotalDelay_Read(&XMMRegsDriver);
+// 
+//   /************ checking of the old delay values *******************************/
+// 
+//   if ( (old_delay_LmkPll != 0) && (old_delay_LmkPll != FIXED_LMKPLL_DELAY) ) {
+//     DBG(DBLE, "ERROR : old_delay_LmkPll can have only two values 0 or %d\n", FIXED_LMKPLL_DELAY);
+//     DBG(DBLE, "whereas old_delay_LmkPll = %u\n", old_delay_LmkPll);
+//     return XST_FAILURE;
+//   }
+// 
+//   if ( old_delay_DelayLine > MAX_DELAY ) {
+//     DBG(DBLE, "ERROR : out of range on old_delay_DelayLine in fineDelaySet, should be smaller than %d\n", MAX_DELAY);
+//     return XST_FAILURE;
+//   } 
+// 
+//   if ( old_total_delay > MAX_RAW_DELAY_V3 ) {
+//     DBG(DBLE, "ERROR : out of range on old_total_delay in fineDelaySet, should be smaller than %d\n", MAX_RAW_DELAY_V3);
+//     return XST_FAILURE;
+//   } 
+// 
+//   /************ computation of the new delay values *****************************/
+// 
+//   if ( total_delay > LIM_SUP_DELAYLINE_LMKPLL ) {
+//     if ( old_delay_LmkPll == 0 ) {
+//       new_delay_LmkPll = FIXED_LMKPLL_DELAY;
+//       new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay - FIXED_LMKPLL_DELAY_IN_DELAYLINE_INCREMENT;
+//     }
+//     else if ( old_delay_LmkPll == FIXED_LMKPLL_DELAY ) {
+//       new_delay_LmkPll = FIXED_LMKPLL_DELAY;
+//       new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay;
+//     }
+//     else {
+//       DBG(DBLE, "ERROR : in function fineDelaySet\n");
+//       return XST_FAILURE;
+//     }
+//   }
+//   else if (total_delay < LIM_INF_DELAYLINE_LMKPLL) {
+//     if ( old_delay_LmkPll == 0 ) {
+//       new_delay_LmkPll = 0;
+//       new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay;
+//     }
+//     else if ( old_delay_LmkPll == FIXED_LMKPLL_DELAY ) {
+//       new_delay_LmkPll = 0;
+//       new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay + FIXED_LMKPLL_DELAY_IN_DELAYLINE_INCREMENT;
+//     }
+//     else {
+//       DBG(DBLE, "ERROR : in function fineDelaySet\n");
+//       return XST_FAILURE;
+//     }
+//   }
+//   else {
+//     new_delay_LmkPll = old_delay_LmkPll;
+//     new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay;
+//   }
+// 
+//   new_total_delay = total_delay;
+//   DBG(DBLI, "TotalDelay : old_total_delay = %u\n", old_total_delay);
+//   DBG(DBLI, "TotalDelay : new_total_delay = %u\n", new_total_delay);
+// 
+//   /************ assignment of the new delay values *****************************/
+// 
+//   if ( old_delay_LmkPll != new_delay_LmkPll ) {   
+//     status |= XMMRegs_LmkPll_FineDelay_GradualSet(&XMMRegsDriver, old_delay_LmkPll, new_delay_LmkPll);
+//   }
+//   if ( old_delay_DelayLine != new_delay_DelayLine ) {
+//     status |= XMMRegs_MuxInOut_FineDelay_GradualSet(&XMMRegsDriver, old_delay_DelayLine, new_delay_DelayLine);
+//   }
 
-  old_delay_DelayLine = XMMRegs_MuxInOut_FineDelay_Read(&XMMRegsDriver);
-  old_delay_LmkPll    = XMMRegs_LmkPll_FineDelay_Read(&XMMRegsDriver);
-  old_total_delay     = XMMRegs_Data_TotalDelay_Read(&XMMRegsDriver);
-
-  /************ checking of the old delay values *******************************/
-
-  if ( (old_delay_LmkPll != 0) && (old_delay_LmkPll != FIXED_LMKPLL_DELAY) ) {
-    DBG(DBLE, "ERROR : old_delay_LmkPll can have only two values 0 or %d\n", FIXED_LMKPLL_DELAY);
-    DBG(DBLE, "whereas old_delay_LmkPll = %u\n", old_delay_LmkPll);
-    return XST_FAILURE;
-  }
-
-  if ( old_delay_DelayLine > MAX_DELAY ) {
-    DBG(DBLE, "ERROR : out of range on old_delay_DelayLine in fineDelaySet, should be smaller than %d\n", MAX_DELAY);
-    return XST_FAILURE;
-  } 
-
-  if ( old_total_delay > MAX_RAW_DELAY_V3 ) {
-    DBG(DBLE, "ERROR : out of range on old_total_delay in fineDelaySet, should be smaller than %d\n", MAX_RAW_DELAY_V3);
-    return XST_FAILURE;
-  } 
-
-  /************ computation of the new delay values *****************************/
-
-  if ( total_delay > LIM_SUP_DELAYLINE_LMKPLL ) {
-    if ( old_delay_LmkPll == 0 ) {
-      new_delay_LmkPll = FIXED_LMKPLL_DELAY;
-      new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay - FIXED_LMKPLL_DELAY_IN_DELAYLINE_INCREMENT;
-    }
-    else if ( old_delay_LmkPll == FIXED_LMKPLL_DELAY ) {
-      new_delay_LmkPll = FIXED_LMKPLL_DELAY;
-      new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay;
-    }
-    else {
-      DBG(DBLE, "ERROR : in function fineDelaySet\n");
-      return XST_FAILURE;
-    }
-  }
-  else if (total_delay < LIM_INF_DELAYLINE_LMKPLL) {
-    if ( old_delay_LmkPll == 0 ) {
-      new_delay_LmkPll = 0;
-      new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay;
-    }
-    else if ( old_delay_LmkPll == FIXED_LMKPLL_DELAY ) {
-      new_delay_LmkPll = 0;
-      new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay + FIXED_LMKPLL_DELAY_IN_DELAYLINE_INCREMENT;
-    }
-    else {
-      DBG(DBLE, "ERROR : in function fineDelaySet\n");
-      return XST_FAILURE;
-    }
-  }
-  else {
-    new_delay_LmkPll = old_delay_LmkPll;
-    new_delay_DelayLine = old_delay_DelayLine + total_delay - old_total_delay;
-  }
-
-  new_total_delay = total_delay;
-  DBG(DBLI, "TotalDelay : old_total_delay = %u\n", old_total_delay);
-  DBG(DBLI, "TotalDelay : new_total_delay = %u\n", new_total_delay);
-
-  /************ assignment of the new delay values *****************************/
-
-  if ( old_delay_LmkPll != new_delay_LmkPll ) {   
-    status |= XMMRegs_LmkPll_FineDelay_GradualSet(&XMMRegsDriver, old_delay_LmkPll, new_delay_LmkPll);
-  }
-  if ( old_delay_DelayLine != new_delay_DelayLine ) {
-    status |= XMMRegs_MuxInOut_FineDelay_GradualSet(&XMMRegsDriver, old_delay_DelayLine, new_delay_DelayLine);
-  }
+  status |= XMMRegs_MuxInOut_FineDelay_Set(&XMMRegsDriver, total_delay);
 
   /************ Logging the new delay values ***********************************/
   
-  status |= XMMRegs_Data_TotalDelay_Set(&XMMRegsDriver, new_total_delay);
+  status |= XMMRegs_Data_TotalDelay_Set(&XMMRegsDriver, total_delay);
 
   return status;
 }
