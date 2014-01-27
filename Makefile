@@ -1,6 +1,6 @@
 BIN = Linux-ppc440
 
-GCC = /space/global/crosstool-ng/CentOS6_64/ppc440/buildroot-2011.08/output/staging/usr/bin/powerpc-440-linux-gnu-gcc -g
+GCC = /space/global/buildroot/CentOS6_64/ppc440/buildroot-2013.11/output/host/usr/bin/powerpc-buildroot-linux-gnu-gcc -g
 
 all : $(BIN) $(BIN)/gtsServer
 
