@@ -93,7 +93,7 @@ int alignSet(int GTStype, int forward)
 
   status  = muxExtSet(GTStype, USE_MGT, BYPASS_MGT); // NUMEXO2 LEAF : RX external mux is always 00
   mgtDataCommaSet();
-  status |= clkSet(GTStype, usrclk, USE_MGT, BYPASS_MGT, FORCE_SET, BLOCKING); // NUMEXO2 LEAF : we force raw clock to MASTER_CLK
+  status |= clkSet(GTStype, usrclk, forward, BYPASS_MGT, FORCE_SET, BLOCKING);
 
   return status;
 }
