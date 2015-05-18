@@ -66,7 +66,7 @@ int main (int argc, char *argv[])
 
   cardNumber = ((struct sockaddr_in *)&(ifreqs[1].ifr_addr))->sin_addr.s_addr & 0xFF;
 
-  printf("card numer : %u\n", cardNumber);
+  printf("card number : %u\n", cardNumber);
 
   FIRST_ARG = last_sentence_serial;
 
@@ -82,8 +82,8 @@ int main (int argc, char *argv[])
 
   memset(file_name_output,0,MAX_CHAR_FILE_OUTPUT);
 
-  dbgTermSet();
-//  dbgNetSet();
+//  dbgTermSet();
+  dbgNetSet();
 
   memset( (void *)&XMMRegsDriver, 0, sizeof( XMMRegs ) );
 

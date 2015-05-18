@@ -36,6 +36,9 @@ int	cmd_triggerStart (void*);
 int	cmd_excludeTriggerProcessor (void*);
 int	cmd_testSet (void*);
 int	cmd_readField (void*);
+int	cmd_readReg (void*);
+int	cmd_readAll (void*);
+int	cmd_writeField (void*);
 
 typedef
 	struct {
@@ -84,6 +87,9 @@ GTScommands	gtsCommands [MaxGtsCommands] = {
 	{"%s",					"excludeTriggerProcessor",	cmd_excludeTriggerProcessor},
 	{"%s",					"testSet",					cmd_testSet},
 	{"%s %s %s",			"readField",				cmd_readField},
+	{"%s %s",			"readReg",				cmd_readReg},
+	{"%s",			"readAll",				cmd_readAll},
+	{"%s %s %s %n",			"writeField",				cmd_writeField}
 };
 
 
@@ -458,7 +464,7 @@ int	cmd_printBinary (void * param)
 int	cmd_set_output_file_name (void * param)
 {
   GtsThreadArgs * gtsThreadArgs = (GtsThreadArgs *)param;
-  char * file_name;
+  char file_name[80];
 
   if (rsscanf(gtsThreadArgs->udpReq.mesg, gtsThreadArgs->gtsCmd->format, cmdName, file_name) != 2)
   {
@@ -544,21 +550,79 @@ int	cmd_testSet (void * param)
   return leaveTestLoopback();
 }
 
-int	cmd_readField (void * param)
+int cmd_readField (void * param)
 {
   GtsThreadArgs * gtsThreadArgs = (GtsThreadArgs *)param;
-  char *reg_name;
-  char *field_name;
+  char reg_name[80];
+  char field_name[80];
   int status = XST_SUCCESS;
+  int return_val = -1;
+
+//  printf("cmd_readField: %s\n",gtsThreadArgs->udpReq.mesg);
 
   if (rsscanf(gtsThreadArgs->udpReq.mesg, gtsThreadArgs->gtsCmd->format, cmdName, reg_name, field_name) != 3)
   {
     return 1;
   }
-  
+
   status |= XMMRegs_Reg_Associate(&XMMRegsDriver, XREG_UPDATE_ALL);
-  status |= XMMRegs_Reg_ReadField(&XMMRegsDriver, reg_name, field_name);
-  
+  if (status == XST_SUCCESS) return_val = XMMRegs_Reg_ReadField(&XMMRegsDriver, reg_name, field_name);
+
+  return return_val;
+}
+
+int cmd_readReg (void * param)
+{
+  GtsThreadArgs * gtsThreadArgs = (GtsThreadArgs *)param;
+  char reg_name[80];
+  int status = XST_SUCCESS;
+
+  if (rsscanf(gtsThreadArgs->udpReq.mesg, gtsThreadArgs->gtsCmd->format, cmdName, reg_name) != 2)
+  {
+    return 1;
+  }
+
+  status |= XMMRegs_Reg_Associate(&XMMRegsDriver, XREG_UPDATE_ALL);
+  if (status == XST_SUCCESS) status |= XMMRegs_Reg_ReadReg(&XMMRegsDriver, reg_name);
+
+  return status;
+}
+
+int cmd_readAll (void * param)
+{
+  GtsThreadArgs * gtsThreadArgs = (GtsThreadArgs *)param;
+  int status = XST_SUCCESS;
+
+  if (rsscanf(gtsThreadArgs->udpReq.mesg, gtsThreadArgs->gtsCmd->format, cmdName) != 1)
+  {
+    return 1;
+  }
+
+  status |= XMMRegs_Reg_Associate(&XMMRegsDriver, XREG_UPDATE_ALL);
+  if (status == XST_SUCCESS) status |= XMMRegs_Reg_ReadAll(&XMMRegsDriver);
+
+  return status;
+}
+
+int cmd_writeField (void * param)
+{
+  GtsThreadArgs * gtsThreadArgs = (GtsThreadArgs *)param;
+  char reg_name[80];
+  char field_name[80];
+  unsigned int val_field;
+  int status = XST_SUCCESS;
+
+  printf("cmd_writeField: %s\n",gtsThreadArgs->udpReq.mesg);
+
+  if (rsscanf(gtsThreadArgs->udpReq.mesg, gtsThreadArgs->gtsCmd->format, cmdName, reg_name, field_name, &val_field) != 4)
+  {
+    return 1;
+  }
+
+  status |= XMMRegs_Reg_Associate(&XMMRegsDriver, XREG_UPDATE_ALL);
+  if (status == XST_SUCCESS) status |= XMMRegs_Reg_WriteField(&XMMRegsDriver, reg_name, field_name, val_field);
+  status |= XMMRegs_Reg_Associate(&XMMRegsDriver, XREG_WRITE_ALL);
+
   return status;
 }
 
@@ -569,6 +633,9 @@ int isValidCommand (GtsThreadArgs * gtsThreadArgs)
 	gtsThreadArgs->gtsCmd = gtsCommands;
 
 	for (taskId = 0; taskId < MaxGtsCommands; ++taskId, gtsThreadArgs->gtsCmd++) {
+
+//		printf("isValidCommand: taskId=%d taskName=%s\n",taskId,gtsThreadArgs->gtsCmd->taskName);
+
 		if (! strncmp (gtsThreadArgs->udpReq.mesg,
 					gtsThreadArgs->gtsCmd->taskName,
 					gtsThreadArgs->gtsCmd->taskNameLen))
@@ -580,16 +647,21 @@ int isValidCommand (GtsThreadArgs * gtsThreadArgs)
 
 void * gtsCmdInterpreter (void * param)
 {
-	GtsThreadArgs*gtsThreadArgs = (GtsThreadArgs*)param;
+	int taskId;
+	GtsThreadArgs * gtsThreadArgs = (GtsThreadArgs *)param;
 
-	if (isValidCommand (gtsThreadArgs) < 0) {
+	if ((taskId = isValidCommand (gtsThreadArgs)) < 0) {
 		printf ("*** Invalid command %s ***\n", gtsThreadArgs->udpReq.mesg);
 		pthread_exit (NULL);
 	}
 
+//	printf("%s\n",gtsThreadArgs->udpReq.mesg);
+
+//	printf("taskId=%d, on appelle la fonction %s\n", taskId, gtsThreadArgs->gtsCmd->taskName);
+
 	gtsThreadArgs->udpAck = gtsThreadArgs->gtsCmd->task (gtsThreadArgs);
 
-	printf ("\t\t%s=>%d\n", gtsThreadArgs->gtsCmd->taskName, gtsThreadArgs->udpAck);
+	printf ("\t\t%s=>0x%x\n", gtsThreadArgs->gtsCmd->taskName, gtsThreadArgs->udpAck);
 
 	pthread_exit (NULL);
 

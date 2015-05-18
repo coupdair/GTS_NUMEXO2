@@ -52,6 +52,8 @@ void udpServer(void * param)
 	while (1) {
 		memset (&gtsThreadArgs, 0, sizeof gtsThreadArgs);
 
+		gtsThreadArgs.gtsCmd = gtsCmds;
+
 		if (recvfrom (gtsServSock, (char *)&gtsThreadArgs.udpReq, reqSize, MSG_WAITALL,
 					(struct sockaddr *)&clientAddr, &fromLen) < reqSize) {
 			perror ("udpServer.c::udpServer:recvfrom=>");

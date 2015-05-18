@@ -21,7 +21,7 @@ enum GtsCommands {
 
 	TriggerSetup, TriggerStart, ExcludeTriggerProcessor, TestSet,
 
-	ReadField,
+	ReadField, ReadReg, ReadAll, WriteField,
 
 	MaxGtsCommands
 };

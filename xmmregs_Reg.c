@@ -48,8 +48,10 @@ int XMMRegs_Reg_ReadAll(XMMRegs *InstancePtr)
   for (i = 0; i < MAX_NUM_REG; i++) {
     if (strcmp(reg[i].name,"") != 0) {
       printf("%-15s : 0x%08X (offset = 0x%08X)\n", reg[i].name, *reg[i].val, reg[i].offset);
+      DBG(DBLD, "%-15s : 0x%08X (offset = 0x%08X)\n", reg[i].name, *reg[i].val, reg[i].offset);
       for (field = &reg[i].bitfield[0]; strcmp(field->name,"") != 0; field++) {
         printf("  %-18s : %u\n", field->name, field->val);
+        DBG(DBLD, "  %-18s : %u\n", field->name, field->val);
       }
     }     
   }
@@ -68,8 +70,10 @@ int XMMRegs_Reg_ReadReg(XMMRegs *InstancePtr, char *reg_name)
   for (i = 0; i < MAX_NUM_REG; i++) {
     if ( strncmp(reg[i].name,reg_name,strlen(reg_name)) == 0) {
       printf("%-15s : 0x%08X (offset = 0x%08X)\n", reg[i].name, *(reg[i].val), reg[i].offset);
+      DBG(DBLD, "%-15s : 0x%08X (offset = 0x%08X)\n", reg[i].name, *(reg[i].val), reg[i].offset);
       for (field = &reg[i].bitfield[0]; strcmp(field->name,"") != 0; field++) {
         printf("  %-18s : %u\n", field->name, field->val);
+        DBG(DBLD, "  %-18s : %u\n", field->name, field->val);
       }
     }
   }
@@ -79,6 +83,7 @@ int XMMRegs_Reg_ReadReg(XMMRegs *InstancePtr, char *reg_name)
 
 int XMMRegs_Reg_ReadField(XMMRegs *InstancePtr, char *reg_name, char *field_name)
 {
+  int last_field = -1;
   int status = XST_SUCCESS;
   XMMRegs_Reg_t      *reg;
   XMMRegs_Bitfield_t *field;
@@ -90,13 +95,15 @@ int XMMRegs_Reg_ReadField(XMMRegs *InstancePtr, char *reg_name, char *field_name
       for (j = 0; j < MAX_NUM_FIELD; j++) {
         field = &reg[i].bitfield[j]; 
 	if (strncmp(field->name, field_name,strlen(field_name)) == 0) {
-          printf("%-15s : %-18s : %u\n", reg[i].name, field->name, field->val);
+          last_field = field->val;
+          printf("%-15s : %-18s : 0x%x\n", reg[i].name, field->name, last_field);
+          DBG(DBLD, "%-15s : %-18s : 0x%x\n", reg[i].name, field->name, last_field);
 	}
       }
-    }     
+    }
   }
 
-  return status;
+  return last_field;
 }
 
 int XMMRegs_Reg_WriteField(XMMRegs *InstancePtr, char *reg_name, char *field_name, unsigned int val_field)
@@ -115,6 +122,7 @@ int XMMRegs_Reg_WriteField(XMMRegs *InstancePtr, char *reg_name, char *field_nam
           if (strncmp(field->name, field_name,strlen(field_name)) == 0) {
             field->val = val_field;
             printf("%-15s : %-18s : %u -> written\n", reg[i].name, field->name, field->val);
+            DBG(DBLD, "%-15s : %-18s : %u -> written\n", reg[i].name, field->name, field->val);
           }
         }
       }
