@@ -1,3 +1,16 @@
+//GTS_server
+/*-----------------------------------------------------------------------
+File : gtsServer.c
+Description : NUMEXO2 GTS server (GANIL)
+Authors : Frederic SAILLANT, 
+-----------------------------------------------------------------------*/
+
+//! version of \c GTS_server, i.e. NUMEXO2 GTS server (GANIL)
+/**
+ * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
+**/
+#define VERSION "v0.0.0"
+
 #include "gts.h"
 
 XMMRegs XMMRegsDriver;
