@@ -1,4 +1,5 @@
 BIN = $(CONFIG)
+BIN= Linux-x86-64
 GCC = gcc -g
 
 all : $(BIN) $(BIN)/gtsServer

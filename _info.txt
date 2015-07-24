@@ -13,7 +13,7 @@ cat Doxyfile.template | sed "s/##VERSION##/$VERSION/" > Doxyfile
 ##help (need updated numexo2- connection)
 nt12 /usr/local/bin/gtsServer -h > gtsServer.help.output
 ###or
-./Linux-ppc/gtsServer -h > gtsServer.help.output
+./Linux-Linux-x86-64/gtsServer -h > gtsServer.help.output
 ##make (html and prepare latex)
 doxygen
 ls doc/html/index.html
@@ -26,5 +26,5 @@ make
 exit
 
 #single CL
-make && make -f Makefile.host ; strings Linux-ppc440/gtsServer | grep 'v.\..\..' > VERSION ; set VERSION=`cat VERSION` ; cat Doxyfile.template | sed "s/##VERSION##/$VERSION/" > Doxyfile ; ./Linux-ppc/gtsServer -h > gtsServer.help.output ; doxygen ; firefox doc/html/index.html &
+make && make -f Makefile.host ; strings Linux-ppc440/gtsServer | grep 'v.\..\..' > VERSION ; set VERSION=`cat VERSION` ; cat Doxyfile.template | sed "s/##VERSION##/$VERSION/" > Doxyfile ; ./Linux-x86-64/gtsServer -h > gtsServer.help.output ; doxygen ; firefox doc/html/index.html &
 
