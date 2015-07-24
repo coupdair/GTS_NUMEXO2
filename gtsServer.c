@@ -9,7 +9,79 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v0.0.1"
+#define VERSION "v0.0.2"
+
+/*Additional documentation for the generation of the reference page (using doxygen)*/
+/**
+\mainpage NUMEXO2 register server
+* table of content:
+* \li \ref sectionCodeHistory
+* \li \ref sectionCommandLine
+* \li \ref sectionGTSserverDocumentation
+* \li \ref sectionDoxygenSyntax
+*
+* \section sectionCodeHistory Modifications
+*
+
+    S. Coudert 24/07/2015
+     - add version support (option -v)
+     - add help    support (option -h)
+
+* \section sectionCommandLine command line options
+*
+* \verbinclude "gtsServer.help.output"
+*
+* \section sectionGTSserverDocumentation documentation outline
+* This is the reference documentation of 
+* <a href="http://wiki.ganil.fr/gap/">NUMEXO2 GTS server</a>, 
+* from the <a href="http://www.ganil-spiral2.eu">GANIL</a>.\n\n
+* The main function is in <a href="gtsServer_8c.html">gtsServer.c</a> source file.\n\n
+* This documentation has been automatically generated from the sources,
+* using the tool <a href="http://www.doxygen.org">doxygen</a>. It should be readed as HTML, LaTex and man page.\n
+* It contains both
+* \li a detailed description of all classes and functions
+* \li TODO: a user guide (cf. \ref pages.html "related pages")
+*
+* that as been documented within the sources.
+*
+* \section sectionDoxygenSyntax make documentation using Doxygen syntax
+* Each function in the source code should be commented using \b doxygen \b syntax in the same file.
+* The documentation need to be written before the function.
+* The basic syntax is presented in this part.
+* \verbinclude "doxygen.example1.txt"
+*
+* Two kind of comments are needed for \b declaration and \b explanation \b parts of the function:
+* Standart documentation should the following (\b sample of code documentation):
+* \verbinclude "doxygen.example2.txt"
+*
+* In both declaration and explanation part, \b writting and \b highlithing syntax can be the following:\n\n
+*
+* \li \c \\n a new line
+* \li \c \\li a list (dot list)
+*
+* \li \c \\b bold style
+* \li \c \\c code style
+* \li \c \\e enhanced style (italic)
+*
+* For making \b shortcut please use:\n
+* \li \c \\see to make a shortcut to a related function or variable
+* \li \c \\link to make a shortcut to a file or a function
+* \note this keyword needs to be closed using \c \\end*
+*
+* \li \c \\todo to add a thing to do in the list of <a href="todo.html">ToDo</a> for the whole program
+*
+* In explanation part, \b paragraph style can be the following:\n
+* \li \c \\code for an example of the function use
+* \li \c \\note to add a few notes
+* \li \c \\attention for SOMETHING NOT FULLY DEFINED YET
+* \li \c \\warning to give a few warning on the function
+* \note these keywords need to be closed using \c \\end*
+*
+* \verbinclude "doxygen.example3.txt"
+*
+* Many other keywords are defined, so please read the documentation of <a href="http://www.doxygen.org/commands.html">doxygen</a>.
+*
+**/
 
 #include "gts.h"
 
