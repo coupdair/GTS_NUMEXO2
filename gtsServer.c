@@ -9,7 +9,7 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v0.0.0"
+#define VERSION "v0.0.1"
 
 #include "gts.h"
 
@@ -56,6 +56,36 @@ extern void udpServer (void);
 
 int main (int argc, char *argv[])
 {
+  //command line options (C/unistd)
+  int opt=0;
+  while( (opt=getopt(argc, argv, "vh")) !=-1)
+  {
+    switch(opt)
+    {
+    case 'h':
+      printf("%s (%s - %s %s)\n",argv[0],VERSION,__DATE__,__TIME__);
+      printf("description:\n");
+      printf("\tGTS embedded server for NUMEXO2.\n");
+      printf("usage:\n");
+      printf("\t%s\n",argv[0]);
+      printf("\t%s -h\n",argv[0]);
+      printf("\t%s -v\n",argv[0]);
+      printf("options:\n");
+      printf("\t-h: help\n");
+      printf("\t-v: version\n");
+      return 0;
+    break;//help
+    case 'v':
+      printf("%s.%s\n",argv[0],VERSION);
+      return 0;
+    break;//version
+    case '?':
+      printf("unknown option: %s\n", optarg);
+      return 1;
+    break;
+    }
+  }//command line options (-.)
+
   char ip[INET_ADDRSTRLEN];
   struct ifconf ifconf;
   struct ifreq ifreqs[2];

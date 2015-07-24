@@ -1,0 +1,8 @@
+#compile
+make
+
+#get version (on host computer, else on target call "gtsServer -v")
+strings Linux-ppc440/gtsServer | grep 'v.\..\..' > VERSION
+###or
+nt12 /usr/local/bin/gtsServer -v | tail -c 8 > VERSION
+
