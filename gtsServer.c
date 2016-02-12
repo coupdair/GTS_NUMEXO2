@@ -9,7 +9,7 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v0.0.2"
+#define VERSION "v1.0.0"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -26,6 +26,9 @@ Authors : Frederic SAILLANT,
     S. Coudert 24/07/2015
      - add version support (option -v)
      - add help    support (option -h)
+
+    S. Coudert 12/02/2016
+     - stable v1.0.0 for production
 
 * \section sectionCommandLine command line options
 *
