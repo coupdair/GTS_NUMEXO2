@@ -7,21 +7,7 @@ strings Linux-ppc440/gtsServer | grep 'v.\..\..' > VERSION
 nt12 /usr/local/bin/gtsServer -v | tail -c 8 > VERSION
 
 #documentation
-##version (tcsh)
-set VERSION=`cat VERSION`
-cat Doxyfile.template | sed "s/##VERSION##/$VERSION/" > Doxyfile
-##help (need updated numexo2- connection)
-nt12 /usr/local/bin/gtsServer -h > gtsServer.help.output
-###or
-./Linux-Linux-x86-64/gtsServer -h > gtsServer.help.output
-##make (html and prepare latex)
-doxygen
-ls doc/html/index.html
-firefox doc/html/index.html &
-##make latex
-cd doc/latex
-make
-
+./doxygen.sh
 
 exit
 
