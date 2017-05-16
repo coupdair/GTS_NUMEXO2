@@ -9,7 +9,7 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v1.0.0"
+#define VERSION "v1.0.1d"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -140,7 +140,9 @@ extern void udpServer (void);
 int main (int argc, char *argv[])
 {
   //command line options (C/unistd)
+//! \todo [low] use argp for CLI options (from libC)
   int opt=0;
+//! - command line options
   while( (opt=getopt(argc, argv, "vh")) !=-1)
   {
     switch(opt)
@@ -169,11 +171,13 @@ int main (int argc, char *argv[])
     }
   }//command line options (-.)
 
+//! - GTS id from IP address
+  XMMRegs_lmk_pll_ctrl *c;
+  {//IP address
   char ip[INET_ADDRSTRLEN];
   struct ifconf ifconf;
   struct ifreq ifreqs[2];
   int fd;
-  XMMRegs_lmk_pll_ctrl *c;
 
   memset( (void *)&ifconf, 0, sizeof(ifconf) );
 
@@ -191,8 +195,11 @@ int main (int argc, char *argv[])
   printf("\nIP address : %s\n", ip);
 
   cardNumber = ((struct sockaddr_in *)&(ifreqs[1].ifr_addr))->sin_addr.s_addr & 0xFF;
+  }//IP address
 
   printf("card number : %u\n", cardNumber);
+
+//! - allocate strings
 
   FIRST_ARG = last_sentence_serial;
 
@@ -217,6 +224,11 @@ int main (int argc, char *argv[])
 
 //  XMMRegs_ConfigTable[0].BaseAddress = (void *)(&Scratch[0]);
 
+//! - memory map
+  {//mmap
+
+  int fd;
+
   fd = open("/dev/memory", O_RDWR);
 
   if (fd == -1)
@@ -227,6 +239,7 @@ int main (int argc, char *argv[])
   }
 
   XMMRegs_ConfigTable[0].BaseAddress = (void *)mmap(NULL, 0x400, O_RDWR, MAP_SHARED, fd, 0x8181C000);
+  close(fd);
 
   if (XMMRegs_ConfigTable[0].BaseAddress == MAP_FAILED)
   {
@@ -234,6 +247,9 @@ int main (int argc, char *argv[])
 
     return -1;
   }
+  }//mmap
+
+//! - initialise and start \b client socket
 
   XSPI_ConfigTable[0].BaseAddress = (void *)(&XSPIScratch[0]);
 
@@ -242,6 +258,8 @@ int main (int argc, char *argv[])
   XSPI_Initialize(&XSPIDriver, 0);
 
   gtsCliSock = clientSetup();
+
+//! - initialise and start \b server socket
 
   XMMRegs_Reg_Init(&XMMRegsDriver);
 
@@ -255,8 +273,6 @@ int main (int argc, char *argv[])
   logAnswer();
 
   udpServer();
-
-  close(fd);
 
   return 0;
 }
