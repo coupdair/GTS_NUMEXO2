@@ -7,10 +7,6 @@ gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/
 #compile
 make && ./bin/linux-x86_64/gts --help && ./bin/linux-x86_64/gts --version
 
-./bin/linux-x86_64/gts
-UDP server: not implemented yet !
-target: EPICS_BUILD_TARGET_ARCH: linux-x86_64
-
 
 #run
 setenv EPICS_CA_ADDR_LIST "10.10.17.254"

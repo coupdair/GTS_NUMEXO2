@@ -13,14 +13,14 @@
 #include "epicsExit.h"
 #include "epicsThread.h"
 #include "iocsh.h"
-#include "envDefs.h" //epicsShareFunc
+#include "envDefs.h" //envPrtConfigParam
 //ArgP
 #include <error.h>
 #include <argp.h>
 
 #include <string>
 
-#define VERSION "v0.1.0f"
+#define VERSION "v0.1.0g"
 
 //Program option/documentation
 //{argp
@@ -143,9 +143,18 @@ if(arguments.epicsFlow)
 }//EPICS
 else
 {//UDP
-  printf("UDP server: not implemented yet !\n");
-  printf("target: ");
-  envPrtConfigParam(&EPICS_BUILD_TARGET_ARCH);
+  if(arguments.verbose) envPrtConfigParam(&EPICS_BUILD_TARGET_ARCH);
+  //check CPU architecture
+  const char*arch=envGetConfigParamPtr(&EPICS_BUILD_TARGET_ARCH);
+  printf("target: %s\n",arch);
+  if(strcmp("linux-ppc",arch)==0)
+  {//PPC arch
+    printf("UDP server: not implemented yet !\n");
+  }//PPC arch
+  else
+  {//other arch
+    printf("UDP server: fake, not implemented yet !\n");
+  }//other arch
 }//UDP
   return(0);
 }//main
