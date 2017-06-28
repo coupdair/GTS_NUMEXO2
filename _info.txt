@@ -7,12 +7,34 @@ gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/
 #compile
 make && ./bin/linux-x86_64/gts --help && ./bin/linux-x86_64/gts --version
 
+#run PPC
 
-#run
-setenv EPICS_CA_ADDR_LIST "10.10.17.254"
+##transfert
+##pack
+rm gts.zip ; zip -ry9 gts.zip db dbd ; zip -j gts.zip bin/linux-ppc/gts iocBoot/iocgts/st.cmd iocBoot/iocgts/envPaths
+rsync -var gts.zip ganp1012:/tmp/   
+rsync -var /tmp/gts.zip numexo2@numexo2-11:/tmp/   
+
+##embedded
+###driver
+#disable periodic message on standard output
+echo 0 > /sys/module/rdp_fifo_driver/parameters/debug_level
+###unpack
+cd /tmp/
+unzip -o gts.zip 
+###server
+./gts -e -c st.cmd
+#var mySubDebug 0
+
+##client
+setenv EPICS_CA_ADDR_LIST "10.10.17.255"
 setenv EPICS_CA_AUTO_ADDR_LIST NO
-setenv EPICS_CAS_BEACON_ADDR_LIST "10.10.17.254"
-/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caRepeater
+setenv EPICS_CAS_BEACON_ADDR_LIST "10.10.17.255"
+##client
+./bin/linux-x86_64/caget coudert:subExample
+
+
+#run x86
 
 cd iocBoot/iocgts/; ../../bin/linux-x86_64/gts --epics -c st.cmd; cd ../..
 ###epics> dbl; var mySubDebug 0; exit

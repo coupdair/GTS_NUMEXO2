@@ -1,0 +1,22 @@
+Usage: gts [OPTION...] 
+gts: EPICS example program
+  gts.v0.1.0
+examples:
+  gts --help
+  gts --epics -c st.cmd
+  gts -v
+  gts -V
+  gts --usage
+
+  -c, --command=st.cmd       EPICS: execute IOC command file, e.g. st.cmd,
+                             before interactive shell
+  -e, --epics                Use EPICS workflow, otherwise UDP by default
+  -v, --verbose              Produce verbose output
+  -?, --help                 Give this help list
+      --usage                Give a short usage message
+  -V, --version              Print program version
+
+Mandatory or optional arguments to long options are also mandatory or optional
+for any corresponding short options.
+
+Report bugs to sebastien.coudert@ganil.fr.

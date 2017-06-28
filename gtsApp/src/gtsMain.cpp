@@ -20,7 +20,7 @@
 
 #include <string>
 
-#define VERSION "v0.1.0h"
+#define VERSION "v0.1.0"
 
 //Program option/documentation
 //{argp
@@ -47,8 +47,8 @@ static char args_doc[] = "";
 static struct argp_option options[]=
 {
   {"verbose",  'v', 0, 0,        "Produce verbose output" },
-  {"epics",    'e', 0, 0,        "Use EPICS workflow, UDP otherwise" },
-  {"command",  'c', "st.cmd", 0, "Execute IOC command file, e.g. st.cmd, before interactive shell" },
+  {"epics",    'e', 0, 0,        "Use EPICS workflow, otherwise UDP by default" },
+  {"command",  'c', "st.cmd", 0, "EPICS: execute IOC command file, e.g. st.cmd, before interactive shell" },
 //default options
   { 0 }
 };//options (CLI)
@@ -129,19 +129,13 @@ int main(int argc,char *argv[])
     print_args(&arguments);
   }//print default option values
 
+  //! fake device if not on NumExo2 device (i.e. PPC CPU), e.g. x86; usage: if(fake_device) printf("x86"); else printf("PPC");
   int fake_device;
   {//arch
   //check CPU architecture
   const char*arch=      envGetConfigParamPtr(&EPICS_BUILD_TARGET_ARCH);
   if(arguments.verbose) envPrtConfigParam   (&EPICS_BUILD_TARGET_ARCH);
-  if(strcmp("linux-ppc",arch)==0)
-  {//PPC arch
-    fake_device=0;
-  }//PPC arch
-  else
-  {//other arch
-    fake_device=1;
-  }//other arch
+  fake_device=strcmp("linux-ppc",arch);
   }//arch
 
 //! start EPICS service
