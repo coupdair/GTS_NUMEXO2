@@ -1,11 +1,26 @@
 ##EPICS server
+
+#edit
+gitk --all &
+gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/st.cmd &
+
+#compile
+make && ./bin/linux-x86_64/gts --help && ./bin/linux-x86_64/gts --version
+
+
+#run
+setenv EPICS_CA_ADDR_LIST "10.10.17.254"
+setenv EPICS_CA_AUTO_ADDR_LIST NO
+setenv EPICS_CAS_BEACON_ADDR_LIST "10.10.17.254"
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caRepeater
 
-cd iocBoot/iocgts/; ../../bin/linux-x86_64/gts st.cmd; cd ..
-###epics> dbl; exit
+cd iocBoot/iocgts/; ../../bin/linux-x86_64/gts -e st.cmd; cd ../..
+###epics> dbl; var mySubDebug 0; exit
 
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caget coudert:subExample
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caput coudert:subExample 123.456
+
+
 
 exit
 ##UDP server
