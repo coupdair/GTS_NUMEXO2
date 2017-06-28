@@ -20,7 +20,7 @@
 
 #include <string>
 
-#define VERSION "v0.1.0e"
+#define VERSION "v0.1.0f"
 
 //Program option/documentation
 //{argp
@@ -144,9 +144,8 @@ if(arguments.epicsFlow)
 else
 {//UDP
   printf("UDP server: not implemented yet !\n");
-epicsPrtEnvParams();
-//  printf("target: %s\n",env_param_list[0]);//EPICS_BUILD_TARGET_ARCH);
-  
+  printf("target: ");
+  envPrtConfigParam(&EPICS_BUILD_TARGET_ARCH);
 }//UDP
   return(0);
 }//main
