@@ -1,0 +1,10 @@
+./Linux-x86-64/gtsServer (v1.0.0 - May 16 2017 11:10:25)
+description:
+	GTS embedded server for NUMEXO2.
+usage:
+	./Linux-x86-64/gtsServer
+	./Linux-x86-64/gtsServer -h
+	./Linux-x86-64/gtsServer -v
+options:
+	-h: help
+	-v: version
