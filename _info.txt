@@ -1,3 +1,15 @@
+##EPICS server
+/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caRepeater
+
+cd iocBoot/iocgts/; ../../bin/linux-x86_64/gts st.cmd; cd ..
+###epics> dbl; exit
+
+/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caget coudert:subExample
+/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caput coudert:subExample 123.456
+
+exit
+##UDP server
+
 #compile
 make
 
