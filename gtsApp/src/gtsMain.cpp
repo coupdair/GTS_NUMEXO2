@@ -20,7 +20,7 @@
 
 #include <string>
 
-#define VERSION "v0.1.0g"
+#define VERSION "v0.1.0h"
 
 //Program option/documentation
 //{argp
@@ -91,8 +91,9 @@ parse_option(int key, char *arg, struct argp_state *state)
 //! [argp] print argument values
 void print_args(struct arguments *p_arguments)
 {
-  printf (".verbose=%s\ncommand_file_name=%s\n"
+  printf (".verbose=%s\n.epicsFlow=%s\n.command_file_name=\"%s\"\n"
   , p_arguments->verbose?"yes":"no"
+  , p_arguments->epicsFlow?"yes":"no"
   , p_arguments->cmd_fname
   );
 }//print_args
@@ -128,6 +129,21 @@ int main(int argc,char *argv[])
     print_args(&arguments);
   }//print default option values
 
+  int fake_device;
+  {//arch
+  //check CPU architecture
+  const char*arch=      envGetConfigParamPtr(&EPICS_BUILD_TARGET_ARCH);
+  if(arguments.verbose) envPrtConfigParam   (&EPICS_BUILD_TARGET_ARCH);
+  if(strcmp("linux-ppc",arch)==0)
+  {//PPC arch
+    fake_device=0;
+  }//PPC arch
+  else
+  {//other arch
+    fake_device=1;
+  }//other arch
+  }//arch
+
 //! start EPICS service
 if(arguments.epicsFlow)
 {//EPICS
@@ -143,18 +159,14 @@ if(arguments.epicsFlow)
 }//EPICS
 else
 {//UDP
-  if(arguments.verbose) envPrtConfigParam(&EPICS_BUILD_TARGET_ARCH);
-  //check CPU architecture
-  const char*arch=envGetConfigParamPtr(&EPICS_BUILD_TARGET_ARCH);
-  printf("target: %s\n",arch);
-  if(strcmp("linux-ppc",arch)==0)
+  if(fake_device)
+  {//other arch
+    printf("UDP server: fake not implemented yet !\n");
+  }//other arch
+  else
   {//PPC arch
     printf("UDP server: not implemented yet !\n");
   }//PPC arch
-  else
-  {//other arch
-    printf("UDP server: fake, not implemented yet !\n");
-  }//other arch
 }//UDP
   return(0);
 }//main
