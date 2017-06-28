@@ -14,7 +14,7 @@ setenv EPICS_CA_AUTO_ADDR_LIST NO
 setenv EPICS_CAS_BEACON_ADDR_LIST "10.10.17.254"
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caRepeater
 
-cd iocBoot/iocgts/; ../../bin/linux-x86_64/gts -e st.cmd; cd ../..
+cd iocBoot/iocgts/; ../../bin/linux-x86_64/gts --epics -c st.cmd; cd ../..
 ###epics> dbl; var mySubDebug 0; exit
 
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caget coudert:subExample

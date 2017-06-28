@@ -20,7 +20,7 @@
 
 #include <string>
 
-#define VERSION "v0.0.2"
+#define VERSION "v0.1.0d"
 
 //Program option/documentation
 //{argp
@@ -35,7 +35,7 @@ static char doc[]=
 \n\
 examples:\n\
   gts --help\n\
-  gts -e st.cmd\n\
+  gts --epics -c st.cmd\n\
   gts -v\n\
   gts -V\n\
   gts --usage";
@@ -47,7 +47,8 @@ static char args_doc[] = "";
 static struct argp_option options[]=
 {
   {"verbose",  'v', 0, 0,        "Produce verbose output" },
-  {"command",  'e', "st.cmd", 0, "Execute IOC command file, e.g. st.cmd, before interactive shell" },
+  {"epics",    'e', 0, 0,        "Use EPICS workflow, UDP otherwise" },
+  {"command",  'c', "st.cmd", 0, "Execute IOC command file, e.g. st.cmd, before interactive shell" },
 //default options
   { 0 }
 };//options (CLI)
@@ -57,6 +58,8 @@ struct arguments
 {
   //! verbose mode
   int verbose;
+  //! EPICS mode
+  int epicsFlow;
   //! command file name
   char* cmd_fname;
 };//arguments (CLI)
@@ -73,6 +76,9 @@ parse_option(int key, char *arg, struct argp_state *state)
       arguments->verbose=1;
       break;
     case 'e':
+      arguments->epicsFlow=1;
+      break;
+    case 'c':
       arguments->cmd_fname=arg;
       break;
     default:
@@ -102,6 +108,7 @@ int main(int argc,char *argv[])
   //CLI arguments
   struct arguments arguments;
   arguments.verbose=0;
+  arguments.epicsFlow=0;
   arguments.cmd_fname="st.cmd";
 
 //! - print default option values (static)
@@ -122,6 +129,8 @@ int main(int argc,char *argv[])
   }//print default option values
 
 //! start EPICS service
+if(arguments.epicsFlow)
+{//EPICS
   //batch IOC shell
   if(argc>=2)
   {
@@ -131,7 +140,11 @@ int main(int argc,char *argv[])
   //interactive IOC shell
   iocsh(NULL);
   epicsExit(0);
-
+}//EPICS
+else
+{//UDP
+  printf("UDP server: not implemented yet !\n");
+}//UDP
   return(0);
 }//main
 

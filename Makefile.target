@@ -115,3 +115,4 @@ $(BIN)/xspi.o : xspi.c xspi.h xspi_i.h xspi_l.h xstatus.h
 
 $(BIN)/xspi_tdcgp2.o : xspi_tdcgp2.c xspi.h xspi_l.h xstatus.h xspi_tdcgp2.h
 	$(GCC) -c -o $@ xspi_tdcgp2.c
+
