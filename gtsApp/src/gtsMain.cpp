@@ -13,14 +13,14 @@
 #include "epicsExit.h"
 #include "epicsThread.h"
 #include "iocsh.h"
-
+#include "envDefs.h" //epicsShareFunc
 //ArgP
 #include <error.h>
 #include <argp.h>
 
 #include <string>
 
-#define VERSION "v0.1.0d"
+#define VERSION "v0.1.0e"
 
 //Program option/documentation
 //{argp
@@ -144,6 +144,9 @@ if(arguments.epicsFlow)
 else
 {//UDP
   printf("UDP server: not implemented yet !\n");
+epicsPrtEnvParams();
+//  printf("target: %s\n",env_param_list[0]);//EPICS_BUILD_TARGET_ARCH);
+  
 }//UDP
   return(0);
 }//main
