@@ -14,3 +14,8 @@ exit
 #single CL
 make && make -f Makefile.host ; strings Linux-ppc440/gtsServer | grep 'v.\..\..' > VERSION ; set VERSION=`cat VERSION` ; cat Doxyfile.template | sed "s/##VERSION##/$VERSION/" > Doxyfile ; ./Linux-x86-64/gtsServer -h > gtsServer.help.output ; doxygen ; firefox doc/html/index.html &
 
+exit
+
+#EPICS interface
+/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example gts
+
