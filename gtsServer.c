@@ -9,7 +9,7 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v1.0.1d"
+#define VERSION "v1.0.1f"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -137,43 +137,8 @@ extern int clientSetup (void);
 
 extern void udpServer (void);
 
-int main (int argc, char *argv[])
-{
-  //command line options (C/unistd)
-//! \todo [low] use argp for CLI options (from libC)
-  int opt=0;
-//! - command line options
-  while( (opt=getopt(argc, argv, "vh")) !=-1)
-  {
-    switch(opt)
-    {
-    case 'h':
-      printf("%s (%s - %s %s)\n",argv[0],VERSION,__DATE__,__TIME__);
-      printf("description:\n");
-      printf("\tGTS embedded server for NUMEXO2.\n");
-      printf("usage:\n");
-      printf("\t%s\n",argv[0]);
-      printf("\t%s -h\n",argv[0]);
-      printf("\t%s -v\n",argv[0]);
-      printf("options:\n");
-      printf("\t-h: help\n");
-      printf("\t-v: version\n");
-      return 0;
-    break;//help
-    case 'v':
-      printf("%s.%s\n",argv[0],VERSION);
-      return 0;
-    break;//version
-    case '?':
-      printf("unknown option: %s\n", optarg);
-      return 1;
-    break;
-    }
-  }//command line options (-.)
-
-//! - GTS id from IP address
-  XMMRegs_lmk_pll_ctrl *c;
-  {//IP address
+void setCardNumber()
+{//IP address
   char ip[INET_ADDRSTRLEN];
   struct ifconf ifconf;
   struct ifreq ifreqs[2];
@@ -195,12 +160,12 @@ int main (int argc, char *argv[])
   printf("\nIP address : %s\n", ip);
 
   cardNumber = ((struct sockaddr_in *)&(ifreqs[1].ifr_addr))->sin_addr.s_addr & 0xFF;
-  }//IP address
+}//IP address
 
-  printf("card number : %u\n", cardNumber);
-
+//! initialize globals
+void initialize(void)
+{
 //! - allocate strings
-
   FIRST_ARG = last_sentence_serial;
 
   memset(global_log,0,MAX_CHAR_LOG);
@@ -248,6 +213,49 @@ int main (int argc, char *argv[])
     return -1;
   }
   }//mmap
+}//initialize
+
+int main (int argc, char *argv[])
+{
+  //command line options (C/unistd)
+//! \todo [low] use argp for CLI options (from libC)
+  int opt=0;
+//! - command line options
+  while( (opt=getopt(argc, argv, "vh")) !=-1)
+  {
+    switch(opt)
+    {
+    case 'h':
+      printf("%s (%s - %s %s)\n",argv[0],VERSION,__DATE__,__TIME__);
+      printf("description:\n");
+      printf("\tGTS embedded server for NUMEXO2.\n");
+      printf("usage:\n");
+      printf("\t%s\n",argv[0]);
+      printf("\t%s -h\n",argv[0]);
+      printf("\t%s -v\n",argv[0]);
+      printf("options:\n");
+      printf("\t-h: help\n");
+      printf("\t-v: version\n");
+      return 0;
+    break;//help
+    case 'v':
+      printf("%s.%s\n",argv[0],VERSION);
+      return 0;
+    break;//version
+    case '?':
+      printf("unknown option: %s\n", optarg);
+      return 1;
+    break;
+    }
+  }//command line options (-.)
+
+//! - GTS id from IP address
+  XMMRegs_lmk_pll_ctrl *c;
+  setCardNumber();
+  printf("card number : %u\n", cardNumber);
+
+//! - initialize globals
+  initialize();
 
 //! - initialise and start \b client socket
 
@@ -275,4 +283,5 @@ int main (int argc, char *argv[])
   udpServer();
 
   return 0;
-}
+}//main
+
