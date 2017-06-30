@@ -9,7 +9,7 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v1.0.1d"
+#define VERSION "v1.0.1e"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -137,6 +137,31 @@ extern int clientSetup (void);
 
 extern void udpServer (void);
 
+void setCardNumber()
+{//IP address
+  char ip[INET_ADDRSTRLEN];
+  struct ifconf ifconf;
+  struct ifreq ifreqs[2];
+  int fd;
+
+  memset( (void *)&ifconf, 0, sizeof(ifconf) );
+
+  ifconf.ifc_buf = (char *)ifreqs;
+  ifconf.ifc_len = sizeof(ifreqs);
+
+  fd = socket( AF_INET, SOCK_STREAM, 0 );
+
+  ioctl( fd, SIOCGIFCONF, (char *)&ifconf );
+
+  close(fd);
+
+  inet_ntop( AF_INET, &(((struct sockaddr_in *)&(ifreqs[1].ifr_addr))->sin_addr), ip, INET_ADDRSTRLEN );
+
+  printf("\nIP address : %s\n", ip);
+
+  cardNumber = ((struct sockaddr_in *)&(ifreqs[1].ifr_addr))->sin_addr.s_addr & 0xFF;
+}//IP address
+
 int main (int argc, char *argv[])
 {
   //command line options (C/unistd)
@@ -173,30 +198,7 @@ int main (int argc, char *argv[])
 
 //! - GTS id from IP address
   XMMRegs_lmk_pll_ctrl *c;
-  {//IP address
-  char ip[INET_ADDRSTRLEN];
-  struct ifconf ifconf;
-  struct ifreq ifreqs[2];
-  int fd;
-
-  memset( (void *)&ifconf, 0, sizeof(ifconf) );
-
-  ifconf.ifc_buf = (char *)ifreqs;
-  ifconf.ifc_len = sizeof(ifreqs);
-
-  fd = socket( AF_INET, SOCK_STREAM, 0 );
-
-  ioctl( fd, SIOCGIFCONF, (char *)&ifconf );
-
-  close(fd);
-
-  inet_ntop( AF_INET, &(((struct sockaddr_in *)&(ifreqs[1].ifr_addr))->sin_addr), ip, INET_ADDRSTRLEN );
-
-  printf("\nIP address : %s\n", ip);
-
-  cardNumber = ((struct sockaddr_in *)&(ifreqs[1].ifr_addr))->sin_addr.s_addr & 0xFF;
-  }//IP address
-
+  setCardNumber();
   printf("card number : %u\n", cardNumber);
 
 //! - allocate strings
