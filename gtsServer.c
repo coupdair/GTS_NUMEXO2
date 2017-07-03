@@ -39,6 +39,12 @@ Authors : Frederic SAILLANT,
 
 * \section sectionCommandLine command line options
 *
+* - GTS server with EPICS+UDP
+*
+* \verbinclude "gts.help.output"
+*
+* - GTS server (UDP only; old)
+*
 * \verbinclude "gtsServer.help.output"
 *
 * \section sectionServerCommands server commands

@@ -43,6 +43,10 @@ extern int gtsCliSock;
 extern int clientSetup (void);
 
 extern void udpServer (void);
+
+//what ?!
+extern void XMMRegs_RocketIO_Gtx_Reset(XMMRegs *InstancePtr);
+
 //}GTS device
 
 #define VERSION "v0.1.1g"

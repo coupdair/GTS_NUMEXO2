@@ -14,7 +14,7 @@ echo "information: error on PPC, due to missing objects in linkage"
 cd /home/coudert/GTS_server/GTS_NUMEXO2/gtsApp/src/O.linux-ppc/
 rm ../../../Linux-ppc440/gtsServer.o
 ##link all device, EPICS and UDP (e.g. with gtsMisc.o)
-/space/global/buildroot/CentOS6_64/ppc440/buildroot-2013.11/output/host/usr//bin/powerpc-buildroot-linux-gnu-g++ -o gts -Wl,-Bstatic -L/home/coudert/GTS_server/GTS_NUMEXO2/lib/linux-ppc -L/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-ppc -Wl,-rpath,/home/coudert/GTS_server/GTS_NUMEXO2/lib/linux-ppc -Wl,-rpath,/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-ppc -rdynamic -L/space/global/buildroot/CentOS6_64/ppc440/buildroot-2013.11/output/host/usr//powerpc-buildroot-linux-gnu/lib gts_registerRecordDeviceDriver.o gtsMain.o -lgtsSupport -ldbRecStd -ldbCore -lca -lCom -Wl,-Bdynamic -lpthread -lm -lrt -ldl -lgcc ../../../Linux-ppc440/*.o
+/space/global/buildroot/CentOS6_64/ppc440/buildroot-2013.11/output/host/usr//bin/powerpc-buildroot-linux-gnu-g++ -o gts -Wl,-Bstatic -L/home/coudert/GTS_server/GTS_NUMEXO2/lib/linux-ppc -L/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-ppc -Wl,-rpath,/home/coudert/GTS_server/GTS_NUMEXO2/lib/linux-ppc -Wl,-rpath,/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-ppc -rdynamic -L/space/global/buildroot/CentOS6_64/ppc440/buildroot-2013.11/output/host/usr//powerpc-buildroot-linux-gnu/lib gts_registerRecordDeviceDriver.o gtsMain.o -lgtsSupport -ldbRecStd -ldbCore -lca -lCom -Wl,-Bdynamic -lpthread -lm -lrt -ldl -lgcc ../../../Linux-ppc440/gtsMisc.o
 echo "information: linkage EPICS with device+UDP"
 ls -lah ./gts
 file ./gts

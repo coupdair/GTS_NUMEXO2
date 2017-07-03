@@ -13,15 +13,15 @@ then
 fi
 
 #command line help
-#make -f Makefile.host
-#cd ./Linux-x86-64/
-# ./gtsServer -v
-# ./gtsServer -h > ../gtsServer.help.output
-#cd ..
+##old UDP server
+make -f Makefile.host
+cd ./Linux-x86-64/
+ ./gtsServer -v
+ ./gtsServer -h > ../gtsServer.help.output
+cd ..
+##GTS server with EPICS+UDP
 ./bin/linux-x86_64/gts --help    > gts.help.output
 ./bin/linux-x86_64/gts --version > VERSION
-### TEMPORARY ###
-cp -p gts.help.output  gtsServer.help.output
 
 #documentation
 ##version (tcsh)
@@ -39,3 +39,4 @@ exit
 ##make latex
 cd doc/latex
 make
+
