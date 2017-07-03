@@ -1,4 +1,4 @@
-##EPICS server
+##GTS server with EPICS+UDP interfaces
 
 #edit
 gitk --all &

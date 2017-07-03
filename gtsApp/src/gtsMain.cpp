@@ -20,11 +20,32 @@
 
 #include <string>
 
-//link to GTS module function
+//GTS device
 #include "../../gts.h"
+//global Misc
+extern XMMRegs XMMRegsDriver;
+
+extern XSPI XSPIDriver;
+
+extern XMMRegs_Config XMMRegs_ConfigTable[];
+
+extern XSPI_Config XSPI_ConfigTable[];
+
+extern unsigned int Scratch[];
+
+extern unsigned int XSPIScratch[];
+
 extern unsigned int cardNumber;
 
-#define VERSION "v0.1.1f"
+//other globals
+extern int gtsCliSock;
+
+extern int clientSetup (void);
+
+extern void udpServer (void);
+//}GTS device
+
+#define VERSION "v0.1.1g"
 
 //Program option/documentation
 //{argp
@@ -34,7 +55,7 @@ const char *argp_program_version=VERSION;
 const char *argp_program_bug_address="sebastien.coudert@ganil.fr";
 //! [argp] documentation of program
 static char doc[]=
-   "gts: EPICS example program\
+   "gts: EPICS example program, UDP device server\
 \n  gts."VERSION"\
 \n\
 examples:\n\
@@ -144,10 +165,16 @@ int main(int argc,char *argv[])
 
 //! module access
 #ifndef _X86_64_
-  printf("cardNumber=%d\n",cardNumber);
-#endif
+//! - GTS id from IP address
+  XMMRegs_lmk_pll_ctrl *c;
+  setCardNumber();
+  printf("card number : %u\n", cardNumber);
 
-//! start EPICS service
+//! - initialize globals
+  initialize();
+#endif //_X86_64_
+
+//! EPICS or UDP service
 if(arguments.epicsFlow)
 {//EPICS
   //batch IOC shell
@@ -168,7 +195,36 @@ else
   }//other arch
   else
   {//PPC arch, i.e. "g++ -D_PPC_"
-    printf("UDP server: not implemented yet !\n");
+#ifndef _X86_64_
+
+    printf("UDP server: work in progress.\n");
+
+//! - initialise and start \b client socket
+
+  XSPI_ConfigTable[0].BaseAddress = (void *)(&XSPIScratch[0]);
+
+  XMMRegs_Initialize(&XMMRegsDriver, 0);
+
+  XSPI_Initialize(&XSPIDriver, 0);
+
+  gtsCliSock = clientSetup();
+
+//! - initialise and start \b server socket
+
+  XMMRegs_Reg_Init(&XMMRegsDriver);
+
+  c = (XMMRegs_lmk_pll_ctrl *)(XMMRegsDriver.BaseAddress + XMMR_LMK_PLL_CTRL_OFFSET);
+
+  c->hw_ctrl = 1;
+  c->hw_init_conf = 1;
+
+  XMMRegs_RocketIO_Gtx_Reset(&XMMRegsDriver);
+
+  logAnswer();
+
+  udpServer();
+
+#endif //_X86_64_
   }//PPC arch
 }//UDP
   return(0);
