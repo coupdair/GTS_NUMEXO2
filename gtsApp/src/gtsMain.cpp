@@ -24,7 +24,7 @@
 #include "../../gts.h"
 extern unsigned int cardNumber;
 
-#define VERSION "v0.1.1d"
+#define VERSION "v0.1.1e"
 
 //Program option/documentation
 //{argp
@@ -143,7 +143,9 @@ int main(int argc,char *argv[])
   }//arch
 
 //! module access
+#ifndef _X86_64_
   printf("cardNumber=%d\n",cardNumber);
+#endif
 
 //! start EPICS service
 if(arguments.epicsFlow)
