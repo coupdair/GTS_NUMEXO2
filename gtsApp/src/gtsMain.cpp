@@ -20,7 +20,11 @@
 
 #include <string>
 
-#define VERSION "v0.1.0"
+//link to GTS module function
+#include "../../gts.h"
+extern unsigned int cardNumber;
+
+#define VERSION "v0.1.1d"
 
 //Program option/documentation
 //{argp
@@ -138,6 +142,9 @@ int main(int argc,char *argv[])
   fake_device=strcmp("linux-ppc",arch);
   }//arch
 
+//! module access
+  printf("cardNumber=%d\n",cardNumber);
+
 //! start EPICS service
 if(arguments.epicsFlow)
 {//EPICS
@@ -154,11 +161,11 @@ if(arguments.epicsFlow)
 else
 {//UDP
   if(fake_device)
-  {//other arch
+  {//other arch, e.g. "g++ -D_X86_64_"
     printf("UDP server: fake not implemented yet !\n");
   }//other arch
   else
-  {//PPC arch
+  {//PPC arch, i.e. "g++ -D_PPC_"
     printf("UDP server: not implemented yet !\n");
   }//PPC arch
 }//UDP
