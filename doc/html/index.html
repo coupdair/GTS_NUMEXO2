@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="contents">
-<h1>NUMEXO2 GTS server</h1><h3>v1.0.1h </h3><p>table of content: </p>
+<h1>NUMEXO2 GTS server</h1><h3>v0.1.1e </h3><p>table of content: </p>
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
 <li><a class="el" href="index.html#sectionCommandLine">command line options</a> </li>
@@ -68,16 +68,28 @@ Modifications</a></h2>
 </ul>
 <h2><a class="anchor" id="sectionCommandLine">
 command line options</a></h2>
-<div class="fragment"><pre class="fragment">./Linux-x86-64/gtsServer (v1.0.1h - Jul  3 2017 14:54:46)
-description:
-	GTS embedded server for NUMEXO2.
-usage:
-	./Linux-x86-64/gtsServer
-	./Linux-x86-64/gtsServer -h
-	./Linux-x86-64/gtsServer -v
-options:
-	-h: help
-	-v: version
+<div class="fragment"><pre class="fragment">Usage: gts [OPTION...] 
+gts: EPICS example program
+  gts.v0.1.1e
+examples:
+  gts --help
+  gts --epics -c st.cmd
+  gts -v
+  gts -V
+  gts --usage
+
+  -c, --command=st.cmd       EPICS: execute IOC command file, e.g. st.cmd,
+                             before interactive shell
+  -e, --epics                Use EPICS workflow, otherwise UDP by default
+  -v, --verbose              Produce verbose output
+  -?, --help                 Give this help list
+      --usage                Give a short usage message
+  -V, --version              Print program version
+
+Mandatory or optional arguments to long options are also mandatory or optional
+for any corresponding short options.
+
+Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><h2><a class="anchor" id="sectionServerCommands">
 server commands</a></h2>
 <div class="fragment"><pre class="fragment">gtsTest

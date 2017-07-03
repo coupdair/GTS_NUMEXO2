@@ -13,20 +13,20 @@ then
 fi
 
 #command line help
-make -f Makefile.host
-cd ./Linux-x86-64/
- ./gtsServer -v
- ./gtsServer -h > ../gtsServer.help.output
-cd ..
+#make -f Makefile.host
+#cd ./Linux-x86-64/
+# ./gtsServer -v
+# ./gtsServer -h > ../gtsServer.help.output
+#cd ..
+./bin/linux-x86_64/gts --help    > gts.help.output
+./bin/linux-x86_64/gts --version > VERSION
+### TEMPORARY ###
+cp -p gts.help.output  gtsServer.help.output
 
 #documentation
 ##version (tcsh)
 VERSION=`cat VERSION`
 cat Doxyfile.template | sed "s/##VERSION##/$VERSION/" > Doxyfile
-##help (need updated numexo2- conn ection)
-nt12 /usr/local/bin/gtsServer -h > gtsServer.help.output
-###or
-./Linux-x86-64/gtsServer -h > gtsServer.help.output
 ##commands
 grep 'int.cmd_' udpInterpret.c | head -n 35 | sed 's/int.cmd_//;s/.(void\*)\;//' > gtsServer_command.txt
 ##make (html and prepare latex)

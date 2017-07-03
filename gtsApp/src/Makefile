@@ -79,5 +79,4 @@ include $(TOP)/configure/RULES
 
 #WiP: in linking, it needs to:
 #add /home/coudert/GTS_server/GTS_NUMEXO2/Linux-ppc440/gtsMisc.o
-#add /home/coudert/GTS_server/GTS_NUMEXO2/Linux-x86-64/gtsMisc.o
 
