@@ -1,6 +1,6 @@
 Usage: gts [OPTION...] 
 gts: EPICS example program
-  gts.v0.1.1e
+  gts.v0.1.1f
 examples:
   gts --help
   gts --epics -c st.cmd

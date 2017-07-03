@@ -4,18 +4,8 @@
 gitk --all &
 gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/st.cmd &
 
-#hand compile
-rm bin/*/* Linux-*/*
-##compile device and UDP objects
-make -f Makefile.target
-##compile EPICS objects
-make
-cd /home/coudert/GTS_server/GTS_NUMEXO2/gtsApp/src/O.linux-ppc/
-##link all device, EPICS and UDP (e.g. with gtsMisc.o)
-/space/global/buildroot/CentOS6_64/ppc440/buildroot-2013.11/output/host/usr//bin/powerpc-buildroot-linux-gnu-g++ -o gts -Wl,-Bstatic -L/home/coudert/GTS_server/GTS_NUMEXO2/lib/linux-ppc -L/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-ppc -Wl,-rpath,/home/coudert/GTS_server/GTS_NUMEXO2/lib/linux-ppc -Wl,-rpath,/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-ppc -rdynamic -L/space/global/buildroot/CentOS6_64/ppc440/buildroot-2013.11/output/host/usr//powerpc-buildroot-linux-gnu/lib gts_registerRecordDeviceDriver.o gtsMain.o -lgtsSupport -ldbRecStd -ldbCore -lca -lCom -Wl,-Bdynamic -lpthread -lm -lrt -ldl -lgcc /home/coudert/GTS_server/GTS_NUMEXO2/Linux-ppc440/gtsMisc.o
-##copy binary
-cp -p gts ../../../bin/linux-ppc/
-cd ../../../
+#compile
+./make.sh
 ./bin/linux-x86_64/gts --help && ./bin/linux-x86_64/gts --version
 ./doxygen.sh
 

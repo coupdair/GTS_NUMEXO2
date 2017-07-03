@@ -24,7 +24,7 @@
 #include "../../gts.h"
 extern unsigned int cardNumber;
 
-#define VERSION "v0.1.1e"
+#define VERSION "v0.1.1f"
 
 //Program option/documentation
 //{argp
@@ -164,7 +164,7 @@ else
 {//UDP
   if(fake_device)
   {//other arch, e.g. "g++ -D_X86_64_"
-    printf("UDP server: fake not implemented yet !\n");
+    printf("UDP server: fake is not implemented yet !\n");
   }//other arch
   else
   {//PPC arch, i.e. "g++ -D_PPC_"
