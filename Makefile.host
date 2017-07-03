@@ -7,13 +7,13 @@ all : $(BIN) $(BIN)/gtsServer
 $(BIN) :
 	mkdir $(BIN)
 
-$(BIN)/gtsServer : $(BIN)/gtsServer.o $(BIN)/udpServer.o $(BIN)/udpClient.o $(BIN)/udpInterpret.o $(BIN)/xdebug_i.o $(BIN)/xmmregs.o \
+$(BIN)/gtsServer : $(BIN)/gtsServer.o $(BIN)/gtsMisc.o $(BIN)/udpServer.o $(BIN)/udpClient.o $(BIN)/udpInterpret.o $(BIN)/xdebug_i.o $(BIN)/xmmregs.o \
                    $(BIN)/xmmregs_i.o $(BIN)/xmmregs_Reg.o $(BIN)/xmmregs_Reg_l.o $(BIN)/xmmregs_Trigger.o $(BIN)/xmmregs_TdcDebug.o \
                    $(BIN)/xmmregs_ClockPath.o $(BIN)/xmmregs_MuxInOut.o $(BIN)/xmmregs_DataPath.o $(BIN)/xmmregs_RocketIO.o \
                    $(BIN)/xmmregs_LmkPll.o $(BIN)/xmmregs_LmkPll_i.o $(BIN)/xtdc.o $(BIN)/xoutput_i.o $(BIN)/xspi.o $(BIN)/xspi_tdcgp2.o \
                    $(BIN)/align_tree.o $(BIN)/align.o $(BIN)/align_sfp.o $(BIN)/align_path.o $(BIN)/align_mgtdata.o $(BIN)/align_tdc.o \
                    $(BIN)/rocketIO.o $(BIN)/trigger.o $(BIN)/align_clk.o $(BIN)/align_delay.o $(BIN)/gtsInit.o
-	$(GCC) -o $@ $(BIN)/gtsServer.o $(BIN)/udpServer.o $(BIN)/udpClient.o $(BIN)/udpInterpret.o $(BIN)/xdebug_i.o $(BIN)/xmmregs.o \
+	$(GCC) -o $@ $(BIN)/gtsServer.o $(BIN)/gtsMisc.o $(BIN)/udpServer.o $(BIN)/udpClient.o $(BIN)/udpInterpret.o $(BIN)/xdebug_i.o $(BIN)/xmmregs.o \
                      $(BIN)/xmmregs_i.o $(BIN)/xmmregs_Reg.o $(BIN)/xmmregs_Reg_l.o $(BIN)/xmmregs_Trigger.o $(BIN)/xmmregs_TdcDebug.o \
                      $(BIN)/xmmregs_ClockPath.o $(BIN)/xmmregs_MuxInOut.o $(BIN)/xmmregs_DataPath.o $(BIN)/xmmregs_RocketIO.o \
                      $(BIN)/xmmregs_LmkPll.o $(BIN)/xmmregs_LmkPll_i.o $(BIN)/xtdc.o $(BIN)/xoutput_i.o $(BIN)/xspi.o \
@@ -22,6 +22,9 @@ $(BIN)/gtsServer : $(BIN)/gtsServer.o $(BIN)/udpServer.o $(BIN)/udpClient.o $(BI
 
 $(BIN)/gtsServer.o : gtsServer.c gts.h udpStruct.h gtsCommands.h xmmregs.h xstatus.h xmmregs_l.h xmmregs_i.h xdebug_i.h xspi.h xspi_l.h xoutput_i.h
 	$(GCC) -c -o $@ gtsServer.c
+
+$(BIN)/gtsMisc.o : gtsMisc.c gts.h udpStruct.h gtsCommands.h xmmregs.h xstatus.h xmmregs_l.h xmmregs_i.h xdebug_i.h xspi.h xspi_l.h xoutput_i.h
+	$(GCC) -c -o $@ gtsMisc.c
 
 $(BIN)/udpServer.o : udpServer.c gts.h udpStruct.h gtsCommands.h xmmregs.h xstatus.h xmmregs_l.h xmmregs_i.h xdebug_i.h xspi.h xspi_l.h xoutput_i.h
 	$(GCC) -c -o $@ udpServer.c

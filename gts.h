@@ -32,6 +32,7 @@
 #include "xdebug_i.h"
 #include "xoutput_i.h"
 #include "xspi.h"
+#include "gtsMisc.h"
 
 // General Definitions
 //#define printf					xil_printf

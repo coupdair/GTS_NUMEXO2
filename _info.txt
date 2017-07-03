@@ -7,6 +7,7 @@ gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/
 #compile
 make -f Makefile.target 
 make && ./bin/linux-x86_64/gts --help && ./bin/linux-x86_64/gts --version
+./doxygen.sh
 
 #run PPC
 

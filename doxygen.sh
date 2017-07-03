@@ -16,14 +16,14 @@ fi
 make -f Makefile.host
 cd ./Linux-x86-64/
  ./gtsServer -v
- ./gtsServer -h > gtsServer.help.output
+ ./gtsServer -h > ../gtsServer.help.output
 cd ..
 
 #documentation
 ##version (tcsh)
 VERSION=`cat VERSION`
 cat Doxyfile.template | sed "s/##VERSION##/$VERSION/" > Doxyfile
-##help (need updated numexo2- connection)
+##help (need updated numexo2- conn ection)
 nt12 /usr/local/bin/gtsServer -h > gtsServer.help.output
 ###or
 ./Linux-x86-64/gtsServer -h > gtsServer.help.output
