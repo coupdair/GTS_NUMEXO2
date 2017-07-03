@@ -9,7 +9,7 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v1.0.1g"
+#define VERSION "v1.0.1h"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -99,41 +99,22 @@ Authors : Frederic SAILLANT,
 
 #include "gts.h"
 
-XMMRegs XMMRegsDriver;
+//global Misc
+extern XMMRegs XMMRegsDriver;
 
-XSPI XSPIDriver;
+extern XSPI XSPIDriver;
 
-XMMRegs_Config XMMRegs_ConfigTable[] = {{0,0}};
-/*
-XSPI_Config XSPI_ConfigTable[] =
-{
-	{
-		XPAR_SPI_IF_DEVICE_ID,
-		XPAR_SPI_IF_BASEADDR,
-                XPAR_SPI_IF_FIFO_EXIST,
-                XPAR_SPI_IF_SPI_SLAVE_ONLY,
-                XPAR_SPI_IF_NUM_SS_BITS
-	}
-};
-*/
+extern XMMRegs_Config XMMRegs_ConfigTable[];
 
-XSPI_Config XSPI_ConfigTable[] =
-{
-	{
-		XPAR_SPI_IF_DEVICE_ID,
-		0,
-                XPAR_SPI_IF_FIFO_EXIST,
-                XPAR_SPI_IF_SPI_SLAVE_ONLY,
-                XPAR_SPI_IF_NUM_SS_BITS
-	}
-};
+extern XSPI_Config XSPI_ConfigTable[];
 
-unsigned int Scratch[128];
+extern unsigned int Scratch[];
 
-unsigned int XSPIScratch[0x4000];
+extern unsigned int XSPIScratch[];
 
-unsigned int cardNumber = 225;
+extern unsigned int cardNumber;
 
+//other globals
 extern int gtsCliSock;
 
 extern int clientSetup (void);
