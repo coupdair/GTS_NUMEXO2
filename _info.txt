@@ -5,6 +5,7 @@ gitk --all &
 gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/st.cmd &
 
 #compile
+make -f Makefile.target 
 make && ./bin/linux-x86_64/gts --help && ./bin/linux-x86_64/gts --version
 
 #run PPC
