@@ -21,7 +21,10 @@
 #include <string>
 
 //GTS device
-#include "../../gts.h"
+extern "C"
+{
+#include "../../gtsMisc.h"
+}
 //global Misc
 extern XMMRegs XMMRegsDriver;
 
@@ -42,7 +45,7 @@ extern int gtsCliSock;
 
 //}GTS device
 
-#define VERSION "v0.1.1i"
+#define VERSION "v0.1.1o"
 
 //Program option/documentation
 //{argp
