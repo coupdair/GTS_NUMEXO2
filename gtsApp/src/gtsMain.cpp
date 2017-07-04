@@ -21,10 +21,13 @@
 #include <string>
 
 //GTS device
+#ifndef _X86_64_
+
 extern "C"
 {
-#include "../../gtsMisc.h"
+#include "../../gts.h"
 }
+
 //global Misc
 extern XMMRegs XMMRegsDriver;
 
@@ -43,9 +46,10 @@ extern unsigned int cardNumber;
 //other globals
 extern int gtsCliSock;
 
+#endif //_X86_64_
 //}GTS device
 
-#define VERSION "v0.1.1o"
+#define VERSION "v0.1.1p"
 
 //Program option/documentation
 //{argp
