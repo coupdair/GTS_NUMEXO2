@@ -9,6 +9,20 @@ gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/
 ./bin/linux-x86_64/gts --help && ./bin/linux-x86_64/gts --version
 ./doxygen.sh
 
+
+gtsMain.o: In function `main':
+gtsMain.cpp:(.text+0x168): undefined reference to `setCardNumber()'
+gtsMain.cpp:(.text+0x180): undefined reference to `initialize()'
+gtsMain.cpp:(.text+0x214): undefined reference to `XMMRegs_Initialize(XMMRegs*, unsigned short)'
+gtsMain.cpp:(.text+0x224): undefined reference to `XSPI_Initialize(XSPI*, unsigned short)'
+gtsMain.cpp:(.text+0x228): undefined reference to `clientSetup()'
+gtsMain.cpp:(.text+0x238): undefined reference to `XMMRegs_Reg_Init(XMMRegs*)'
+gtsMain.cpp:(.text+0x258): undefined reference to `XMMRegs_RocketIO_Gtx_Reset(XMMRegs*)'
+gtsMain.cpp:(.text+0x25c): undefined reference to `logAnswer()'
+gtsMain.cpp:(.text+0x260): undefined reference to `udpServer()'
+collect2: ld returned 1 exit status
+
+
 #run PPC
 
 ##transfert

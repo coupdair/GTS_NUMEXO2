@@ -47,6 +47,8 @@ extern void udpServer (void);
 //what ?!
 extern void XMMRegs_RocketIO_Gtx_Reset(XMMRegs *InstancePtr);
 
+extern void setCardNumber(void);
+
 //}GTS device
 
 #define VERSION "v0.1.1g"
