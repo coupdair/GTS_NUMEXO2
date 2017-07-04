@@ -4,7 +4,7 @@
  * \author Sebastien COUDERT
 **/
 
-#define VERSION "v0.1.1q"
+#define VERSION "v0.1.1"
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -184,6 +184,7 @@ int main(int argc,char *argv[])
 //! EPICS or UDP service
 if(arguments.epicsFlow)
 {//EPICS
+  printf("GTS server 4 EPICS: not implemented yet !\n");
   //batch IOC shell
   if(argc>=2)
   {
@@ -204,7 +205,7 @@ else
   {//PPC arch, i.e. "g++ -D_PPC_"
 #ifndef _X86_64_
 
-    printf("UDP server: work in progress.\n");
+    printf("UDP server: work in progress (test on device needed).\n");
 
 //! - initialise and start \b client socket
 
