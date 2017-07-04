@@ -4,6 +4,8 @@
  * \author Sebastien COUDERT
 **/
 
+#define VERSION "v0.1.1q"
+
 #include <stddef.h>
 #include <stdlib.h>
 #include <stddef.h>
@@ -26,6 +28,9 @@
 extern "C"
 {
 #include "../../gts.h"
+void XMMRegs_RocketIO_Gtx_Reset(XMMRegs *InstancePtr);
+int clientSetup (void);
+void udpServer (void);
 }
 
 //global Misc
@@ -48,8 +53,6 @@ extern int gtsCliSock;
 
 #endif //_X86_64_
 //}GTS device
-
-#define VERSION "v0.1.1p"
 
 //Program option/documentation
 //{argp
