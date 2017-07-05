@@ -5,24 +5,24 @@ include $(TOP)/configure/CONFIG
 #  ADD MACRO DEFINITIONS BELOW HERE
 
 # xxxRecord.h will be created from xxxRecord.dbd
-DBDINC += xxxRecord
+#DBDINC += xxxRecord
 
 # Install xxxSupport.dbd into <top>/dbd
-DBD += xxxSupport.dbd
+#DBD += xxxSupport.dbd
 
 # Build an IOC support library
-LIBRARY_IOC += gtsSupport
+#LIBRARY_IOC += gtsSupport
 
 # Compile and add the code to the support library
-gtsSupport_SRCS += xxxRecord.c
-gtsSupport_SRCS += devXxxSoft.c
+#gtsSupport_SRCS += xxxRecord.c
+#gtsSupport_SRCS += devXxxSoft.c
 
 # Link locally-provided code into the support library,
 # rather than directly into the IOC application.
 # This is required for Windows DLL builds.
 gtsSupport_SRCS += dbSubExample.c
-gtsSupport_SRCS += gtsHello.c
-gtsSupport_SRCS += initTrace.c
+#gtsSupport_SRCS += gtsHello.c
+#gtsSupport_SRCS += initTrace.c
 
 gtsSupport_LIBS += $(EPICS_BASE_IOC_LIBS)
 
@@ -34,11 +34,11 @@ PROD_IOC = gts
 DBD += gts.dbd
 
 # gts.dbd will include these files:
-gts_DBD += base.dbd
-gts_DBD += xxxSupport.dbd
+#gts_DBD += base.dbd
+#gts_DBD += xxxSupport.dbd
 gts_DBD += dbSubExample.dbd
-gts_DBD += gtsHello.dbd
-gts_DBD += initTrace.dbd
+#gts_DBD += gtsHello.dbd
+#gts_DBD += initTrace.dbd
 
 # gts_registerRecordDeviceDriver.cpp derives from gts.dbd
 gts_SRCS += gts_registerRecordDeviceDriver.cpp
@@ -48,7 +48,7 @@ gts_SRCS_DEFAULT += gtsMain.cpp
 gts_SRCS_vxWorks += -nil-
 
 # Link in the code from our support library
-gts_LIBS += gtsSupport
+#gts_LIBS += gtsSupport
 
 # To build SNL programs, SNCSEQ must be defined
 # in the <top>/configure/RELEASE file
