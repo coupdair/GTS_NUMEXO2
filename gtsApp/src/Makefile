@@ -11,7 +11,7 @@ include $(TOP)/configure/CONFIG
 #DBD += xxxSupport.dbd
 
 # Build an IOC support library
-#LIBRARY_IOC += gtsSupport
+LIBRARY_IOC += gtsSupport
 
 # Compile and add the code to the support library
 #gtsSupport_SRCS += xxxRecord.c
@@ -34,7 +34,7 @@ PROD_IOC = gts
 DBD += gts.dbd
 
 # gts.dbd will include these files:
-#gts_DBD += base.dbd
+gts_DBD += base.dbd
 #gts_DBD += xxxSupport.dbd
 gts_DBD += dbSubExample.dbd
 #gts_DBD += gtsHello.dbd
@@ -48,7 +48,7 @@ gts_SRCS_DEFAULT += gtsMain.cpp
 gts_SRCS_vxWorks += -nil-
 
 # Link in the code from our support library
-#gts_LIBS += gtsSupport
+gts_LIBS += gtsSupport
 
 # To build SNL programs, SNCSEQ must be defined
 # in the <top>/configure/RELEASE file
