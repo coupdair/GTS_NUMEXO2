@@ -4,6 +4,13 @@
 gitk --all &
 gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/st.cmd &
 
+#clean DB
+cd gtsApp/src/
+git rm devXxxSoft.c gtsHello.c gtsHello.dbd initTrace.c initTrace.dbd sncExample.dbd sncExample.stt xxxRecord.c sncProgram.st xxxRecord.dbd xxxSupport.dbd
+git commit -am 'EPICS/db: cleaning (WiP)'
+rm -fr iocBoot/iocgts
+/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example -i -a linux-x86_64 gts
+
 #compile
 ./make.sh
 ./bin/linux-x86_64/gts --help && ./bin/linux-x86_64/gts --version

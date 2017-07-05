@@ -16,7 +16,7 @@ dbLoadTemplate "db/user.substitutions"
 dbLoadRecords "db/dbSubExample.db", "user=coudert"
 
 ## Set this to see messages from mySub
-var mySubDebug 1
+#var mySubDebug 1
 
 ## Run this to trace the stages of iocInit
 #traceIocInit
