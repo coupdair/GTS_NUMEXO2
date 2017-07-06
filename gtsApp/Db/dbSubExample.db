@@ -11,7 +11,6 @@ record(aSub,"$(user):aSubExample")
     field(NOA,"10")
     field(INPA,"$(user):compressExample CPP")
 }
-//record(sub,"$(gtsno):gtsReset")
 record(sub,"$(user):gtsReset")
 {
     field(SNAM,"mygtsReset")

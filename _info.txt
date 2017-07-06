@@ -83,8 +83,8 @@ or by calling ca_pend_event() and or ca_poll() more often.
 epics> 
 epics> dbl
 coudert:subExample
+coudert:gtsReset
 coudert:aSubExample
-
 
 
 ##client
@@ -96,6 +96,8 @@ setenv EPICS_CAS_BEACON_ADDR_LIST "10.10.17.255"
 coudert:subExample             0
 ./bin/linux-x86_64/caget coudert:aSubExample
 coudert:aSubExample            0
+./bin/linux-x86_64/caget coudert:gtsReset
+coudert:gtsReset               0
 
 
 
