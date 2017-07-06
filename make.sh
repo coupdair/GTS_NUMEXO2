@@ -6,8 +6,9 @@ set TC_LightCyan="\033[1;36m"
 set TC_clear="\033[0m"
 
 #clean
-rm -f bin/linux-*/* Linux-*/*
-###sync
+rm -f bin/linux-*/* Linux-*/* \
+  gtsApp/src/O.linux-ppc/*.o gtsApp/src/O.linux-ppc/*.d gtsApp/src/O.linux-ppc/*.a
+sync
 
 ##compile device and UDP objects
 make -f Makefile.target

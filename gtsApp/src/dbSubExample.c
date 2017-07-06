@@ -6,6 +6,11 @@
 #include <aSubRecord.h>
 #include <epicsExport.h>
 
+//GTS device
+#include "../../xmmregs_l.h" //CARD_NUMBER_ADDRESS
+#include "../../xstatus.h"   //XST_SUCCESS
+#include "../../xmmregs_i.h"//cardNumber
+
 int mySubDebug;
 
 static int increment;
@@ -33,7 +38,7 @@ static long myAsubInit(aSubRecord *precord)
     printf("Record %s called myAsubInit(%p) #%d\n"
       , precord->name, (void*) precord
       , increment);
-    return 0;
+  return 0;
 }
 
 static long myAsubProcess(aSubRecord *precord)
@@ -43,7 +48,8 @@ static long myAsubProcess(aSubRecord *precord)
     printf("Record %s called myAsubProcess(%p) #%d\n"
       , precord->name, (void*) precord
       , increment);
-    return 0;
+  precord->val = increment;
+  return 0;
 }
 
 //! EPICS call for \c gtsReset function
@@ -65,7 +71,7 @@ unsigned long mygtsReset(subRecord *precord)
   if (mySubDebug)
        printf("gts fake: EPICS/%s(subRecord *)\n",__func__);
 #endif //_X86_64_
-   precord->val = status;
+  precord->val = status;
   return 0;
 }
 

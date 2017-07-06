@@ -6,7 +6,6 @@ gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/
 
 #clean DB
 rm -fr iocBoot/iocgts db dbd
-/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example -i -a linux-x86_64 gts
 
 #compile
 ./make.sh
@@ -34,12 +33,70 @@ unzip -o gts.zip
 ./gts -e -c st.cmd
 #var mySubDebug 0
 
+
+
+./gts --epics -c st.cmd 
+
+IP address : 10.10.17.111
+card number : 111
+GTS server on EPICS: only gtsReset implemented yet !
+#!../../bin/linux-x86_64/gts
+## You may have to change gts to something else
+## everywhere it appears in this file
+< envPaths
+epicsEnvSet("IOC","iocgts")
+epicsEnvSet("TOP","/home/coudert/GTS_server/GTS_NUMEXO2")
+epicsEnvSet("EPICS_BASE","/space/global/buildroot/CentOS6_64/ppc440/epics/base")
+cd "/home/coudert/GTS_server/GTS_NUMEXO2"
+Invalid directory path, ignored
+## Register all support components
+dbLoadDatabase "dbd/gts.dbd"
+gts_registerRecordDeviceDriver pdbbase
+## Load record instances
+#dbLoadTemplate "db/user.substitutions"
+dbLoadRecords "db/dbSubExample.db", "user=coudert"
+## Set this to see messages from mySub
+var mySubDebug 1
+## Run this to trace the stages of iocInit
+#traceIocInit
+cd "/home/coudert/GTS_server/GTS_NUMEXO2/iocBoot/iocgts"
+Invalid directory path, ignored
+iocInit
+Starting iocInit
+############################################################################
+## EPICS R3.15.5
+## EPICS Base built Jun 26 2017
+############################################################################
+Record coudert:subExample called mySubInit(0x101cec68)
+Record coudert:aSubExample called myAsubInit(0x101cf140) #0
+**** The executable "caRepeater" couldn't be located
+iocRun: All initialization complete
+**** because of errno = "No such file or directory".
+**** You may need to modify your PATH environment variable.
+**** Unable to start "CA Repeater" process.
+## Start any sequence programs
+#seq sncExample, "user=coudert"
+epics> 
+CA client library is unable to contact CA repeater after 50 tries.
+Silence this message by starting a CA repeater daemon
+or by calling ca_pend_event() and or ca_poll() more often.
+epics> 
+epics> dbl
+coudert:subExample
+coudert:aSubExample
+
+
+
 ##client
 setenv EPICS_CA_ADDR_LIST "10.10.17.255"
 setenv EPICS_CA_AUTO_ADDR_LIST NO
 setenv EPICS_CAS_BEACON_ADDR_LIST "10.10.17.255"
 ##client
 ./bin/linux-x86_64/caget coudert:subExample
+coudert:subExample             0
+./bin/linux-x86_64/caget coudert:aSubExample
+coudert:aSubExample            0
+
 
 
 #run x86
