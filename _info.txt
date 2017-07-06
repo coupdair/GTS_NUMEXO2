@@ -112,7 +112,12 @@ coudert:gtsReset               0
 WARNING: OS Clock time was read before being set.
 Using 1990-01-02 00:00:00.000000 UTC
 
-rdp_fifo_driver - fonction_timer(): occupancy(int32) = 0 mode = 1 irq = 0 frames stockees = 0 tailleElement = 32 capacity = 40000  @631239538 s, i.e. 7306day 00h 18min 58s.
+Thu Jan  1 01:00:11 CET 1970
+# rdp_fifo_driver - fonction_timer(): occupancy(int32) = 0 mode = 1 irq = 0 frames stockees = 0 tailleElement = 32 capacity = 40000  @28 s, i.e. 000day 00h 00min 28s.
+memory - memory_mmap(): offset = $8181c000 size = $1000
+
+rdp_fifo_driver - fonction_timer(): occupancy(int32) = 0 mode = 1 irq = 0 frames stockees = 0 tailleElement = 32 capacity = 400date@631238403 s, i.e. 7306day 00h 00min 03s.
+Tue Jan  2 01:00:06 CET 1990
 
 
 #run x86
