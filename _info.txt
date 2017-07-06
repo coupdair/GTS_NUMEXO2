@@ -67,8 +67,10 @@ Starting iocInit
 ## EPICS R3.15.5
 ## EPICS Base built Jun 26 2017
 ############################################################################
+
 Record coudert:subExample called mySubInit(0x101cec68)
 Record coudert:aSubExample called myAsubInit(0x101cf140) #0
+
 **** The executable "caRepeater" couldn't be located
 iocRun: All initialization complete
 **** because of errno = "No such file or directory".
@@ -86,6 +88,10 @@ coudert:subExample
 coudert:gtsReset
 coudert:aSubExample
 
+#?! there are no calls shown ?!:
+Record coudert:subExample  called mySubProcess(0x101cec68)
+Record coudert:aSubExample called myAsubProcess(0x101cf140) #i
+Record coudert:gtsReset    called mygtsReset(0x*)
 
 ##client
 setenv EPICS_CA_ADDR_LIST "10.10.17.255"
@@ -98,7 +104,15 @@ coudert:subExample             0
 coudert:aSubExample            0
 ./bin/linux-x86_64/caget coudert:gtsReset
 coudert:gtsReset               0
+#?? seems to freeze linux module, if both old and new gts servers running !?
 
+
+#date change (1970 to 1990)
+./gts --epics -c st.cmd 
+WARNING: OS Clock time was read before being set.
+Using 1990-01-02 00:00:00.000000 UTC
+
+rdp_fifo_driver - fonction_timer(): occupancy(int32) = 0 mode = 1 irq = 0 frames stockees = 0 tailleElement = 32 capacity = 40000  @631239538 s, i.e. 7306day 00h 18min 58s.
 
 
 #run x86

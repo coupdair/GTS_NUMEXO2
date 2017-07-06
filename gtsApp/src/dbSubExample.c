@@ -49,7 +49,7 @@ static long myAsubProcess(aSubRecord *precord)
       , precord->name, (void*) precord
       , increment);
   precord->val = increment;
-  return 0;
+  return increment;
 }
 
 //! EPICS call for \c gtsReset function
