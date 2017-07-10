@@ -14,9 +14,11 @@
 int mySubDebug;
 
 static int increment;
+static int subi;
 
 static long mySubInit(subRecord *precord)
 {
+  subi=0;
     if (mySubDebug)
         printf("Record %s called mySubInit(%p)\n",
                precord->name, (void*) precord);
@@ -25,9 +27,14 @@ static long mySubInit(subRecord *precord)
 
 static long mySubProcess(subRecord *precord)
 {
+  ++subi;
     if (mySubDebug)
-        printf("Record %s called mySubProcess(%p)\n",
-               precord->name, (void*) precord);
+        printf("Record %s called mySubProcess(%p) #%d S%d\n",
+               precord->name, (void*) precord
+      , increment
+      , subi
+      );
+  precord->val = increment;
     return 0;
 }
 

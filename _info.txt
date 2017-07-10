@@ -37,8 +37,12 @@ unzip -o gts.zip
 
 ./gts --epics -c st.cmd 
 
+WARNING: OS Clock time was read before being set.
+Using 1990-01-02 00:00:00.000000 UTC
+
 IP address : 10.10.17.111
 card number : 111
+open("/dev/memory"): No such device or address
 GTS server on EPICS: only gtsReset implemented yet !
 #!../../bin/linux-x86_64/gts
 ## You may have to change gts to something else
@@ -67,29 +71,32 @@ Starting iocInit
 ## EPICS R3.15.5
 ## EPICS Base built Jun 26 2017
 ############################################################################
-
-Record coudert:subExample called mySubInit(0x101cec68)
-Record coudert:aSubExample called myAsubInit(0x101cf140) #0
-
-**** The executable "caRepeater" couldn't be located
+iocInit: Time provider has not yet synchronized.
+Record coudert:subExample called mySubInit(0x103d4d20)
+Record coudert:aSubExample called myAsubInit(0x103d5210) #0
 iocRun: All initialization complete
+**** The executable "caRepeater" couldn't be located
 **** because of errno = "No such file or directory".
-**** You may need to modify your PATH environment variable.
-**** Unable to start "CA Repeater" process.
 ## Start any sequence programs
 #seq sncExample, "user=coudert"
-epics> 
-CA client library is unable to contact CA repeater after 50 tries.
+**** You may need to modify your PATH environment variable.
+**** Unable to start "CA Repeater" process.
+epics> CA client library is unable to contact CA repeater after 50 tries.
 Silence this message by starting a CA repeater daemon
 or by calling ca_pend_event() and or ca_poll() more often.
-epics> 
+
+Record coudert:subExample called mySubProcess(0x103d4d20) #0 S1
+Record coudert:subExample called mySubProcess(0x103d4d20) #0 S2
+Record coudert:subExample called mySubProcess(0x103d4d20) #0 S3
+Record coudert:subExample called mySubProcess(0x103d4d20) #0 S4
+
 epics> dbl
 coudert:subExample
 coudert:gtsReset
 coudert:aSubExample
 
 #calls shown on caput:
-Record coudert:subExample called mySubProcess(0x106e7d10)
+Record coudert:subExample called mySubProcess(0x103d4d20) #0 S4
 
 #calls NOT shown on caput (?!, but value set !):
 Record coudert:aSubExample called myAsubProcess(0x*) #i
@@ -113,9 +120,9 @@ coudert:gtsReset               0
 coudert:subExample             0
 ./bin/linux-x86_64/caput coudert:subExample 123.456
 Old : coudert:subExample             0
-New : coudert:subExample             123.456
+New : coudert:subExample             0
 ./bin/linux-x86_64/caget coudert:subExample
-coudert:subExample             123.456
+coudert:subExample             0
 
 ./bin/linux-x86_64/caput coudert:aSubExample 123
 Old : coudert:aSubExample            0
