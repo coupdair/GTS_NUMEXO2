@@ -12,15 +12,15 @@ rm -fr iocBoot/iocgts db dbd
 ./bin/linux-x86_64/gts --help && ./bin/linux-x86_64/gts --version
 ./doxygen.sh
 ls bin/*/gts Linux-*/gtsServer
-
+cp -p /space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/bin/linux-ppc/caRepeater bin/linux-ppc/
 
 #run PPC
 
 ##transfert
 ##pack
-rm gts.zip ; zip -ry9 gts.zip db dbd ; zip -j gts.zip bin/linux-ppc/gts iocBoot/iocgts/st.cmd iocBoot/iocgts/envPaths
-rsync -var gts.zip ganp1012:/tmp/   
-rsync -var /tmp/gts.zip numexo2@numexo2-11:/tmp/   
+rm gts.zip ; zip -ry9 gts.zip db dbd ; zip -j gts.zip bin/linux-ppc/gts iocBoot/iocgts/st.cmd iocBoot/iocgts/envPaths bin/linux-ppc/caRepeater
+rsync -var gts.zip ganp1012:/tmp/
+rsync -var /tmp/gts.zip numexo2@numexo2-11:/tmp/
 
 ##embedded
 ###driver
