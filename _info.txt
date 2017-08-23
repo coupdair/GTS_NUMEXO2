@@ -141,6 +141,11 @@ New : coudert:gtsReset               456.123
 ./bin/linux-x86_64/caget coudert:gtsReset
 coudert:gtsReset               456.123
 
+bash
+for((i=0;i<12345;++i)); do ./caput coudert:subExample $i;  sleep 0.1; done
+for((i=0;i<12345;++i)); do ./caput coudert:aSubExample $i; sleep 0.1; done
+
+
 #stop caRepeater
 fg
 #Ctrl+C
@@ -166,6 +171,56 @@ cd iocBoot/iocgts/; ../../bin/linux-x86_64/gts --epics -c st.cmd; cd ../..
 
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caget coudert:subExample
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/caput coudert:subExample 123.456
+
+
+exit
+
+FLASH erase
+
+SREC Bootloader
+Loading SREC image from flash @ address: 86000000
+
+Executing program starting at address: 020283c0
+
+
+U-Boot 1.3.4-dirty (Dec  2 2015 - 14:46:40)
+
+CPU:   Xilinx PowerPC 440 UNKNOWN (PVR=7ff21912) at 400 MHz
+       32 kB I-Cache 32 kB D-Cache
+### No HW ID in FLASH as L - assuming NumExo2 (GANILu-boot.v0.0.6)
+MAC address is 00:22:8F:00:00:3b
+IP  address is 10.10.17.111
+hostname is numexo2-11
+DRAM:  256 MB
+FLASH: 32 MB
+In:    serial
+Out:   serial
+Err:   serial
+Hit any key to stop autoboot:  0 
+## Booting kernel from Legacy Image at 86100000 ...
+   Image Name:   Linux-3.0.0+
+   Image Type:   PowerPC Linux Kernel Image (gzip compressed)
+   Data Size:    1993591 Bytes =  1.9 MB
+   Load Address: 00000000
+   Entry Point:  00000000
+   Verifying Checksum ... Bad Data CRC
+ERROR: can't get kernel image!
+   XIP Invalid Image ... OK
+OK
+NIP: 00000004 XER: 20000000 LR: 0FFED168 REGS: 0fe47998 TRAP: 0700 DEAR: A43B00A5
+MSR: 00021000 EE: 0 PR: 0 FP: 0 ME: 1 IR/DR: 00
+
+GPR00: 00000000 0FE47A88 0FE47F48 007FFE80 00000000 00000000 007FFF00 007FFFAB 
+GPR08: 00000000 00000000 00000001 00000003 24000082 00000D20 0FFFFD00 00000004 
+GPR16: 00000024 00000000 0FFD5F74 0FFF1DBE 0FFF1DB3 00000000 00000001 00000000 
+GPR24: 00000000 00000000 10000000 00000000 00000000 0FFFAE5C 10000DC8 0FFFADE0 
+** Illegal Instruction **
+Call backtrace: 
+0FFED0E0 0FFD64E4 0FFD2A64 0FFD30B8 0FFCB63C 0FFCA678 
+Program Check Exception
+
+SREC Bootloader
+...
 
 
 
