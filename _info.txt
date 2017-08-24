@@ -223,6 +223,25 @@ SREC Bootloader
 ...
 
 
+exit
+
+
+server stop
+
+...
+Record coudert:subExample called mySubProcess(0x102edc38) #0 S6223
+Record coudert:subExample called mySubProcess(0x102edc38) #0 S6224
+Record coudert:subExample called mySubProcess(0x102edc38) #0 S6225
+Illegal instruction
+# rdp_fifo_driver - rdp_fifo_release(): Exiting
+
+# 
+# ./gts -e -c st.cmd
+Segmentation fault
+# reboot
+Segmentation fault
+# 
+
 
 exit
 ##UDP server
