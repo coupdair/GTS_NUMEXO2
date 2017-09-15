@@ -620,8 +620,10 @@ int cmd_writeField (void * param)
   }
 
   status |= XMMRegs_Reg_Associate(&XMMRegsDriver, XREG_UPDATE_ALL);
+
   if (status == XST_SUCCESS) status |= XMMRegs_Reg_WriteField(&XMMRegsDriver, reg_name, field_name, val_field);
-  status |= XMMRegs_Reg_Associate(&XMMRegsDriver, XREG_WRITE_ALL);
+
+  status |= XMMRegs_Reg_Write(&XMMRegsDriver);
 
   return status;
 }

@@ -126,6 +126,7 @@ extern int XMMRegs_Reg_ReadReg(XMMRegs *InstancePtr, char *reg_name);
 extern int XMMRegs_Reg_ReadField(XMMRegs *InstancePtr, char *reg_name, char *field_name);
 extern int XMMRegs_Reg_WriteField(XMMRegs *InstancePtr, char *reg_name, char *field_name, unsigned int val_field);
 extern int XMMRegs_Reg_Associate(XMMRegs *InstancePtr, int config);
+extern int XMMRegs_Reg_Write(XMMRegs *InstancePtr);
 extern int XMMRegs_Reg_Setup(XMMRegs *InstancePtr);
 extern int XMMRegs_Reg_Start(XMMRegs *InstancePtr);
 extern int XMMRegs_Reg_Stop(XMMRegs *InstancePtr);
