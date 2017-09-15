@@ -25,7 +25,7 @@ void udpServer(void * param)
 	for (taskId=0; taskId < MaxGtsCommands; ++taskId, ++gtsCmds)
 		gtsCmds->taskNameLen = strlen (gtsCmds->taskName);
 
-// Setup gts Server INET
+//! - Setup gts Server INET
 	memset((char *)&serverAddr, 0, sizeof serverAddr);
 	memset((char *)&clientAddr, 0, sizeof clientAddr);
 
@@ -49,6 +49,7 @@ void udpServer(void * param)
 
 	setsockopt (gtsServSock, SOL_SOCKET, SO_REUSEADDR, (char *)&one, sizeof(one));
 
+//! - infinite loop (see following *)
 	while (1) {
 		memset (&gtsThreadArgs, 0, sizeof gtsThreadArgs);
 
@@ -61,8 +62,10 @@ void udpServer(void * param)
 		}
 //		printf ("CMD=%s\n", gtsThreadArgs.udpReq.mesg); 
 
+//! * setup client server if it failed
 		if (gtsCliSock <= 0) gtsCliSock = clientSetup();
 
+//! * launch thread
 		pthread_attr_init (&attr);
 
 		if (pthread_create (&tid, &attr, gtsCmdInterpreter, (void *)&gtsThreadArgs) != 0) {
@@ -70,6 +73,7 @@ void udpServer(void * param)
 			continue;
 		}
 
+//! * wait thread and process output
 		switch (gtsThreadArgs.udpReq.type) {
 			case UDP_NON_BLOCKING :
 				pthread_join (tid, NULL);
@@ -102,6 +106,7 @@ void udpServer(void * param)
 				break;
 		}
 
+//! * send output
 		if (sendto (gtsServSock, (void *) &gtsThreadArgs.udpAck, ackSize, 0,
 					(struct sockaddr *)&clientAddr, fromLen) < 0) {
 			perror ("udpServer.c::udpServer:sendto=>");
@@ -109,6 +114,7 @@ void udpServer(void * param)
 		}
 	}
 
+//! - shutdown and close sockets
 	shutdown (gtsServSock, 2);
 
 	close (gtsServSock);
