@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-<title>GTS server for NUMEXO2: NUMEXO2 register server</title>
+<title>GTS server for NUMEXO2: NUMEXO2 GTS server</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javaScript" src="search/search.js"></script>
@@ -38,10 +38,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="contents">
-<h1>NUMEXO2 register server</h1><h3>v0.0.2 </h3><p>table of content: </p>
+<h1>NUMEXO2 GTS server</h1><h3>v1.0.0 </h3><p>table of content: </p>
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
 <li><a class="el" href="index.html#sectionCommandLine">command line options</a> </li>
+<li><a class="el" href="index.html#sectionServerCommands">server commands</a> </li>
 <li><a class="el" href="index.html#sectionGTSserverDocumentation">documentation outline</a> </li>
 <li><a class="el" href="index.html#sectionDoxygenSyntax">make documentation using Doxygen syntax</a></li>
 </ul>
@@ -52,18 +53,63 @@ Modifications</a></h2>
 <li>add version support (option -v)</li>
 <li>add help support (option -h)</li>
 </ul>
+<p>S. Coudert 12/02/2016</p>
+<ul>
+<li>stable v1.0.0 for production</li>
+</ul>
+<p>S. Coudert 15/05/2017</p>
+<ul>
+<li>add server commands to documentation</li>
+</ul>
 <h2><a class="anchor" id="sectionCommandLine">
 command line options</a></h2>
-<div class="fragment"><pre class="fragment">./Linux-ppc/gtsServer (v0.0.2 - Jul 24 2015 17:11:51)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.0 - May 15 2017 15:04:21)
 description:
 	GTS embedded server for NUMEXO2.
 usage:
-	./Linux-ppc/gtsServer
-	./Linux-ppc/gtsServer -h
-	./Linux-ppc/gtsServer -v
+	./gtsServer
+	./gtsServer -h
+	./gtsServer -v
 options:
 	-h: help
 	-v: version
+</pre></div><h2><a class="anchor" id="sectionServerCommands">
+server commands</a></h2>
+<div class="fragment"><pre class="fragment">gtsTest
+gtsReset
+gtsInit
+gtsUpdate
+transCon
+transGtsTree
+transDigitizer
+conIs
+gtsIs
+treeSetup
+treeStart
+rxSystemIsReady
+treeRead
+treeStop
+excludeCarrierForAlign
+includeCarrierForAlign
+alignStart
+fineDelaySetNow
+fineDelaySet
+coarseDelaySet
+alignSet
+alignTdcSet
+printBinary
+set_output_file_name
+alignMeas
+tdcSet
+tdcMeas
+triggerSetup
+triggerStart
+excludeTriggerProcessor
+testSet
+readField
+readReg
+readAll
+writeField
 </pre></div><h2><a class="anchor" id="sectionGTSserverDocumentation">
 documentation outline</a></h2>
 <p>This is the reference documentation of <a href="http://wiki.ganil.fr/gap/">NUMEXO2 GTS server</a>, from the <a href="http://www.ganil-spiral2.eu">GANIL</a>.<br/>
@@ -145,7 +191,7 @@ make documentation using Doxygen syntax</a></h2>
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on 24 Jul 2015 for GTS server for NUMEXO2 by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on 15 May 2017 for GTS server for NUMEXO2 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

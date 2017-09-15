@@ -9,14 +9,15 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v0.0.2"
+#define VERSION "v1.0.0"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
-\mainpage NUMEXO2 register server
+\mainpage NUMEXO2 GTS server
 * table of content:
 * \li \ref sectionCodeHistory
 * \li \ref sectionCommandLine
+* \li \ref sectionServerCommands
 * \li \ref sectionGTSserverDocumentation
 * \li \ref sectionDoxygenSyntax
 *
@@ -27,9 +28,19 @@ Authors : Frederic SAILLANT,
      - add version support (option -v)
      - add help    support (option -h)
 
+    S. Coudert 12/02/2016
+     - stable v1.0.0 for production
+
+    S. Coudert 15/05/2017
+     - add server commands to documentation
+
 * \section sectionCommandLine command line options
 *
 * \verbinclude "gtsServer.help.output"
+*
+* \section sectionServerCommands server commands
+*
+* \verbinclude "gtsServer_command.txt"
 *
 * \section sectionGTSserverDocumentation documentation outline
 * This is the reference documentation of 
