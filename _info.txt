@@ -111,34 +111,34 @@ Record coudert:gtsReset    called mygtsReset(0x*)
 setenv EPICS_CA_ADDR_LIST "10.10.17.255"
 setenv EPICS_CA_AUTO_ADDR_LIST NO
 setenv EPICS_CAS_BEACON_ADDR_LIST "10.10.17.255"
-./bin/linux-x86_64/caRepeater &
+~/bin/caRepeater &
 ##client
-./bin/linux-x86_64/caget coudert:subExample
+~/bin/caget coudert:subExample
 coudert:subExample             0
-./bin/linux-x86_64/caget coudert:aSubExample
+~/bin/caget coudert:aSubExample
 coudert:aSubExample            0
-./bin/linux-x86_64/caget coudert:gtsReset
+~/bin/caget coudert:gtsReset
 coudert:gtsReset               0
 
 
-./bin/linux-x86_64/caget coudert:subExample
+~/bin/caget coudert:subExample
 coudert:subExample             0
-./bin/linux-x86_64/caput coudert:subExample 123.456
+~/bin/caput coudert:subExample 123.456
 Old : coudert:subExample             0
 New : coudert:subExample             0
-./bin/linux-x86_64/caget coudert:subExample
+~/bin/caget coudert:subExample
 coudert:subExample             0
 
-./bin/linux-x86_64/caput coudert:aSubExample 123
+~/bin/caput coudert:aSubExample 123
 Old : coudert:aSubExample            0
 New : coudert:aSubExample            123
-./bin/linux-x86_64/caget coudert:aSubExample
+~/bin/caget coudert:aSubExample
 coudert:aSubExample            123
 
-./bin/linux-x86_64/caput coudert:gtsReset 456.123
+~/bin/caput coudert:gtsReset 456.123
 Old : coudert:gtsReset               0
 New : coudert:gtsReset               456.123
-./bin/linux-x86_64/caget coudert:gtsReset
+~/bin/caget coudert:gtsReset
 coudert:gtsReset               456.123
 
 bash
@@ -149,6 +149,15 @@ for((i=0;i<12345;++i)); do ./caput coudert:aSubExample $i; sleep 0.1; done
 #stop caRepeater
 fg
 #Ctrl+C
+
+
+#run on linux-x86_64
+./bin/linux-x86_64/gts -e -c ./iocBoot/iocgts/st.cmd
+...
+Record coudert:subExample called mySubProcess(0xede730) #0 S1
+gts fake: EPICS/mygtsReset(subRecord *)
+#gts, but not ASubEx !? (value change for ASubEx)
+#call: no gts output on PPC ?!? (from the same compilation), value change.
 
 
 #date change (1970 to 1990)
