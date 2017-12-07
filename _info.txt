@@ -1,7 +1,7 @@
 ##example
 
 #clean
-rm -fr dbd db include gtsApp lib
+rm -fr configure include iocBoot gtsApp lib db dbd
 
 #example
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example gts
