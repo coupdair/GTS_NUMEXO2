@@ -5,12 +5,8 @@ rm -fr configure include iocBoot gtsApp lib db dbd Makefile bin
 
 #example
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example gts
-
-make
-
-exit
-
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example -i -p gts -a linux-x86_64 gts
+make
 
 exit
 

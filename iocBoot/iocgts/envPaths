@@ -1,0 +1,3 @@
+epicsEnvSet("IOC","iocgts")
+epicsEnvSet("TOP","/home/coudert/GTS_server/GTS_NUMEXO2")
+epicsEnvSet("EPICS_BASE","/space/global/buildroot/CentOS6_64/ppc440/epics/base")
