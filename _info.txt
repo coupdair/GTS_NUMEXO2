@@ -1,9 +1,5 @@
 ##example
 
-
-quota: Cannot resolve mountpoint path /home/coudert: Stale file handle
-
-
 #clean
 rm -fr configure include iocBoot gtsApp lib db dbd Makefile bin
 
@@ -11,24 +7,6 @@ rm -fr configure include iocBoot gtsApp lib db dbd Makefile bin
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example gts
 
 make
-
-#FAIL
-
-/usr/bin/g++ -o gts -Wl,-Bstatic -L/home/coudert/GTS_server/GTS_NUMEXO2/gtsApp/src/O.linux-x86_64/lib/linux-x86_64 -L/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-x86_64 -Wl,-rpath,/home/coudert/GTS_server/GTS_NUMEXO2/gtsApp/src/O.linux-x86_64/lib/linux-x86_64 -Wl,-rpath,/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-x86_64           -rdynamic -m64            gts_registerRecordDeviceDriver.o gtsMain.o    -lgtsSupport -ldbRecStd -ldbCore -lca -lCom -Wl,-Bdynamic  -lpthread   -lreadline -lm -lrt -ldl -lgcc
-/usr/bin/ld: cannot find -lgtsSupport
-
-#CORRECTION -L/home/coudert/GTS_server/GTS_NUMEXO2/gtsApp/src/O.linux-x86_64/lib/linux-x86_64
-cd /home/coudert/GTS_server/GTS_NUMEXO2/gtsApp/src/O.linux-x86_64/
-mkdir lib/linux-x86_64 -p
-cd lib/linux-x86_64 
-ln -s ../../libgtsSupport.a
-cd /home/coudert/GTS_server/GTS_NUMEXO2/
-
-make
-
-#FAIL 2
-/usr/bin/g++ -o gts -Wl,-Bstatic -L/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-x86_64 -Wl,-rpath,/space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/lib/linux-x86_64           -rdynamic -m64            gts_registerRecordDeviceDriver.o gtsMain.o    -lgtsSupport -ldbRecStd -ldbCore -lca -lCom -Wl,-Bdynamic  -lpthread   -lreadline -lm -lrt -ldl -lgcc
-/usr/bin/ld: cannot find -lgtsSupport
 
 exit
 
