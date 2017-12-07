@@ -23,7 +23,7 @@ static long mySubInit(subRecord *precord)
         printf("Record %s called mySubInit(%p)\n",
                precord->name, (void*) precord);
     return 0;
-}
+}//mySubInit
 
 static long mySubProcess(subRecord *precord)
 {
@@ -36,7 +36,7 @@ static long mySubProcess(subRecord *precord)
       );
   precord->val = increment;
     return 0;
-}
+}//mySubProcess
 
 static long myAsubInit(aSubRecord *precord)
 {
@@ -46,7 +46,7 @@ static long myAsubInit(aSubRecord *precord)
       , precord->name, (void*) precord
       , increment);
   return 0;
-}
+}//myAsubInit
 
 static long myAsubProcess(aSubRecord *precord)
 {
@@ -57,7 +57,7 @@ static long myAsubProcess(aSubRecord *precord)
       , increment);
   precord->val = increment;
   return increment;
-}
+}//myAsubProcess
 
 //! EPICS call for \c gtsReset function
 unsigned long mygtsReset(subRecord *precord)
@@ -67,12 +67,15 @@ unsigned long mygtsReset(subRecord *precord)
   unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS);
 
   if((int)precord->val != 1) {
+    if (mySubDebug)
+      printf("gts: EPICS/%s(subRecord *)\n",__func__);
+    precord->val=99;
     return 0;
   }
 
   if (mySubDebug)
        printf("gts %lu is being reset\n",  cardnumber);
-   status=gtsReset();
+  status=gtsReset();
 #else
   int status=0;
   if (mySubDebug)
@@ -80,7 +83,7 @@ unsigned long mygtsReset(subRecord *precord)
 #endif //_X86_64_
   precord->val = status;
   return 0;
-}
+}//mygtsReset
 
 /* Register these symbols for use by IOC code: */
 
