@@ -1,5 +1,9 @@
 ##example
 
+
+quota: Cannot resolve mountpoint path /home/coudert: Stale file handle
+
+
 #clean
 rm -fr configure include iocBoot gtsApp lib db dbd Makefile bin
 
