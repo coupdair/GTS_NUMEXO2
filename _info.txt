@@ -3,6 +3,10 @@
 #clean
 rm -fr dbd db include gtsApp lib
 
+#example
+/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example gts
+/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example -i -p gts -a linux-x86_64 -a linux-ppc gts
+
 exit
 
 #edit
