@@ -21,6 +21,9 @@ dbl
 ##ppc
 ./gts st.cmd
 
+setenv EPICS_CA_ADDR_LIST '10.10.17.127'
+#setenv EPICS_CA_AUTO_ADDR_LIST 'NO'
+
 
 exit
 
