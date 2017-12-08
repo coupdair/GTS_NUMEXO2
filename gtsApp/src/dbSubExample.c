@@ -53,6 +53,7 @@ static long gtsProcess(subRecord *precord)
     if (mySubDebug)
         printf("Record %s called gtsProcess(%p)\n",
                precord->name, (void*) precord);
+  precord->val=456;
     return 0;
 }
 /* Register these symbols for use by IOC code: */
