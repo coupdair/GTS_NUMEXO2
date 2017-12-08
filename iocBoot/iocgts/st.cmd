@@ -12,7 +12,7 @@ dbLoadDatabase "dbd/gts.dbd"
 gts_registerRecordDeviceDriver pdbbase
 
 ## Load record instances
-dbLoadTemplate "db/user.substitutions"
+#dbLoadTemplate "db/user.substitutions"
 dbLoadRecords "db/dbSubExample.db", "user=coudert"
 
 ## Set this to see messages from mySub

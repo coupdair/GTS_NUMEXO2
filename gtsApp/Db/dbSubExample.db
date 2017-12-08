@@ -1,21 +1,21 @@
-record(sub,"$(user):subExample")
-{
-    field(INAM,"mySubInit")
-    field(SNAM,"mySubProcess")
-}
-record(aSub,"$(user):aSubExample")
-{
-    field(INAM,"myAsubInit")
-    field(SNAM,"myAsubProcess")
-    field(FTA,"DOUBLE")
-    field(NOA,"10")
-    field(INPA,"$(user):compressExample CPP")
-}
+#record(sub,"$(user):subExample")
+#{
+#    field(INAM,"mySubInit")
+#    field(SNAM,"mySubProcess")
+#}
+#record(aSub,"$(user):aSubExample")
+#{
+#    field(INAM,"myAsubInit")
+#    field(SNAM,"myAsubProcess")
+#    field(FTA,"DOUBLE")
+#    field(NOA,"10")
+#    field(INPA,"$(user):compressExample CPP")
+#}
 
 record(sub,"$(user):gtsExample")
 {
-	  field(SCAN,"1 second")
-    field(INAM,"mySubInit")
-    field(SNAM,"mySubProcess")
+	  field(SCAN,"Passive")
+    field(INAM,"gtsInit")
+    field(SNAM,"gtsProcess")
 }
 

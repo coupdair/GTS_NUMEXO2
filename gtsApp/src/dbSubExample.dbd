@@ -1,5 +1,7 @@
 variable(mySubDebug)
 function(mySubInit)
 function(mySubProcess)
+function(gtsInit)
+function(gtsProcess)
 function(myAsubInit)
 function(myAsubProcess)

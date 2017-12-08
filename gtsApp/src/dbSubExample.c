@@ -40,10 +40,27 @@ static long myAsubProcess(aSubRecord *precord)
     return 0;
 }
 
+static long gtsInit(subRecord *precord)
+{
+    if (mySubDebug)
+        printf("Record %s called gtsInit(%p)\n",
+               precord->name, (void*) precord);
+    return 0;
+}
+
+static long gtsProcess(subRecord *precord)
+{
+    if (mySubDebug)
+        printf("Record %s called gtsProcess(%p)\n",
+               precord->name, (void*) precord);
+    return 0;
+}
 /* Register these symbols for use by IOC code: */
 
 epicsExportAddress(int, mySubDebug);
 epicsRegisterFunction(mySubInit);
 epicsRegisterFunction(mySubProcess);
+epicsRegisterFunction(gtsInit);
+epicsRegisterFunction(gtsProcess);
 epicsRegisterFunction(myAsubInit);
 epicsRegisterFunction(myAsubProcess);

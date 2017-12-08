@@ -18,7 +18,7 @@ record(ai, "$(user):aiExample")
 record(calc, "$(user):calcExample")
 {
 	field(DESC, "Counter")
-	field(SCAN,"5 second")
+	field(SCAN,"Passive")
 	field(FLNK, "$(user):aiExample")
 	field(CALC, "(A<B)?(A+C):D")
 	field(INPA, "$(user):calcExample.VAL  NPP NMS")
