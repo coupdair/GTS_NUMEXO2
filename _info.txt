@@ -1,16 +1,29 @@
 ##example
 
-#clean
-rm -fr configure include iocBoot gtsApp lib db dbd Makefile bin
+#edit
+gitk --all &
+gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/st.cmd &
 
 #example
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example gts
 /space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example -i -p gts -a linux-x86_64 gts
 make
 
+#transfert
+cp -p /space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/bin/linux-ppc/caRepeater bin/linux-ppc/
+rm gts.zip ; zip -ry9 gts.zip db dbd ; zip -j gts.zip bin/linux-ppc/gts iocBoot/iocgts/st.cmd iocBoot/iocgts/envPaths bin/linux-ppc/caRepeater
+
+#run
+##x86
+bin/linux-x86_64/gts iocBoot/iocgts/st.cmd
+dbl
+
+##ppc
+./gts st.cmd
+
+
 exit
 
-#edit
-gitk --all &
-gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/st.cmd &
+#clean
+rm -fr configure include iocBoot gtsApp lib db dbd Makefile bin
 

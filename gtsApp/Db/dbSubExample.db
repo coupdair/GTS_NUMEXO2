@@ -11,3 +11,11 @@ record(aSub,"$(user):aSubExample")
     field(NOA,"10")
     field(INPA,"$(user):compressExample CPP")
 }
+
+record(sub,"$(user):gtsExample")
+{
+	  field(SCAN,"1 second")
+    field(INAM,"mySubInit")
+    field(SNAM,"mySubProcess")
+}
+
