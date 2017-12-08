@@ -21,8 +21,24 @@ dbl
 ##ppc
 ./gts st.cmd
 
+##PPC server
 setenv EPICS_CA_ADDR_LIST '10.10.17.127'
 #setenv EPICS_CA_AUTO_ADDR_LIST 'NO'
+
+##x86 server
+setenv EPICS_CA_ADDR_LIST '10.10.17.254'
+setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
+
+
+~/bin/caput coudert:gtsExample 123
+Old : coudert:gtsExample             0
+Record coudert:gtsExample called gtsProcess(0x10223098/0)
+New : coudert:gtsExample             456
+
+~/bin/caput coudert:gtsExample 123
+Old : coudert:gtsExample             456
+Record coudert:gtsExample called gtsProcess(0x10223098/0)
+New : coudert:gtsExample             456
 
 
 exit

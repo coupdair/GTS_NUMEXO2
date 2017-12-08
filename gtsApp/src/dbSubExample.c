@@ -50,9 +50,12 @@ static long gtsInit(subRecord *precord)
 
 static long gtsProcess(subRecord *precord)
 {
-    if (mySubDebug)
-        printf("Record %s called gtsProcess(%p)\n",
-               precord->name, (void*) precord);
+  if (mySubDebug)
+    printf("Record %s called gtsProcess(%p/%d)\n"
+      ,precord->name
+      ,(void*) precord
+      ,precord->val
+    );
   precord->val=456;
     return 0;
 }
