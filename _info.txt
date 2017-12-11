@@ -1,4 +1,6 @@
 ##example
+# - SCAN passive
+# - ->val float
 
 #edit
 gitk --all &
@@ -29,16 +31,27 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.127'
 setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
+~/bin/caput numexo2:subExample 1
+Old : numexo2:subExample             0
+New : numexo2:subExample             0
+~/bin/caput numexo2:subExample 2
+Old : numexo2:subExample             0
+New : numexo2:subExample             0
+~/bin/caput numexo2:gtsExample 3
+Old : numexo2:gtsExample             0
+New : numexo2:gtsExample             456
+~/bin/caput numexo2:gtsExample 4
+Old : numexo2:gtsExample             456
+New : numexo2:gtsExample             456
+~/bin/caput numexo2:subExample 5
+Old : numexo2:subExample             0
+New : numexo2:subExample             2
 
-~/bin/caput coudert:gtsExample 123
-Old : coudert:gtsExample             0
-Record coudert:gtsExample called gtsProcess(0x10223098/0)
-New : coudert:gtsExample             456
-
-~/bin/caput coudert:gtsExample 123
-Old : coudert:gtsExample             456
-Record coudert:gtsExample called gtsProcess(0x10223098/0)
-New : coudert:gtsExample             456
+Record numexo2:subExample called mySubProcess(0x108051e8/1.000000) #0 S1
+Record numexo2:subExample called mySubProcess(0x108051e8/2.000000) #0 S2
+Record numexo2:gtsExample called gtsProcess(0x10805648/3.000000) #1 S2
+Record numexo2:gtsExample called gtsProcess(0x10805648/4.000000) #2 S2
+Record numexo2:subExample called mySubProcess(0x108051e8/5.000000) #2 S3
 
 
 exit

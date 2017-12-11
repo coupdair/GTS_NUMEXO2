@@ -1,5 +1,6 @@
 record(sub,"$(user):subExample")
 {
+    field(SCAN,"Passive")
     field(INAM,"mySubInit")
     field(SNAM,"mySubProcess")
 }
@@ -15,7 +16,7 @@ record(sub,"$(user):subExample")
 
 record(sub,"$(user):gtsExample")
 {
-	  field(SCAN,"Passive")
+    field(SCAN,"Passive")
     field(INAM,"gtsInit")
     field(SNAM,"gtsProcess")
 }
