@@ -13,7 +13,7 @@ gts_registerRecordDeviceDriver pdbbase
 
 ## Load record instances
 #dbLoadTemplate "db/user.substitutions"
-dbLoadRecords "db/dbSubExample.db", "user=coudert"
+dbLoadRecords "db/dbSubExample.db", "user=numexo2"
 
 ## Set this to see messages from mySub
 var mySubDebug 1
