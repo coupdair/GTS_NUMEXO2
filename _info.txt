@@ -16,7 +16,15 @@ rm gts.zip ; zip -ry9 gts.zip db dbd ; zip -j gts.zip bin/linux-ppc/gts iocBoot/
 #run
 ##x86
 bin/linux-x86_64/gts --epics -c iocBoot/iocgts/st.cmd
+# v
 dbl
+numexo2:subExample
+numexo2:gtsExample
+Record numexo2:subExample called mySubProcess(0x22fbb10/1.000000) #0 S1
+...
+# v
+~/bin/caput numexo2:subExample 1
+...
 
 ##ppc
 ./gts --epics -c st.cmd
