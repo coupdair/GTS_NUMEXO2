@@ -4,7 +4,7 @@
  * \author Sebastien COUDERT
 **/
 
-#define VERSION "v0.1.2e"
+#define VERSION "v0.1.2"
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -180,23 +180,16 @@ int main(int argc,char *argv[])
 //! - initialize globals
   initialize();
 
-//!
-
+//! - initialize XSPI
   XSPI_ConfigTable[0].BaseAddress = (void *)(&XSPIScratch[0]);
-
   XMMRegs_Initialize(&XMMRegsDriver, 0);
-
   XSPI_Initialize(&XSPIDriver, 0);
 
-//!
-
+//! - initialize XMMRegs
   XMMRegs_Reg_Init(&XMMRegsDriver);
-
   c = (XMMRegs_lmk_pll_ctrl *)(XMMRegsDriver.BaseAddress + XMMR_LMK_PLL_CTRL_OFFSET);
-
   c->hw_ctrl = 1;
   c->hw_init_conf = 1;
-
   XMMRegs_RocketIO_Gtx_Reset(&XMMRegsDriver);
 
 #endif //_X86_64_
@@ -204,7 +197,7 @@ int main(int argc,char *argv[])
 //! EPICS or UDP service
 if(arguments.epicsFlow)
 {//EPICS
-  printf("GTS server 4 EPICS: not implemented yet !\n");
+  printf("GTS server 4 EPICS: not fully implemented yet !\n  - gtsReset only.\n");
   //batch IOC shell
   if(argc>=2)
   {
