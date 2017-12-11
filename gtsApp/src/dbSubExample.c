@@ -95,11 +95,11 @@ static long gtsProcess(subRecord *precord)
 
   if (mySubDebug)
        printf("gts %lu is being reset\n",  cardnumber);
-   status=gtsReset();
+  status=gtsReset();
 #else
   int status=0;
-  if (mySubDebug)
-       printf("gts fake: EPICS/%s(subRecord *)\n",__func__);
+  if(mySubDebug)
+    printf("gts fake: EPICS/%s(subRecord *)\n",__func__);
 #endif //_X86_64_
   precord->val = status;
   return 0;

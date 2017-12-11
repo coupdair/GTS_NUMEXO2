@@ -4,7 +4,7 @@
  * \author Sebastien COUDERT
 **/
 
-#define VERSION "v0.1.2d"
+#define VERSION "v0.1.2e"
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -179,6 +179,26 @@ int main(int argc,char *argv[])
 
 //! - initialize globals
   initialize();
+
+//!
+
+  XSPI_ConfigTable[0].BaseAddress = (void *)(&XSPIScratch[0]);
+
+  XMMRegs_Initialize(&XMMRegsDriver, 0);
+
+  XSPI_Initialize(&XSPIDriver, 0);
+
+//!
+
+  XMMRegs_Reg_Init(&XMMRegsDriver);
+
+  c = (XMMRegs_lmk_pll_ctrl *)(XMMRegsDriver.BaseAddress + XMMR_LMK_PLL_CTRL_OFFSET);
+
+  c->hw_ctrl = 1;
+  c->hw_init_conf = 1;
+
+  XMMRegs_RocketIO_Gtx_Reset(&XMMRegsDriver);
+
 #endif //_X86_64_
 
 //! EPICS or UDP service
@@ -209,24 +229,9 @@ else
 
 //! - initialise and start \b client socket
 
-  XSPI_ConfigTable[0].BaseAddress = (void *)(&XSPIScratch[0]);
-
-  XMMRegs_Initialize(&XMMRegsDriver, 0);
-
-  XSPI_Initialize(&XSPIDriver, 0);
-
   gtsCliSock = clientSetup();
 
 //! - initialise and start \b server socket
-
-  XMMRegs_Reg_Init(&XMMRegsDriver);
-
-  c = (XMMRegs_lmk_pll_ctrl *)(XMMRegsDriver.BaseAddress + XMMR_LMK_PLL_CTRL_OFFSET);
-
-  c->hw_ctrl = 1;
-  c->hw_init_conf = 1;
-
-  XMMRegs_RocketIO_Gtx_Reset(&XMMRegsDriver);
 
   logAnswer();
 
