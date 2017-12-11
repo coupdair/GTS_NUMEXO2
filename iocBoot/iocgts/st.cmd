@@ -12,7 +12,6 @@ dbLoadDatabase "dbd/gts.dbd"
 gts_registerRecordDeviceDriver pdbbase
 
 ## Load record instances
-#dbLoadTemplate "db/user.substitutions"
 dbLoadRecords "db/dbSubExample.db", "user=numexo2"
 
 ## Set this to see messages from mySub
@@ -25,4 +24,4 @@ cd "${TOP}/iocBoot/${IOC}"
 iocInit
 
 ## Start any sequence programs
-#seq sncExample, "user=coudert"
+

@@ -61,11 +61,12 @@ static long gtsInit(subRecord *precord)
 {
   increment=0;
   if(mySubDebug)
-    printf("Record %s called gtsInit(%p/%f) #%d\n"
+    printf("Record %s called gtsInit(%p/%f) #%d S%d\n"
       ,precord->name
       ,(void*) precord
       ,precord->val
       ,increment
+      ,subi
     );
   return 0;
 }//gtsInit
@@ -73,11 +74,12 @@ static long gtsProcess(subRecord *precord)
 {
   ++increment;
   if (mySubDebug)
-    printf("Record %s called gtsProcess(%p/%f) #%d\n"
+    printf("Record %s called gtsProcess(%p/%f) #%d S%d\n"
       ,precord->name
       ,(void*) precord
       ,precord->val
       ,increment
+      ,subi
     );
   precord->val=456;
   return 0;
