@@ -6,10 +6,8 @@
 gitk --all &
 gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/st.cmd &
 
-#example
-/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example gts
-/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example -i -p gts -a linux-x86_64 gts
-make
+#GTS (EPICS or UDP)
+./make.sh
 
 #transfert
 cp -p /space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/bin/linux-ppc/caRepeater bin/linux-ppc/
@@ -17,11 +15,11 @@ rm gts.zip ; zip -ry9 gts.zip db dbd ; zip -j gts.zip bin/linux-ppc/gts iocBoot/
 
 #run
 ##x86
-bin/linux-x86_64/gts -e iocBoot/iocgts/st.cmd
+bin/linux-x86_64/gts --epics -c iocBoot/iocgts/st.cmd
 dbl
 
 ##ppc
-./gts -e st.cmd
+./gts --epics -c st.cmd
 
 ##PPC server
 setenv EPICS_CA_ADDR_LIST '10.10.17.127'
@@ -58,4 +56,10 @@ exit
 
 #clean
 rm -fr configure include iocBoot gtsApp lib db dbd Makefile bin
+
+#example
+/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example gts
+/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example -i -p gts -a linux-x86_64 gts
+make
+
 

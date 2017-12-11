@@ -14,4 +14,5 @@ gtsMain.o: ../gtsMain.cpp \
  /space/global/buildroot/CentOS6_64/ppc440/epics/base/include/ellLib.h \
  /space/global/buildroot/CentOS6_64/ppc440/epics/base/include/epicsEvent.h \
  /space/global/buildroot/CentOS6_64/ppc440/epics/base/include/iocsh.h \
+ /space/global/buildroot/CentOS6_64/ppc440/epics/base/include/envDefs.h \
  /space/global/buildroot/CentOS6_64/ppc440/epics/base/include/error.h
