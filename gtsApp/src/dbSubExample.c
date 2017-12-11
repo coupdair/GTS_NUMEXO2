@@ -6,6 +6,11 @@
 #include <aSubRecord.h>
 #include <epicsExport.h>
 
+//GTS device
+#include "../../xmmregs_l.h" //CARD_NUMBER_ADDRESS
+#include "../../xstatus.h"   //XST_SUCCESS
+#include "../../xmmregs_i.h"//cardNumber
+
 int mySubDebug;
 
 static int increment;
@@ -73,7 +78,7 @@ static long gtsInit(subRecord *precord)
 static long gtsProcess(subRecord *precord)
 {
   ++increment;
-  if (mySubDebug)
+  if(mySubDebug)
     printf("Record %s called gtsProcess(%p/%f) #%d S%d\n"
       ,precord->name
       ,(void*) precord
@@ -81,7 +86,22 @@ static long gtsProcess(subRecord *precord)
       ,increment
       ,subi
     );
-  precord->val=456;
+
+#ifndef _X86_64_
+  int status = XST_SUCCESS;
+  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS);
+
+  if(precord->val != 1.0) return 0;
+
+  if (mySubDebug)
+       printf("gts %lu is being reset\n",  cardnumber);
+   status=gtsReset();
+#else
+  int status=0;
+  if (mySubDebug)
+       printf("gts fake: EPICS/%s(subRecord *)\n",__func__);
+#endif //_X86_64_
+  precord->val = status;
   return 0;
 }//gtsProcess
 
