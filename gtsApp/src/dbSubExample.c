@@ -105,6 +105,31 @@ static long myGTSProcess(subRecord *precord)
   return 0;
 }//myGTSProcess
 
+
+//! \todo implement funcNoArg with ARG()
+#define funcNoArgEPICS(ARG) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  if(mySubDebug) \
+    printf("Record %s called %s(%p/%f) activated if val=1.0\n" \
+      ,precord->name \
+      ,__func__ \
+      ,(void*) precord \
+      ,precord->val \
+    ); \
+ \
+  int status=0; \
+  precord->val = status; \
+  return 0; \
+}/*ARG##EPICS*/ \
+//funcNoArgEPICS
+
+//gtsResetEPICS
+funcNoArgEPICS(gtsReset)
+funcNoArgEPICS(gtsInit)
+#undef funcNoArgEPICS
+
+/*
 static long gtsResetEPICS(subRecord *precord)
 {
   if(mySubDebug)
@@ -132,35 +157,25 @@ static long gtsResetEPICS(subRecord *precord)
   precord->val = status;
   return 0;
 }//gtsResetEPICS
-static long gtsInitEPICS(subRecord *precord)
-{
-  if(mySubDebug)
-    printf("Record %s called %s(%p/%f) activated if val=1.0\n"
-      ,precord->name
-      ,__func__
-      ,(void*) precord
-      ,precord->val
-    );
+*/
 
-#ifndef _X86_64_
-  int status = XST_SUCCESS;
-  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS);
+/*no arg
+implement:
+gtsTest
+gtsUpdate
+conIs
+gtsIs
+treeStart
+treeStop
+includeCarrierForAlign
+excludeCarrierForAlign
+alignStart
 
-  if(precord->val != 1.0) return 0;
-
-  if (mySubDebug)
-       printf("gts %lu is being init\n",  cardnumber);
-  status=gtsInit();
-#else
-  int status=0;
-  if(mySubDebug)
-    printf("gts fake: EPICS/%s(subRecord *)\n",__func__);
-#endif //_X86_64_
-  precord->val = status;
-  return 0;
-}//gtsInitEPICS
-
-
+see:
+//excludeTriggerProcessor empty
+testSet -> leaveTestLoopback
+readAll ...
+*/
 
 /* Register these symbols for use by IOC code: */
 epicsExportAddress(int, mySubDebug);
