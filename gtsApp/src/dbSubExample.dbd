@@ -5,3 +5,5 @@ function(gtsInit)
 function(gtsProcess)
 function(myAsubInit)
 function(myAsubProcess)
+function(gtsResetEPICS)
+

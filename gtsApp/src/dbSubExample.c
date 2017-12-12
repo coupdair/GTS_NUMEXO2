@@ -131,7 +131,7 @@ static long gtsResetEPICS(subRecord *precord)
 #endif //_X86_64_
   precord->val = status;
   return 0;
-}//gtsProcess
+}//gtsResetEPICS
 
 
 
@@ -143,6 +143,5 @@ epicsRegisterFunction(myAsubInit);
 epicsRegisterFunction(myAsubProcess);
 epicsRegisterFunction(gtsInit);
 epicsRegisterFunction(gtsProcess);
-
 epicsRegisterFunction(gtsResetEPICS);
 

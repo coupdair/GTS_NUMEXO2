@@ -8,7 +8,11 @@ set TC_clear="\033[0m"
 #clean
 rm -f bin/linux-*/* Linux-*/* \
   gtsApp/src/O.linux-ppc/*.o gtsApp/src/O.linux-ppc/*.d gtsApp/src/O.linux-ppc/*.a
-make clean
+#make clean
+#rm -fr iocBoot db dbd include lib
+#sync
+##rebuild IOC
+#/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example -i -p gts -a linux-x86_64 gts
 sync
 #option: copy caRepeater
 cp -p /space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/bin/linux-ppc/caRepeater bin/linux-ppc/
