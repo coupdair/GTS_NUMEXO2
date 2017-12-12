@@ -23,7 +23,7 @@ record(sub,"$(user):gtsExample")
 
 record(sub,"$(user):serverVersion")
 {
-    field(DESC,"v0.1.3k")
+    field(DESC,"v0.1.3l")
 }
 
 record(sub,"$(user):gtsReset")
@@ -44,4 +44,44 @@ record(sub,"$(user):gtsTest")
     field(SNAM,"gtsTestEPICS")
 }
 
+record(sub,"$(user):gtsUpdate")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"gtsUpdateEPICS")
+}
+record(sub,"$(user):conIs")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"conIsEPICS")
+}
+record(sub,"$(user):gtsIs")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"gtsIsEPICS")
+}
+record(sub,"$(user):treeStart")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"treeStartEPICS")
+}
+record(sub,"$(user):treeStop")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"treeStopEPICS")
+}
+record(sub,"$(user):includeCarrierForAlign")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"includeCarrierForAlignEPICS")
+}
+record(sub,"$(user):excludeCarrierForAlign")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"excludeCarrierForAlignEPICS")
+}
+record(sub,"$(user):alignStart")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"alignStartEPICS")
+}
 

@@ -46,7 +46,7 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
 ~/bin/caget numexo2:serverVersion.DESC
-numexo2:serverVersion.DESC     v0.1.3j
+numexo2:serverVersion.DESC     v0.1.3l
 
 ~/bin/caput numexo2:gtsReset 1
 Old : numexo2:gtsReset               0
@@ -66,9 +66,17 @@ numexo2:serverVersion
 numexo2:gtsReset
 numexo2:gtsInit
 numexo2:gtsTest
+numexo2:gtsUpdate
+numexo2:conIs
+numexo2:gtsIs
+numexo2:treeStart
+numexo2:treeStop
+numexo2:includeCarrierForAlign
+numexo2:excludeCarrierForAlign
+numexo2:alignStart
 epics> dbpr numexo2:serverVersion
 ...
-D: 0                DESC: v0.1.3j       DISA: 0             DISP: 0             
+D: 0                DESC: v0.1.3l       DISA: 0             DISP: 0             
 ...
 epics>
 Record numexo2:gtsReset called gtsResetEPICS(0x106aa450/1.000000) activated if val=1.0

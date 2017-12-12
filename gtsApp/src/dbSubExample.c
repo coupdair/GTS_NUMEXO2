@@ -152,10 +152,27 @@ epicsRegisterFunction(ARG##EPICS); \
 
 #endif //_X86_64_
 
-funcNoArgEPICS(gtsReset, reset)
-funcNoArgEPICS(gtsInit,  initialise)
-funcNoArgEPICS(gtsTest,  test)
+//funcNoArgEPICS(,)
+funcNoArgEPICS(gtsReset,  reset)
+funcNoArgEPICS(gtsInit,   initialise)
+funcNoArgEPICS(gtsTest,   test)
+funcNoArgEPICS(gtsUpdate, update)
+funcNoArgEPICS(conIs,  conIs)
+funcNoArgEPICS(gtsIs,  gtsIs)
+funcNoArgEPICS(treeStart, start)
+funcNoArgEPICS(treeStop,  stop)
+funcNoArgEPICS(includeCarrierForAlign, include)
+funcNoArgEPICS(excludeCarrierForAlign, exclude)
+funcNoArgEPICS(alignStart, aligned)
 #undef funcNoArgEPICS
+/*no arg
+implement ?!:
+//excludeTriggerProcessor empty
+testSet -> leaveTestLoopback
+readAll ...
+*/
+
+
 
 /*
 static long gtsResetEPICS(subRecord *precord)
@@ -185,23 +202,6 @@ static long gtsResetEPICS(subRecord *precord)
   precord->val = status;
   return 0;
 }//gtsResetEPICS
-*/
-
-/*no arg
-implement:
-gtsUpdate
-conIs
-gtsIs
-treeStart
-treeStop
-includeCarrierForAlign
-excludeCarrierForAlign
-alignStart
-
-see:
-//excludeTriggerProcessor empty
-testSet -> leaveTestLoopback
-readAll ...
 */
 
 /* Register these symbols for use by IOC code: */
