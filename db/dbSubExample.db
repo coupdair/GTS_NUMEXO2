@@ -17,13 +17,13 @@ record(sub,"$(user):subExample")
 record(sub,"$(user):gtsExample")
 {
     field(SCAN,"Passive")
-    field(INAM,"gtsInit")
-    field(SNAM,"gtsProcess")
+    field(INAM,"myGTSInit")
+    field(SNAM,"myGTSProcess")
 }
 
 record(sub,"$(user):serverVersion")
 {
-    field(DESC,"v0.1.3f")
+    field(DESC,"v0.1.3g")
 }
 
 record(sub,"$(user):gtsReset")
@@ -32,4 +32,9 @@ record(sub,"$(user):gtsReset")
     field(SNAM,"gtsResetEPICS")
 }
 
+record(sub,"$(user):gtsInit")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"gtsInitEPICS")
+}
 

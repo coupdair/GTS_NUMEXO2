@@ -62,7 +62,7 @@ static long myAsubProcess(aSubRecord *precord)
   return increment;
 }//myAsubProcess
 
-static long gtsInit(subRecord *precord)
+static long myGTSInit(subRecord *precord)
 {
   increment=0;
   if(mySubDebug)
@@ -74,8 +74,8 @@ static long gtsInit(subRecord *precord)
       ,subi
     );
   return 0;
-}//gtsInit
-static long gtsProcess(subRecord *precord)
+}//myGTSInit
+static long myGTSProcess(subRecord *precord)
 {
   ++increment;
   if(mySubDebug)
@@ -103,7 +103,7 @@ static long gtsProcess(subRecord *precord)
 #endif //_X86_64_
   precord->val = status;
   return 0;
-}//gtsProcess
+}//myGTSProcess
 
 static long gtsResetEPICS(subRecord *precord)
 {
@@ -132,6 +132,33 @@ static long gtsResetEPICS(subRecord *precord)
   precord->val = status;
   return 0;
 }//gtsResetEPICS
+static long gtsInitEPICS(subRecord *precord)
+{
+  if(mySubDebug)
+    printf("Record %s called %s(%p/%f) activated if val=1.0\n"
+      ,precord->name
+      ,__func__
+      ,(void*) precord
+      ,precord->val
+    );
+
+#ifndef _X86_64_
+  int status = XST_SUCCESS;
+  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS);
+
+  if(precord->val != 1.0) return 0;
+
+  if (mySubDebug)
+       printf("gts %lu is being init\n",  cardnumber);
+  status=gtsInit();
+#else
+  int status=0;
+  if(mySubDebug)
+    printf("gts fake: EPICS/%s(subRecord *)\n",__func__);
+#endif //_X86_64_
+  precord->val = status;
+  return 0;
+}//gtsInitEPICS
 
 
 
@@ -141,7 +168,9 @@ epicsRegisterFunction(mySubInit);
 epicsRegisterFunction(mySubProcess);
 epicsRegisterFunction(myAsubInit);
 epicsRegisterFunction(myAsubProcess);
-epicsRegisterFunction(gtsInit);
-epicsRegisterFunction(gtsProcess);
+epicsRegisterFunction(myGTSInit);
+epicsRegisterFunction(myGTSProcess);
+
 epicsRegisterFunction(gtsResetEPICS);
+epicsRegisterFunction(gtsInitEPICS);
 

@@ -42,9 +42,6 @@ ls -lah ./bin/linux-ppc/gts
 file ./bin/linux-ppc/gts
 date
 
-#copy db ?!
-cp -p gtsApp/Db/dbSubExample.db db/
-
 #VERSION
 set version=`./bin/linux-x86_64/gts --version`
 cat gtsApp/Db/dbSubExample.db | sed "s/__SERVER_VERSION__/$version/" > db/dbSubExample.db

@@ -1,9 +1,10 @@
 variable(mySubDebug)
 function(mySubInit)
 function(mySubProcess)
-function(gtsInit)
-function(gtsProcess)
+function(myGTSInit)
+function(myGTSProcess)
 function(myAsubInit)
 function(myAsubProcess)
 function(gtsResetEPICS)
+function(gtsInitEPICS)
 

@@ -175,11 +175,12 @@ typedef void (*reg_func)(void);
 epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_dbndInitialize, pvar_func_helloRegister,
     pvar_func_initTraceRegister, pvar_func_syncInitialize,
-    pvar_func_tsInitialize, pvar_func_register_func_gtsInit,
-    pvar_func_register_func_gtsProcess,
+    pvar_func_tsInitialize, pvar_func_register_func_gtsInitEPICS,
     pvar_func_register_func_gtsResetEPICS,
     pvar_func_register_func_myAsubInit,
     pvar_func_register_func_myAsubProcess,
+    pvar_func_register_func_myGTSInit,
+    pvar_func_register_func_myGTSProcess,
     pvar_func_register_func_mySubInit,
     pvar_func_register_func_mySubProcess;
 
@@ -253,11 +254,12 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_initTraceRegister();
     pvar_func_syncInitialize();
     pvar_func_tsInitialize();
-    pvar_func_register_func_gtsInit();
-    pvar_func_register_func_gtsProcess();
+    pvar_func_register_func_gtsInitEPICS();
     pvar_func_register_func_gtsResetEPICS();
     pvar_func_register_func_myAsubInit();
     pvar_func_register_func_myAsubProcess();
+    pvar_func_register_func_myGTSInit();
+    pvar_func_register_func_myGTSProcess();
     pvar_func_register_func_mySubInit();
     pvar_func_register_func_mySubProcess();
     iocshRegisterVariable(vardefs);
