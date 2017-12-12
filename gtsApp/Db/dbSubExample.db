@@ -85,3 +85,9 @@ record(sub,"$(user):alignStart")
     field(SNAM,"alignStartEPICS")
 }
 
+record(sub,"$(user):treeSetup")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"treeSetupEPICS")
+}
+

@@ -105,21 +105,24 @@ static long myGTSProcess(subRecord *precord)
   return 0;
 }//myGTSProcess
 
-#define SUB_DEBUG_PRINT \
+#define SUB_DEBUG_PRINT_COMMENT(COMMENT) \
   if(mySubDebug) \
-    printf("Record %s called %s(%p/%f) activated if val=1.0\n" \
+    printf("Record %s called %s(%p/%f)" #COMMENT "\n" \
       ,precord->name \
       ,__func__ \
       ,(void*) precord \
       ,precord->val \
     );
 
+#define SUB_DEBUG_PRINT_NO_ARG SUB_DEBUG_PRINT_COMMENT(activated_if_1)
+#define SUB_DEBUG_PRINT SUB_DEBUG_PRINT_COMMENT()
+
 #ifndef _X86_64_
 
 #define funcNoArgEPICS(ARG,SET) \
 static long ARG##EPICS(subRecord *precord) \
 { \
-  SUB_DEBUG_PRINT \
+  SUB_DEBUG_PRINT_NO_ARG \
   int status = XST_SUCCESS; \
   unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS); \
  \
@@ -139,7 +142,7 @@ epicsRegisterFunction(ARG##EPICS); \
 #define funcNoArgEPICS(ARG,SET) \
 static long ARG##EPICS(subRecord *precord) \
 { \
-  SUB_DEBUG_PRINT \
+  SUB_DEBUG_PRINT_NO_ARG \
   int status=0; \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord *)\n",__func__); \
@@ -172,8 +175,6 @@ testSet -> leaveTestLoopback
 readAll ...
 */
 
-
-
 /*
 static long gtsResetEPICS(subRecord *precord)
 {
@@ -203,6 +204,63 @@ static long gtsResetEPICS(subRecord *precord)
   return 0;
 }//gtsResetEPICS
 */
+
+/*
+1 arg
+treeSetup(step)
+rxSystemIsReady(transceiver)
+treeRead(transceiver)
+fineDelaySetNow((unsigned int)delay)
+fineDelaySet((unsigned int)delay)
+coarseDelaySet((unsigned int)delay)
+triggerStart(GTStype)
+implement ?!:
+progTruncatedIpNumber ->	progHostTruncatedIpNumber
+printBinary
+readReg
+*/
+
+#ifndef _X86_64_
+
+#define funcOneArgEPICS(ARG,SET,VAL) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  SUB_DEBUG_PRINT \
+  int status = XST_SUCCESS; \
+  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS); \
+ \
+  int val=(int)precord->val; \
+  if (mySubDebug) \
+       printf("gts %lu is being " #SET " using " #VAL "=%d\n",  cardnumber, val); \
+  status=ARG(val); \
+  precord->val = status; \
+  return 0; \
+}/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
+//funcNoArgEPICS
+
+#else //other ARCH
+
+#define funcOneArgEPICS(ARG,SET,VAL) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  SUB_DEBUG_PRINT \
+  int status=0; \
+  int val=(int)precord->val; \
+  if(mySubDebug) \
+    printf("gts fake: EPICS/%s(subRecord */" #VAL "=%d)\n",__func__,val); \
+ \
+  precord->val = status; \
+  return 0; \
+}/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
+//funcNoArgEPICS
+
+#endif //_X86_64_
+
+//funcOneArgEPICS(,)
+funcOneArgEPICS(treeSetup,  setup, step)
+#undef funcOneArgEPICS
 
 /* Register these symbols for use by IOC code: */
 epicsExportAddress(int, mySubDebug);

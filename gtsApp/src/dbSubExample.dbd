@@ -17,4 +17,5 @@ function(treeStopEPICS)
 function(includeCarrierForAlignEPICS)
 function(excludeCarrierForAlignEPICS)
 function(alignStartEPICS)
+function(treeSetupEPICS)
 
