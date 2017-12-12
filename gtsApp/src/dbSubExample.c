@@ -105,12 +105,44 @@ static long gtsProcess(subRecord *precord)
   return 0;
 }//gtsProcess
 
+static long gtsResetEPICS(subRecord *precord)
+{
+  if(mySubDebug)
+    printf("Record %s called %s(%p/%f) activated if val=1.0\n"
+      ,precord->name
+      ,__func__
+      ,(void*) precord
+      ,precord->val
+    );
+
+#ifndef _X86_64_
+  int status = XST_SUCCESS;
+  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS);
+
+  if(precord->val != 1.0) return 0;
+
+  if (mySubDebug)
+       printf("gts %lu is being reset\n",  cardnumber);
+  status=gtsReset();
+#else
+  int status=0;
+  if(mySubDebug)
+    printf("gts fake: EPICS/%s(subRecord *)\n",__func__);
+#endif //_X86_64_
+  precord->val = status;
+  return 0;
+}//gtsProcess
+
+
+
 /* Register these symbols for use by IOC code: */
 epicsExportAddress(int, mySubDebug);
 epicsRegisterFunction(mySubInit);
 epicsRegisterFunction(mySubProcess);
-epicsRegisterFunction(gtsInit);
-epicsRegisterFunction(gtsProcess);
 epicsRegisterFunction(myAsubInit);
 epicsRegisterFunction(myAsubProcess);
+epicsRegisterFunction(gtsInit);
+epicsRegisterFunction(gtsProcess);
+
+epicsRegisterFunction(gtsResetEPICS);
 

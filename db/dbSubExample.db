@@ -21,3 +21,10 @@ record(sub,"$(user):gtsExample")
     field(SNAM,"gtsProcess")
 }
 
+record(sub,"$(user):gtsReset")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"gtsResetEPICS")
+}
+
+

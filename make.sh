@@ -8,7 +8,10 @@ set TC_clear="\033[0m"
 #clean
 rm -f bin/linux-*/* Linux-*/* \
   gtsApp/src/O.linux-ppc/*.o gtsApp/src/O.linux-ppc/*.d gtsApp/src/O.linux-ppc/*.a
+make clean
 sync
+#option: copy caRepeater
+cp -p /space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/bin/linux-ppc/caRepeater bin/linux-ppc/
 
 ##compile device and UDP objects
 make -f Makefile.target

@@ -4,7 +4,7 @@
  * \author Sebastien COUDERT
 **/
 
-#define VERSION "v0.1.2"
+#define VERSION "v0.1.3d"
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -197,7 +197,7 @@ int main(int argc,char *argv[])
 //! EPICS or UDP service
 if(arguments.epicsFlow)
 {//EPICS
-  printf("GTS server 4 EPICS: not fully implemented yet !\n  - gtsReset only.\n");
+  printf("GTS server 4 EPICS: not fully implemented yet !\n  for complete list, type:\n  epics> dbl\n");
   //batch IOC shell
   if(argc>=2)
   {
