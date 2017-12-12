@@ -21,6 +21,11 @@ record(sub,"$(user):gtsExample")
     field(SNAM,"gtsProcess")
 }
 
+record(sub,"$(user):serverVersion")
+{
+    field(DESC,"__SERVER_VERSION__")
+}
+
 record(sub,"$(user):gtsReset")
 {
     field(SCAN,"Passive")

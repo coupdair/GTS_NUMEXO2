@@ -8,8 +8,8 @@ set TC_clear="\033[0m"
 #clean
 rm -f bin/linux-*/* Linux-*/* \
   gtsApp/src/O.linux-ppc/*.o gtsApp/src/O.linux-ppc/*.d gtsApp/src/O.linux-ppc/*.a
-#make clean
-#rm -fr iocBoot db dbd include lib
+make clean
+#rm -fr iocBoot db/* dbd include lib
 #sync
 ##rebuild IOC
 #/space/global/buildroot/CentOS6_64/ppc440/epics/base/bin/linux-x86_64/makeBaseApp.pl -t example -i -p gts -a linux-x86_64 gts
@@ -40,4 +40,14 @@ cp -p gts ../../../bin/linux-ppc/
 cd ../../../
 ls -lah ./bin/linux-ppc/gts
 file ./bin/linux-ppc/gts
+date
+
+#copy db ?!
+cp -p gtsApp/Db/dbSubExample.db db/
+
+#VERSION
+set version=`./bin/linux-x86_64/gts --version`
+cat gtsApp/Db/dbSubExample.db | sed "s/__SERVER_VERSION__/$version/" > db/dbSubExample.db
+##print
+grep serverVersion -A 2 db/dbSubExample.db | grep DESC | grep 'v.\..\..' --color
 
