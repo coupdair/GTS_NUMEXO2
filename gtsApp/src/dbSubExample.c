@@ -105,20 +105,21 @@ static long myGTSProcess(subRecord *precord)
   return 0;
 }//myGTSProcess
 
-
-#ifndef _X86_64_
-
-#define funcNoArgEPICS(ARG,SET) \
-static long ARG##EPICS(subRecord *precord) \
-{ \
+#define SUB_DEBUG_PRINT \
   if(mySubDebug) \
     printf("Record %s called %s(%p/%f) activated if val=1.0\n" \
       ,precord->name \
       ,__func__ \
       ,(void*) precord \
       ,precord->val \
-    ); \
- \
+    );
+
+#ifndef _X86_64_
+
+#define funcNoArgEPICS(ARG,SET) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  SUB_DEBUG_PRINT \
   int status = XST_SUCCESS; \
   unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS); \
  \
@@ -138,13 +139,7 @@ epicsRegisterFunction(ARG##EPICS); \
 #define funcNoArgEPICS(ARG,SET) \
 static long ARG##EPICS(subRecord *precord) \
 { \
-  if(mySubDebug) \
-    printf("Record %s called %s(%p/%f) activated if val=1.0\n" \
-      ,precord->name \
-      ,__func__ \
-      ,(void*) precord \
-      ,precord->val \
-    ); \
+  SUB_DEBUG_PRINT \
   int status=0; \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord *)\n",__func__); \
@@ -194,7 +189,6 @@ static long gtsResetEPICS(subRecord *precord)
 
 /*no arg
 implement:
-gtsTest
 gtsUpdate
 conIs
 gtsIs
