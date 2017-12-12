@@ -46,18 +46,17 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
 ~/bin/caget numexo2:serverVersion.DESC
-numexo2:serverVersion.DESC     v0.1.3i
+numexo2:serverVersion.DESC     v0.1.3j
 
-~/bin/caput numexo2:gtsReset 0
+~/bin/caput numexo2:gtsReset 1
 Old : numexo2:gtsReset               0
 New : numexo2:gtsReset               0
-~/bin/caput numexo2:gtsInit 0
+~/bin/caput numexo2:gtsInit 1
 Old : numexo2:gtsInit                0
 New : numexo2:gtsInit                0
-~/bin/caput numexo2:gtsInit 1.
-Old : numexo2:gtsInit                0
-New : numexo2:gtsInit                0
-~/bin/caput numexo2:gtsReset 1
+~/bin/caput numexo2:gtsTest 1
+Old : numexo2:gtsTest                0
+New : numexo2:gtsTest                127
 
 
 epics> dbl
@@ -66,19 +65,25 @@ numexo2:gtsExample
 numexo2:serverVersion
 numexo2:gtsReset
 numexo2:gtsInit
+numexo2:gtsTest
 epics> dbpr numexo2:serverVersion
 ...
-D: 0                DESC: v0.1.3i       DISA: 0             DISP: 0             
+D: 0                DESC: v0.1.3j       DISA: 0             DISP: 0             
 ...
 epics>
-Record numexo2:gtsInit called gtsInitEPICS(0x1052fab8/0.000000) activated if val=1.0
-Record numexo2:gtsReset called gtsResetEPICS(0x104d4438/0.000000) activated if val=1.0
-Record numexo2:gtsInit called gtsInitEPICS(0x1052fab8/1.000000) activated if val=1.0
-gts 127 is being SET
+Record numexo2:gtsReset called gtsResetEPICS(0x106aa450/1.000000) activated if val=1.0
+gts 127 is being reset
 LLP Carrier detected => LLP_Carrier is included for the alignment
-Record numexo2:gtsReset called gtsResetEPICS(0x104d4438/1.000000) activated if val=1.0
-gts 127 is being SET
+
+Record numexo2:gtsInit called gtsInitEPICS(0x10705b08/1.000000) activated if val=1.0
+gts 127 is being initialise
 LLP Carrier detected => LLP_Carrier is included for the alignment
+
+Record numexo2:gtsTest called gtsTestEPICS(0x10705f68/1.000000) activated if val=1.0
+gts 127 is being test
+udpClient.c::logAnswer:sendto=>: Bad file descriptor
+
+
 
 exit
 

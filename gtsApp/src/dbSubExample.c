@@ -108,7 +108,7 @@ static long myGTSProcess(subRecord *precord)
 
 #ifndef _X86_64_
 
-#define funcNoArgEPICS(ARG) \
+#define funcNoArgEPICS(ARG,SET) \
 static long ARG##EPICS(subRecord *precord) \
 { \
   if(mySubDebug) \
@@ -125,7 +125,7 @@ static long ARG##EPICS(subRecord *precord) \
   if(precord->val != 1.0) return 0; \
  \
   if (mySubDebug) \
-       printf("gts %lu is being SET\n",  cardnumber); \
+       printf("gts %lu is being " #SET "\n",  cardnumber); \
   status=ARG(); \
   precord->val = status; \
   return 0; \
@@ -135,7 +135,7 @@ epicsRegisterFunction(ARG##EPICS); \
 
 #else //other ARCH
 
-#define funcNoArgEPICS(ARG) \
+#define funcNoArgEPICS(ARG,SET) \
 static long ARG##EPICS(subRecord *precord) \
 { \
   if(mySubDebug) \
@@ -157,9 +157,9 @@ epicsRegisterFunction(ARG##EPICS); \
 
 #endif //_X86_64_
 
-funcNoArgEPICS(gtsReset)
-funcNoArgEPICS(gtsInit)
-funcNoArgEPICS(gtsTest)
+funcNoArgEPICS(gtsReset, reset)
+funcNoArgEPICS(gtsInit,  initialise)
+funcNoArgEPICS(gtsTest,  test)
 #undef funcNoArgEPICS
 
 /*
