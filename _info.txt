@@ -46,7 +46,7 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
 ~/bin/caget numexo2:serverVersion.DESC
-numexo2:serverVersion.DESC     v0.1.3g
+numexo2:serverVersion.DESC     v0.1.3i
 
 ~/bin/caput numexo2:gtsReset 0
 Old : numexo2:gtsReset               0
@@ -68,16 +68,16 @@ numexo2:gtsReset
 numexo2:gtsInit
 epics> dbpr numexo2:serverVersion
 ...
-D: 0                DESC: v0.1.3g       DISA: 0             DISP: 0             
+D: 0                DESC: v0.1.3i       DISA: 0             DISP: 0             
 ...
 epics>
 Record numexo2:gtsInit called gtsInitEPICS(0x1052fab8/0.000000) activated if val=1.0
 Record numexo2:gtsReset called gtsResetEPICS(0x104d4438/0.000000) activated if val=1.0
 Record numexo2:gtsInit called gtsInitEPICS(0x1052fab8/1.000000) activated if val=1.0
-gts 127 is being init
+gts 127 is being SET
 LLP Carrier detected => LLP_Carrier is included for the alignment
 Record numexo2:gtsReset called gtsResetEPICS(0x104d4438/1.000000) activated if val=1.0
-gts 127 is being reset
+gts 127 is being SET
 LLP Carrier detected => LLP_Carrier is included for the alignment
 
 exit
