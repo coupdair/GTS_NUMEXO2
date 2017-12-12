@@ -130,6 +130,7 @@ static long ARG##EPICS(subRecord *precord) \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
 //funcNoArgEPICS
 
 #else //other ARCH
@@ -151,13 +152,14 @@ static long ARG##EPICS(subRecord *precord) \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
 //funcNoArgEPICS
 
 #endif //_X86_64_
 
-//gtsResetEPICS
 funcNoArgEPICS(gtsReset)
 funcNoArgEPICS(gtsInit)
+funcNoArgEPICS(gtsTest)
 #undef funcNoArgEPICS
 
 /*
@@ -216,7 +218,4 @@ epicsRegisterFunction(myAsubInit);
 epicsRegisterFunction(myAsubProcess);
 epicsRegisterFunction(myGTSInit);
 epicsRegisterFunction(myGTSProcess);
-
-epicsRegisterFunction(gtsResetEPICS);
-epicsRegisterFunction(gtsInitEPICS);
 

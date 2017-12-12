@@ -7,4 +7,5 @@ function(myAsubInit)
 function(myAsubProcess)
 function(gtsResetEPICS)
 function(gtsInitEPICS)
+function(gtsTestEPICS)
 

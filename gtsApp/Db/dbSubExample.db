@@ -38,3 +38,10 @@ record(sub,"$(user):gtsInit")
     field(SNAM,"gtsInitEPICS")
 }
 
+record(sub,"$(user):gtsTest")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"gtsTestEPICS")
+}
+
+

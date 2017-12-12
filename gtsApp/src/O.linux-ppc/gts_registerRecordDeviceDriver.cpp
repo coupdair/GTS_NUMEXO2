@@ -177,6 +177,7 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_initTraceRegister, pvar_func_syncInitialize,
     pvar_func_tsInitialize, pvar_func_register_func_gtsInitEPICS,
     pvar_func_register_func_gtsResetEPICS,
+    pvar_func_register_func_gtsTestEPICS,
     pvar_func_register_func_myAsubInit,
     pvar_func_register_func_myAsubProcess,
     pvar_func_register_func_myGTSInit,
@@ -256,6 +257,7 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_tsInitialize();
     pvar_func_register_func_gtsInitEPICS();
     pvar_func_register_func_gtsResetEPICS();
+    pvar_func_register_func_gtsTestEPICS();
     pvar_func_register_func_myAsubInit();
     pvar_func_register_func_myAsubProcess();
     pvar_func_register_func_myGTSInit();
