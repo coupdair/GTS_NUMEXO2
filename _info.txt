@@ -46,7 +46,7 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
 ~/bin/caget numexo2:serverVersion.DESC
-numexo2:serverVersion.DESC     v0.1.3l
+numexo2:serverVersion.DESC     v0.1.3n
 
 ~/bin/caput numexo2:gtsReset 1
 Old : numexo2:gtsReset               0
@@ -58,6 +58,8 @@ New : numexo2:gtsInit                0
 Old : numexo2:gtsTest                0
 New : numexo2:gtsTest                127
 
+~/bin/caput numexo2:treeSetup 2    
+Ctrl+C
 
 epics> dbl
 numexo2:subExample
@@ -74,24 +76,29 @@ numexo2:treeStop
 numexo2:includeCarrierForAlign
 numexo2:excludeCarrierForAlign
 numexo2:alignStart
+numexo2:treeSetup
+
 epics> dbpr numexo2:serverVersion
 ...
-D: 0                DESC: v0.1.3l       DISA: 0             DISP: 0             
+D: 0                DESC: v0.1.3n       DISA: 0             DISP: 0             
 ...
 epics>
-Record numexo2:gtsReset called gtsResetEPICS(0x106aa450/1.000000) activated if val=1.0
+Record numexo2:gtsReset called gtsResetEPICS(0x106aa450/1.000000)activated_if_1
 gts 127 is being reset
 LLP Carrier detected => LLP_Carrier is included for the alignment
 
-Record numexo2:gtsInit called gtsInitEPICS(0x10705b08/1.000000) activated if val=1.0
+Record numexo2:gtsInit called gtsInitEPICS(0x10705b08/1.000000)activated_if_1
 gts 127 is being initialise
 LLP Carrier detected => LLP_Carrier is included for the alignment
 
-Record numexo2:gtsTest called gtsTestEPICS(0x10705f68/1.000000) activated if val=1.0
+Record numexo2:gtsTest called gtsTestEPICS(0x10705f68/1.000000)activated_if_1
 gts 127 is being test
 udpClient.c::logAnswer:sendto=>: Bad file descriptor
 
-
+Record numexo2:gtsTest called treeSetupEPICS(0x????????/1.000000)
+gts 127 is being test
+udpClient.c::logAnswer:sendto=>: Bad file descriptor
+...
 
 exit
 

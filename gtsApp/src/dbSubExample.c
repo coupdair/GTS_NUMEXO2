@@ -207,7 +207,6 @@ static long gtsResetEPICS(subRecord *precord)
 
 /*
 1 arg
-treeSetup(step)
 rxSystemIsReady(transceiver)
 treeRead(transceiver)
 fineDelaySetNow((unsigned int)delay)
@@ -237,7 +236,7 @@ static long ARG##EPICS(subRecord *precord) \
   return 0; \
 }/*ARG##EPICS*/ \
 epicsRegisterFunction(ARG##EPICS); \
-//funcNoArgEPICS
+//funcOneArgEPICS
 
 #else //other ARCH
 
@@ -260,6 +259,7 @@ epicsRegisterFunction(ARG##EPICS); \
 
 //funcOneArgEPICS(,)
 funcOneArgEPICS(treeSetup,  setup, step)
+
 #undef funcOneArgEPICS
 
 /* Register these symbols for use by IOC code: */

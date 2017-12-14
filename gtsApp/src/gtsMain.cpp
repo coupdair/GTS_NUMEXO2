@@ -4,7 +4,7 @@
  * \author Sebastien COUDERT
 **/
 
-#define VERSION "v0.1.3m"
+#define VERSION "v0.1.3n"
 
 #include <stddef.h>
 #include <stdlib.h>
@@ -192,6 +192,10 @@ int main(int argc,char *argv[])
   c->hw_init_conf = 1;
   XMMRegs_RocketIO_Gtx_Reset(&XMMRegsDriver);
 
+//! - initialise and start \b client socket
+  gtsCliSock = clientSetup();
+  logAnswer();
+
 #endif //_X86_64_
 
 //! EPICS or UDP service
@@ -220,14 +224,7 @@ else
 
     printf("UDP server: work in progress (test on device needed).\n");
 
-//! - initialise and start \b client socket
-
-  gtsCliSock = clientSetup();
-
 //! - initialise and start \b server socket
-
-  logAnswer();
-
   udpServer();
 
 #endif //_X86_64_
