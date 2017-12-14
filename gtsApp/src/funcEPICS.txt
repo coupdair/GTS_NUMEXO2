@@ -1,2 +1,8 @@
 treeSetup(step)
+rxSystemIsReady(transceiver)
+treeRead(transceiver)
+fineDelaySetNow(delay)
+fineDelaySet(delay)
+coarseDelaySet(delay)
+triggerStart(GTStype)
 

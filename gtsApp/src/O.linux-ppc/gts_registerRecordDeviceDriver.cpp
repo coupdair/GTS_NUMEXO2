@@ -176,8 +176,11 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_dbndInitialize, pvar_func_helloRegister,
     pvar_func_initTraceRegister, pvar_func_syncInitialize,
     pvar_func_tsInitialize, pvar_func_register_func_alignStartEPICS,
+    pvar_func_register_func_coarseDelaySetEPICS,
     pvar_func_register_func_conIsEPICS,
     pvar_func_register_func_excludeCarrierForAlignEPICS,
+    pvar_func_register_func_fineDelaySetEPICS,
+    pvar_func_register_func_fineDelaySetNowEPICS,
     pvar_func_register_func_gtsInitEPICS,
     pvar_func_register_func_gtsIsEPICS,
     pvar_func_register_func_gtsResetEPICS,
@@ -190,9 +193,12 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_myGTSProcess,
     pvar_func_register_func_mySubInit,
     pvar_func_register_func_mySubProcess,
+    pvar_func_register_func_rxSystemIsReadyEPICS,
+    pvar_func_register_func_treeReadEPICS,
     pvar_func_register_func_treeSetupEPICS,
     pvar_func_register_func_treeStartEPICS,
-    pvar_func_register_func_treeStopEPICS;
+    pvar_func_register_func_treeStopEPICS,
+    pvar_func_register_func_triggerStartEPICS;
 
 epicsShareExtern int * const pvar_int_asCaDebug;
 epicsShareExtern int * const pvar_int_atExitDebug;
@@ -265,8 +271,11 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_syncInitialize();
     pvar_func_tsInitialize();
     pvar_func_register_func_alignStartEPICS();
+    pvar_func_register_func_coarseDelaySetEPICS();
     pvar_func_register_func_conIsEPICS();
     pvar_func_register_func_excludeCarrierForAlignEPICS();
+    pvar_func_register_func_fineDelaySetEPICS();
+    pvar_func_register_func_fineDelaySetNowEPICS();
     pvar_func_register_func_gtsInitEPICS();
     pvar_func_register_func_gtsIsEPICS();
     pvar_func_register_func_gtsResetEPICS();
@@ -279,9 +288,12 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_myGTSProcess();
     pvar_func_register_func_mySubInit();
     pvar_func_register_func_mySubProcess();
+    pvar_func_register_func_rxSystemIsReadyEPICS();
+    pvar_func_register_func_treeReadEPICS();
     pvar_func_register_func_treeSetupEPICS();
     pvar_func_register_func_treeStartEPICS();
     pvar_func_register_func_treeStopEPICS();
+    pvar_func_register_func_triggerStartEPICS();
     iocshRegisterVariable(vardefs);
     return 0;
 }

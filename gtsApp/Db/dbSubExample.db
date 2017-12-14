@@ -91,4 +91,40 @@ record(sub,"$(user):treeSetup")
     field(SNAM,"treeSetupEPICS")
     field(DESC,"treeSetup(step)")
 }
+record(sub,"$(user):rxSystemIsReady")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"rxSystemIsReadyEPICS")
+    field(DESC,"rxSystemIsReady(transceiver)")
+}
+record(sub,"$(user):treeRead")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"treeReadEPICS")
+    field(DESC,"treeRead(transceiver)")
+}
+record(sub,"$(user):fineDelaySetNow")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"fineDelaySetNowEPICS")
+    field(DESC,"fineDelaySetNow(delay)")
+}
+record(sub,"$(user):fineDelaySet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"fineDelaySetEPICS")
+    field(DESC,"fineDelaySet(delay)")
+}
+record(sub,"$(user):coarseDelaySet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"coarseDelaySetEPICS")
+    field(DESC,"coarseDelaySet(delay)")
+}
+record(sub,"$(user):triggerStart")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"triggerStartEPICS")
+    field(DESC,"triggerStart(GTStype)")
+}
 

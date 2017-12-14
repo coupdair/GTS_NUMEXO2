@@ -205,20 +205,6 @@ static long gtsResetEPICS(subRecord *precord)
 }//gtsResetEPICS
 */
 
-/*
-1 arg
-rxSystemIsReady(transceiver)
-treeRead(transceiver)
-fineDelaySetNow((unsigned int)delay)
-fineDelaySet((unsigned int)delay)
-coarseDelaySet((unsigned int)delay)
-triggerStart(GTStype)
-implement ?!:
-progTruncatedIpNumber ->	progHostTruncatedIpNumber
-printBinary
-readReg
-*/
-
 #ifndef _X86_64_
 
 #define funcOneArgEPICS(ARG,SET,VAL) \
@@ -257,10 +243,22 @@ epicsRegisterFunction(ARG##EPICS); \
 
 #endif //_X86_64_
 
-//funcOneArgEPICS(,)
+//funcOneArgEPICS(,,)
 funcOneArgEPICS(treeSetup,  setup, step)
-
+funcOneArgEPICS(rxSystemIsReady, rx, transceiver)
+funcOneArgEPICS(treeRead, read, transceiver)
+funcOneArgEPICS(fineDelaySetNow, fineDelayNow, delay)
+funcOneArgEPICS(fineDelaySet,    fineDelay,    delay)
+funcOneArgEPICS(coarseDelaySet,  coarseDelay,  delay)
+funcOneArgEPICS(triggerStart, triggerStart, GTStype)
 #undef funcOneArgEPICS
+/*
+1 arg
+implement ?!:
+progTruncatedIpNumber ->	progHostTruncatedIpNumber
+printBinary
+readReg
+*/
 
 /* Register these symbols for use by IOC code: */
 epicsExportAddress(int, mySubDebug);
