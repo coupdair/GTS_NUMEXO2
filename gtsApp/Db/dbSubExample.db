@@ -89,5 +89,6 @@ record(sub,"$(user):treeSetup")
 {
     field(SCAN,"Passive")
     field(SNAM,"treeSetupEPICS")
+    field(DESC,"treeSetup(step)")
 }
 

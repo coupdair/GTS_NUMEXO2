@@ -47,4 +47,5 @@ set version=`./bin/linux-x86_64/gts --version`
 cat gtsApp/Db/dbSubExample.db | sed "s/__SERVER_VERSION__/$version/" > db/dbSubExample.db
 ##print
 grep serverVersion -A 2 db/dbSubExample.db | grep DESC | grep 'v.\..\..' --color
+sync
 
