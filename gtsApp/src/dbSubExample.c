@@ -214,7 +214,8 @@ static long ARG##EPICS(subRecord *precord) \
   int status = XST_SUCCESS; \
   unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS); \
  \
-  int val=(int)precord->val; \
+  if(precord->val != 1.0) return 0; \
+  int val = (int)precord->a; \
   if (mySubDebug) \
        printf("gts %lu is being " #SET " using " #VAL "=%d\n",  cardnumber, val); \
   status=ARG(val); \
@@ -231,7 +232,8 @@ static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
   int status=0; \
-  int val=(int)precord->val; \
+  if(precord->val != 1.0) return 0; \
+  int val = (int)precord->a; \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord */" #VAL "=%d)\n",__func__,val); \
  \

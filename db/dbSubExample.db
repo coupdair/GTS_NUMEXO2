@@ -23,7 +23,7 @@ record(sub,"$(user):gtsExample")
 
 record(sub,"$(user):serverVersion")
 {
-    field(DESC,"v0.1.3")
+    field(DESC,"v0.1.4d")
 }
 
 record(sub,"$(user):gtsReset")

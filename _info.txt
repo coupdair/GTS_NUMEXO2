@@ -47,26 +47,25 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
 ~/bin/caget numexo2:serverVersion.DESC
-numexo2:serverVersion.DESC     v0.1.3p
+numexo2:serverVersion.DESC     v0.1.4d
 
-~/bin/caput numexo2:gtsReset 1
-Old : numexo2:gtsReset               0
-New : numexo2:gtsReset               0
-~/bin/caput numexo2:gtsInit 1
-Old : numexo2:gtsInit                0
-New : numexo2:gtsInit                0
 ~/bin/caput numexo2:gtsTest 1
 Old : numexo2:gtsTest                0
 New : numexo2:gtsTest                127
 
-~/bin/caput numexo2:coarseDelaySet 1234
+~/bin/caput numexo2:coarseDelaySet 0
+~/bin/caput numexo2:coarseDelaySet.A 1234
+~/bin/caput numexo2:coarseDelaySet 1
 Old : numexo2:coarseDelaySet         0
 New : numexo2:coarseDelaySet         1
 
-~/bin/caput numexo2:treeSetup 1    
-Old : numexo2:treeSetup              0
-New : numexo2:treeSetup              0
-~/bin/caput numexo2:treeSetup 2    
+~/bin/caput numexo2:treeSetup 0
+~/bin/caput numexo2:treeSetup.A 1    
+~/bin/caput numexo2:treeSetup 1
+
+~/bin/caput numexo2:treeSetup 0
+~/bin/caput numexo2:treeSetup.A 2    
+~/bin/caput numexo2:treeSetup 1
 Ctrl+C
 
 epics> dbl
@@ -94,28 +93,28 @@ numexo2:triggerStart
 
 epics> dbpr numexo2:serverVersion
 ...
-D: 0                DESC: v0.1.3p       DISA: 0             DISP: 0             
+D: 0                DESC: v0.1.4d       DISA: 0             DISP: 0             
 ...
 epics>
-Record numexo2:gtsReset called gtsResetEPICS(0x109e0fb8/1.000000)activated_if_1
-gts 127 is being reset
-LLP Carrier detected => LLP_Carrier is included for the alignment
-
-Record numexo2:gtsInit called gtsInitEPICS(0x10705b08/1.000000)activated_if_1
-gts 127 is being initialise
-LLP Carrier detected => LLP_Carrier is included for the alignment
 
 Record numexo2:gtsTest called gtsTestEPICS(0x10705f68/1.000000)activated_if_1
 gts 127 is being test
 
-Record numexo2:coarseDelaySet called coarseDelaySetEPICS(0x1049bb10/1234.000000)
+Record numexo2:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/0.000000)
+Record numexo2:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/0.000000)
+Record numexo2:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/1.000000)
 gts 127 is being coarseDelay using delay=1234
 
-Record numexo2:treeSetup called treeSetupEPICS(0x1049a260/1.000000)
+Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/0.000000)
+Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/0.000000)
+Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/1.000000)
 gts 127 is being setup using step=1
-Record numexo2:treeSetup called treeSetupEPICS(0x1049a260/2.000000)
+
+Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/0.000000)
+Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/0.000000)
+Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/1.000000)
 gts 127 is being setup using step=2
-**locked**
+### locked ###
 
 exit
 
