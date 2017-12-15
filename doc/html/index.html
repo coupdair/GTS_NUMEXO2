@@ -43,7 +43,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
 <li><a class="el" href="index.html#sectionCommandLine">command line options</a> </li>
-<li><a class="el" href="index.html#sectionServerCommands">server commands</a> </li>
+<li><a class="el" href="index.html#sectionServerCommands">server commands</a> <ul>
+<li>
+<a class="el" href="index.html#subsectionSCUDP">UDP list</a>  </li>
+<li>
+<a class="el" href="index.html#subsectionSCEPICS">EPICS list</a>  </li>
+<li>
+<a class="el" href="index.html#subsectionSCUDPvsEPICS">UDP vs EPICS command table</a>  </li>
+</ul>
+</li>
 <li><a class="el" href="index.html#sectionGTSserverDocumentation">documentation outline</a> </li>
 <li><a class="el" href="index.html#sectionDoxygenSyntax">make documentation using Doxygen syntax</a></li>
 </ul>
@@ -76,7 +84,7 @@ command line options</a></h2>
 <li>GTS server with EPICS+UDP</li>
 </ul>
 <div class="fragment"><pre class="fragment">Usage: gts [OPTION...] 
-gts: EPICS example program, UDP device server
+gts: GTS server using EPICS or UDP
   gts.v0.2.0
 examples:
   gts --help
@@ -98,11 +106,11 @@ for any corresponding short options.
 
 Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><ul>
-<li>GTS server (UDP only; old)</li>
+<li><b>old</b> GTS server (UDP only)</li>
 </ul>
-<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 15 2017 10:18:38)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 15 2017 11:08:04)
 description:
-	GTS embedded server for NUMEXO2.
+	old GTS embedded server for NUMEXO2 (UDP only).
 usage:
 	./gtsServer
 	./gtsServer -h
@@ -112,9 +120,8 @@ options:
 	-v: version
 </pre></div><h2><a class="anchor" id="sectionServerCommands">
 server commands</a></h2>
-<ul>
-<li>UDP list:</li>
-</ul>
+<h3><a class="anchor" id="subsectionSCUDP">
+UDP list</a></h3>
 <div class="fragment"><pre class="fragment">gtsTest
 gtsReset
 gtsInit
@@ -150,8 +157,10 @@ readField
 readReg
 readAll
 writeField
-</pre></div><ul>
-<li>EPICS list (record: DESC, .A, .B, .C upto .D):</li>
+</pre></div><h3><a class="anchor" id="subsectionSCEPICS">
+EPICS list</a></h3>
+<ul>
+<li>record: DESC, .A, .B, .C upto .D</li>
 </ul>
 <div class="fragment"><pre class="fragment">gtsReset()
 gtsInit()
@@ -180,6 +189,43 @@ transCon(con0,con1,con2,con3)
 transGtsTree(con0,con1,con2,con3)
 transDigitizer(con0,con1,con2,con3)
 alignTdcSet(GTStype,forward,tr,cal)
+</pre></div><h3><a class="anchor" id="subsectionSCUDPvsEPICS">
+UDP vs EPICS command table</a></h3>
+<div class="fragment"><pre class="fragment">gtsTest                         gtsTest()
+gtsReset                        gtsReset()
+gtsInit                         gtsInit()
+gtsUpdate                       gtsUpdate()
+transCon                        transCon(con0,con1,con2,con3)
+transGtsTree                    transGtsTree(con0,con1,con2,con3)
+transDigitizer                  transDigitizer(con0,con1,con2,con3)
+conIs                           conIs()
+gtsIs                           gtsIs()
+treeSetup                       treeSetup(step)
+treeStart                       treeStart()
+rxSystemIsReady                 rxSystemIsReady(transceiver)
+treeRead                        treeRead(transceiver)
+treeStop                        treeStop()
+excludeCarrierForAlign          excludeCarrierForAlign()
+includeCarrierForAlign          includeCarrierForAlign()
+alignStart                      alignStart()
+fineDelaySetNow                 fineDelaySetNow(delay)
+fineDelaySet                    fineDelaySet(delay)
+coarseDelaySet                  coarseDelaySet(delay)
+alignSet                        alignSet(GTStype,forward)
+alignTdcSet                     alignTdcSet(GTStype,forward,tr,cal)
+printBinary                     
+set_output_file_name            
+alignMeas                       alignMeas(forward,nmes)
+tdcSet                          tdcSet(meas,debug,delay)
+tdcMeas                         tdcMeas(meas,debug,nmes)
+triggerSetup                    triggerSetup(GTStype,step)
+triggerStart                    triggerStart(GTStype)
+excludeTriggerProcessor         
+testSet                         
+readField                       
+readReg                         
+readAll                         
+writeField                      
 </pre></div><h2><a class="anchor" id="sectionGTSserverDocumentation">
 documentation outline</a></h2>
 <p>This is the reference documentation of <a href="http://wiki.ganil.fr/gap/">NUMEXO2 GTS server</a>, from the <a href="http://www.ganil-spiral2.eu">GANIL</a>.<br/>

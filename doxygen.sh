@@ -31,7 +31,15 @@ cat Doxyfile.template | sed "s/##VERSION##/$VERSION/" > Doxyfile
 ###UDP
 grep 'int.cmd_' udpInterpret.c | head -n 35 | sed 's/int.cmd_//;s/.(void\*)\;//' > gtsServer_command_UDP.txt
 ###EPICS
-cat gtsApp/Db/dbSubExample.db | grep DESC | cut -d',' -f2- | sed 's/"//g;s/)//' | grep -v __SERVER_VERSION__ > gtsServer_command_EPICS.txt ##make (html and prepare latex)
+cat gtsApp/Db/dbSubExample.db | grep DESC | cut -d',' -f2- | sed 's/"//g;s/)//' | grep -v __SERVER_VERSION__ > gtsServer_command_EPICS.txt
+###UDP<->EPICS table
+for w in `cat gtsServer_command_UDP.txt`
+do
+  w2=`grep $w'(' gtsServer_command_EPICS.txt`
+  printf "%-32s%s\n" $w $w2
+done > gtsServer_command.txt
+
+##make (html and prepare latex)
 doxygen
 ls doc/html/index.html
 firefox doc/html/index.html &

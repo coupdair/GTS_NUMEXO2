@@ -1,5 +1,5 @@
 Usage: gts [OPTION...] 
-gts: EPICS example program, UDP device server
+gts: GTS server using EPICS or UDP
   gts.v0.2.0
 examples:
   gts --help

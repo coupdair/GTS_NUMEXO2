@@ -5,15 +5,18 @@ Description : NUMEXO2 GTS server (GANIL)
 Authors : Frederic SAILLANT, 
 -----------------------------------------------------------------------*/
 
-//! version of \c GTS_server, i.e. NUMEXO2 GTS server (GANIL)
+//! version of \b old \c GTS_server
 /**
- * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
+ * \c \b old GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
 #define VERSION "v1.0.1h"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
 \page old OLD NUMEXO2 GTS server (UDP)
+*
+* this is \b old program (for \c main() code) and its documentation:
+*
 * table of content:
 * \li \ref sectionOldCodeHistory
 * \li \ref sectionOldCommandLine
@@ -36,6 +39,9 @@ Authors : Frederic SAILLANT,
 
     S. Coudert 03/07/2017
      - move function from gtsServer to gtsMisc (for future EPICS)
+
+    S. Coudert 15/12/2017
+     - setup documentation to forward to current main program (running both UDP and EPICS)
 
 * \section sectionOldCommandLine command line options
 *
@@ -123,10 +129,10 @@ extern int clientSetup (void);
 
 extern void udpServer (void);
 
+//! \c old main, but still compiled for object files ! For current one see <a href="gtsMain_8cpp.html">gtsMain.cpp</a> \see gtsMain.cpp
 int main (int argc, char *argv[])
 {
   //command line options (C/unistd)
-//! \todo [low] use argp for CLI options (from libC)
   int opt=0;
 //! - command line options
   while( (opt=getopt(argc, argv, "vh")) !=-1)
@@ -136,7 +142,7 @@ int main (int argc, char *argv[])
     case 'h':
       printf("%s (%s - %s %s)\n",argv[0],VERSION,__DATE__,__TIME__);
       printf("description:\n");
-      printf("\tGTS embedded server for NUMEXO2.\n");
+      printf("\told GTS embedded server for NUMEXO2 (UDP only).\n");
       printf("usage:\n");
       printf("\t%s\n",argv[0]);
       printf("\t%s -h\n",argv[0]);

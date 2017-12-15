@@ -18,6 +18,11 @@
 * \li \ref sectionCodeHistory
 * \li \ref sectionCommandLine
 * \li \ref sectionServerCommands
+* <ul>
+* <li> \ref subsectionSCUDP </li>
+* <li> \ref subsectionSCEPICS </li>
+* <li> \ref subsectionSCUDPvsEPICS </li>
+* </ul>
 * \li \ref sectionGTSserverDocumentation
 * \li \ref sectionDoxygenSyntax
 *
@@ -46,19 +51,25 @@
 *
 * \verbinclude "gts.help.output"
 *
-* - GTS server (UDP only; old)
+* - \b old GTS server (UDP only)
 *
 * \verbinclude "gtsServer.help.output"
 *
 * \section sectionServerCommands server commands
 *
-* - UDP list:
+* \subsection subsectionSCUDP UDP list
 *
 * \verbinclude "gtsServer_command_UDP.txt"
 *
-* - EPICS list (record: DESC, .A, .B, .C upto .D):
+* \subsection subsectionSCEPICS EPICS list
+*
+* - record: DESC, .A, .B, .C upto .D
 *
 * \verbinclude "gtsServer_command_EPICS.txt"
+*
+* \subsection subsectionSCUDPvsEPICS UDP vs EPICS command table
+*
+* \verbinclude "gtsServer_command.txt"
 *
 * \section sectionGTSserverDocumentation documentation outline
 * This is the reference documentation of 
@@ -168,7 +179,7 @@ const char *argp_program_version=VERSION;
 const char *argp_program_bug_address="sebastien.coudert@ganil.fr";
 //! [argp] documentation of program
 static char doc[]=
-   "gts: EPICS example program, UDP device server\
+   "gts: GTS server using EPICS or UDP\
 \n  gts."VERSION"\
 \n\
 examples:\n\
@@ -241,7 +252,7 @@ static struct argp argp = { options, parse_option, args_doc, doc };
 
 //}argp
 
-//! CLI option parse and run iocsh
+//! CLI option parse, then run iocsh or UDP server
 int main(int argc,char *argv[])
 {
   //CLI arguments
