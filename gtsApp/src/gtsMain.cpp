@@ -1,10 +1,116 @@
 /**
  * \file gtsMain.cpp
- * \brief gts EPICS example program (i.e. template)
+ * \brief GTS server using UDP or EPICS (from \c gtsServer.c)
  * \author Sebastien COUDERT
 **/
 
+
+//! version of \c GTS_server, i.e. NUMEXO2 GTS server (GANIL)
+/**
+ * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
+**/
 #define VERSION "v0.2.0"
+
+/*Additional documentation for the generation of the reference page (using doxygen)*/
+/**
+\mainpage NUMEXO2 GTS server
+* table of content:
+* \li \ref sectionCodeHistory
+* \li \ref sectionCommandLine
+* \li \ref sectionServerCommands
+* \li \ref sectionGTSserverDocumentation
+* \li \ref sectionDoxygenSyntax
+*
+* \section sectionCodeHistory Modifications
+*
+
+    S. Coudert 24/07/2015
+     - add version support (option -v)
+     - add help    support (option -h)
+
+    S. Coudert 12/02/2016
+     - stable v1.0.0 for production
+
+    S. Coudert 15/05/2017
+     - add server commands to documentation
+
+    S. Coudert 03/07/2017
+     - move function from gtsServer to gtsMisc (for future EPICS)
+
+    S. Coudert 15/12/2017
+     - add EPICS functions (record: .DESC, .A, .B, .C upto .D)
+
+* \section sectionCommandLine command line options
+*
+* - GTS server with EPICS+UDP
+*
+* \verbinclude "gts.help.output"
+*
+* - GTS server (UDP only; old)
+*
+* \verbinclude "gtsServer.help.output"
+*
+* \section sectionServerCommands server commands
+*
+* - UDP list:
+*
+* \verbinclude "gtsServer_command_UDP.txt"
+*
+* - EPICS list (record: DESC, .A, .B, .C upto .D):
+*
+* \verbinclude "gtsServer_command_EPICS.txt"
+*
+* \section sectionGTSserverDocumentation documentation outline
+* This is the reference documentation of 
+* <a href="http://wiki.ganil.fr/gap/">NUMEXO2 GTS server</a>, 
+* from the <a href="http://www.ganil-spiral2.eu">GANIL</a>.\n\n
+* The main function is in <a href="gtsMain_8cpp.html">gtsMain.cpp</a> source file.\n\n
+* This documentation has been automatically generated from the sources,
+* using the tool <a href="http://www.doxygen.org">doxygen</a>. It should be readed as HTML, LaTex and man page.\n
+* It contains both
+* \li a detailed description of all classes and functions
+* \li TODO: a user guide (cf. \ref pages.html "related pages")
+*
+* that as been documented within the sources.
+*
+* \section sectionDoxygenSyntax make documentation using Doxygen syntax
+* Each function in the source code should be commented using \b doxygen \b syntax in the same file.
+* The documentation need to be written before the function.
+* The basic syntax is presented in this part.
+* \verbinclude "doxygen.example1.txt"
+*
+* Two kind of comments are needed for \b declaration and \b explanation \b parts of the function:
+* Standart documentation should the following (\b sample of code documentation):
+* \verbinclude "doxygen.example2.txt"
+*
+* In both declaration and explanation part, \b writting and \b highlithing syntax can be the following:\n\n
+*
+* \li \c \\n a new line
+* \li \c \\li a list (dot list)
+*
+* \li \c \\b bold style
+* \li \c \\c code style
+* \li \c \\e enhanced style (italic)
+*
+* For making \b shortcut please use:\n
+* \li \c \\see to make a shortcut to a related function or variable
+* \li \c \\link to make a shortcut to a file or a function
+* \note this keyword needs to be closed using \c \\end*
+*
+* \li \c \\todo to add a thing to do in the list of <a href="todo.html">ToDo</a> for the whole program
+*
+* In explanation part, \b paragraph style can be the following:\n
+* \li \c \\code for an example of the function use
+* \li \c \\note to add a few notes
+* \li \c \\attention for SOMETHING NOT FULLY DEFINED YET
+* \li \c \\warning to give a few warning on the function
+* \note these keywords need to be closed using \c \\end*
+*
+* \verbinclude "doxygen.example3.txt"
+*
+* Many other keywords are defined, so please read the documentation of <a href="http://www.doxygen.org/commands.html">doxygen</a>.
+*
+**/
 
 #include <stddef.h>
 #include <stdlib.h>

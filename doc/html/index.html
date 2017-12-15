@@ -66,6 +66,10 @@ Modifications</a></h2>
 <ul>
 <li>move function from gtsServer to gtsMisc (for future EPICS)</li>
 </ul>
+<p>S. Coudert 15/12/2017</p>
+<ul>
+<li>add EPICS functions (record: .DESC, .A, .B, .C upto .D)</li>
+</ul>
 <h2><a class="anchor" id="sectionCommandLine">
 command line options</a></h2>
 <ul>
@@ -96,7 +100,7 @@ Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><ul>
 <li>GTS server (UDP only; old)</li>
 </ul>
-<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 15 2017 09:36:52)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 15 2017 10:18:38)
 description:
 	GTS embedded server for NUMEXO2.
 usage:
@@ -108,6 +112,9 @@ options:
 	-v: version
 </pre></div><h2><a class="anchor" id="sectionServerCommands">
 server commands</a></h2>
+<ul>
+<li>UDP list:</li>
+</ul>
 <div class="fragment"><pre class="fragment">gtsTest
 gtsReset
 gtsInit
@@ -143,11 +150,41 @@ readField
 readReg
 readAll
 writeField
+</pre></div><ul>
+<li>EPICS list (record: DESC, .A, .B, .C upto .D):</li>
+</ul>
+<div class="fragment"><pre class="fragment">gtsReset()
+gtsInit()
+gtsTest()
+gtsUpdate()
+conIs()
+gtsIs()
+treeStart()
+treeStop()
+includeCarrierForAlign()
+excludeCarrierForAlign()
+alignStart()
+treeSetup(step)
+rxSystemIsReady(transceiver)
+treeRead(transceiver)
+fineDelaySetNow(delay)
+fineDelaySet(delay)
+coarseDelaySet(delay)
+triggerStart(GTStype)
+alignSet(GTStype,forward)
+alignMeas(forward,nmes)
+triggerSetup(GTStype,step)
+tdcSet(meas,debug,delay)
+tdcMeas(meas,debug,nmes)
+transCon(con0,con1,con2,con3)
+transGtsTree(con0,con1,con2,con3)
+transDigitizer(con0,con1,con2,con3)
+alignTdcSet(GTStype,forward,tr,cal)
 </pre></div><h2><a class="anchor" id="sectionGTSserverDocumentation">
 documentation outline</a></h2>
 <p>This is the reference documentation of <a href="http://wiki.ganil.fr/gap/">NUMEXO2 GTS server</a>, from the <a href="http://www.ganil-spiral2.eu">GANIL</a>.<br/>
 <br/>
- The main function is in <a href="gtsServer_8c.html">gtsServer.c</a> source file.<br/>
+ The main function is in <a href="gtsMain_8cpp.html">gtsMain.cpp</a> source file.<br/>
 <br/>
  This documentation has been automatically generated from the sources, using the tool <a href="http://www.doxygen.org">doxygen</a>. It should be readed as HTML, LaTex and man page.<br/>
  It contains both </p>

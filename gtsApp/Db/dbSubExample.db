@@ -30,59 +30,68 @@ record(sub,"$(user):gtsReset")
 {
     field(SCAN,"Passive")
     field(SNAM,"gtsResetEPICS")
+    field(DESC,"gtsReset()")
 }
 
 record(sub,"$(user):gtsInit")
 {
     field(SCAN,"Passive")
     field(SNAM,"gtsInitEPICS")
+    field(DESC,"gtsInit()")
 }
-
 record(sub,"$(user):gtsTest")
 {
     field(SCAN,"Passive")
     field(SNAM,"gtsTestEPICS")
+    field(DESC,"gtsTest()")
 }
-
 record(sub,"$(user):gtsUpdate")
 {
     field(SCAN,"Passive")
     field(SNAM,"gtsUpdateEPICS")
+    field(DESC,"gtsUpdate()")
 }
 record(sub,"$(user):conIs")
 {
     field(SCAN,"Passive")
     field(SNAM,"conIsEPICS")
+    field(DESC,"conIs()")
 }
 record(sub,"$(user):gtsIs")
 {
     field(SCAN,"Passive")
     field(SNAM,"gtsIsEPICS")
+    field(DESC,"gtsIs()")
 }
 record(sub,"$(user):treeStart")
 {
     field(SCAN,"Passive")
     field(SNAM,"treeStartEPICS")
+    field(DESC,"treeStart()")
 }
 record(sub,"$(user):treeStop")
 {
     field(SCAN,"Passive")
     field(SNAM,"treeStopEPICS")
+    field(DESC,"treeStop()")
 }
 record(sub,"$(user):includeCarrierForAlign")
 {
     field(SCAN,"Passive")
     field(SNAM,"includeCarrierForAlignEPICS")
+    field(DESC,"includeCarrierForAlign()")
 }
 record(sub,"$(user):excludeCarrierForAlign")
 {
     field(SCAN,"Passive")
     field(SNAM,"excludeCarrierForAlignEPICS")
+    field(DESC,"excludeCarrierForAlign()")
 }
 record(sub,"$(user):alignStart")
 {
     field(SCAN,"Passive")
     field(SNAM,"alignStartEPICS")
+    field(DESC,"alignStart()")
 }
 
 record(sub,"$(user):treeSetup")

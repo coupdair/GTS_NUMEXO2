@@ -13,15 +13,15 @@ Authors : Frederic SAILLANT,
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
-\mainpage NUMEXO2 GTS server
+\page old OLD NUMEXO2 GTS server (UDP)
 * table of content:
-* \li \ref sectionCodeHistory
-* \li \ref sectionCommandLine
-* \li \ref sectionServerCommands
-* \li \ref sectionGTSserverDocumentation
-* \li \ref sectionDoxygenSyntax
+* \li \ref sectionOldCodeHistory
+* \li \ref sectionOldCommandLine
+* \li \ref sectionOldServerCommands
+* \li \ref sectionOldGTSserverDocumentation
+* \li \ref sectionOldDoxygenSyntax
 *
-* \section sectionCodeHistory Modifications
+* \section sectionOldCodeHistory Modifications
 *
 
     S. Coudert 24/07/2015
@@ -37,21 +37,17 @@ Authors : Frederic SAILLANT,
     S. Coudert 03/07/2017
      - move function from gtsServer to gtsMisc (for future EPICS)
 
-* \section sectionCommandLine command line options
-*
-* - GTS server with EPICS+UDP
-*
-* \verbinclude "gts.help.output"
+* \section sectionOldCommandLine command line options
 *
 * - GTS server (UDP only; old)
 *
 * \verbinclude "gtsServer.help.output"
 *
-* \section sectionServerCommands server commands
+* \section sectionOldServerCommands server commands
 *
-* \verbinclude "gtsServer_command.txt"
+* \verbinclude "gtsServer_command_UDP.txt"
 *
-* \section sectionGTSserverDocumentation documentation outline
+* \section sectionOldGTSserverDocumentation documentation outline
 * This is the reference documentation of 
 * <a href="http://wiki.ganil.fr/gap/">NUMEXO2 GTS server</a>, 
 * from the <a href="http://www.ganil-spiral2.eu">GANIL</a>.\n\n
@@ -64,7 +60,7 @@ Authors : Frederic SAILLANT,
 *
 * that as been documented within the sources.
 *
-* \section sectionDoxygenSyntax make documentation using Doxygen syntax
+* \section sectionOldDoxygenSyntax make documentation using Doxygen syntax
 * Each function in the source code should be commented using \b doxygen \b syntax in the same file.
 * The documentation need to be written before the function.
 * The basic syntax is presented in this part.

@@ -176,12 +176,7 @@ funcNoArgEPICS(includeCarrierForAlign, include)
 funcNoArgEPICS(excludeCarrierForAlign, exclude)
 funcNoArgEPICS(alignStart, aligned)
 #undef funcNoArgEPICS
-/*no arg
-implement ?!:
-//excludeTriggerProcessor empty
-testSet -> leaveTestLoopback
-readAll ...
-*/
+//! \todo [?] no arg function for EPICS: need to implement - //excludeTriggerProcessor empty - testSet -> leaveTestLoopback - readAll ...
 
 /*
 static long gtsResetEPICS(subRecord *precord)
@@ -262,13 +257,7 @@ funcOneArgEPICS(fineDelaySet,    fineDelay,    delay)
 funcOneArgEPICS(coarseDelaySet,  coarseDelay,  delay)
 funcOneArgEPICS(triggerStart, triggerStart, GTStype)
 #undef funcOneArgEPICS
-/*
-1 arg
-implement ?!:
-progTruncatedIpNumber ->	progHostTruncatedIpNumber
-printBinary
-readReg
-*/
+//! \todo [?] 1 arg function for EPICS: need to implement: - progTruncatedIpNumber ->	progHostTruncatedIpNumber - printBinary - readReg
 
 #ifndef _X86_64_
 
