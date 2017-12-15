@@ -9,7 +9,7 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.2.1e"
+#define VERSION "v0.2.1f"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**

@@ -211,8 +211,8 @@ static long gtsResetEPICS(subRecord *precord)
 
 #ifndef _X86_64_
 
-#define funcOneArgEPICS(ARG1,ARG2,VAL) \
-static long ARG1##EPICS(subRecord *precord) \
+#define funcOneArgEPICS(ARG,FCT,VAL) \
+static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
   int status = XST_SUCCESS; \
@@ -221,18 +221,18 @@ static long ARG1##EPICS(subRecord *precord) \
   if(precord->val != 1.0) return 0; \
   int val = (int)precord->a; \
   if (mySubDebug) \
-       printf("gts %lu is running " #ARG2 " using " #VAL "=%d\n",  cardnumber, val); \
-  status=ARG2(val); \
+       printf("gts %lu is running " #FCT " using " #VAL "=%d\n",  cardnumber, val); \
+  status=FCT(val); \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
-epicsRegisterFunction(ARG1##EPICS); \
+epicsRegisterFunction(ARG##EPICS); \
 //funcOneArgEPICS
 
 #else //other ARCH
 
-#define funcOneArgEPICS(ARG1,ARG2,VAL) \
-static long ARG1##EPICS(subRecord *precord) \
+#define funcOneArgEPICS(ARG,FCT,VAL) \
+static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
   int status=0; \
@@ -244,7 +244,7 @@ static long ARG1##EPICS(subRecord *precord) \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
-epicsRegisterFunction(ARG1##EPICS); \
+epicsRegisterFunction(ARG##EPICS); \
 //funcOneArgEPICS
 
 #endif //_X86_64_
@@ -263,8 +263,8 @@ funcOneArgEPICS(printBinary,printBinary, offset)
 
 #ifndef _X86_64_
 
-#define funcTwoArgEPICS(ARG1,ARG2,VAL1,VAL2) \
-static long ARG1##EPICS(subRecord *precord) \
+#define funcTwoArgEPICS(ARG,FCT,VAL1,VAL2) \
+static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
   int status = XST_SUCCESS; \
@@ -274,18 +274,18 @@ static long ARG1##EPICS(subRecord *precord) \
   int val1 = (int)precord->a; \
   int val2 = (int)precord->b; \
   if (mySubDebug) \
-       printf("gts %lu is running " #ARG2 " using " #VAL1 "=%d and " #VAL2 "=%d\n",  cardnumber, val1,val2); \
-  status=ARG2(val1,val2); \
+       printf("gts %lu is running " #FCT " using " #VAL1 "=%d and " #VAL2 "=%d\n",  cardnumber, val1,val2); \
+  status=FCT(val1,val2); \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
-epicsRegisterFunction(ARG1##EPICS); \
+epicsRegisterFunction(ARG##EPICS); \
 //funcTwoArgEPICS
 
 #else //other ARCH
 
-#define funcTwoArgEPICS(ARG1,ARG2,VAL1,VAL2) \
-static long ARG1##EPICS(subRecord *precord) \
+#define funcTwoArgEPICS(ARG,FCT,VAL1,VAL2) \
+static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
   int status=0; \
@@ -298,7 +298,7 @@ static long ARG1##EPICS(subRecord *precord) \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
-epicsRegisterFunction(ARG1##EPICS); \
+epicsRegisterFunction(ARG##EPICS); \
 //funcTwoArgEPICS
 
 #endif //_X86_64_
@@ -312,8 +312,8 @@ funcTwoArgEPICS(triggerSetup,triggerSetup, GTStype,step)
 
 #ifndef _X86_64_
 
-#define funcThreeArgEPICS(ARG1,ARG2,VAL1,VAL2,VAL3) \
-static long ARG1##EPICS(subRecord *precord) \
+#define funcThreeArgEPICS(ARG,FCT,VAL1,VAL2,VAL3) \
+static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
   int status = XST_SUCCESS; \
@@ -324,18 +324,18 @@ static long ARG1##EPICS(subRecord *precord) \
   int val2 = (int)precord->b; \
   int val3 = (int)precord->c; \
   if (mySubDebug) \
-       printf("gts %lu is running " #ARG2 " using " #VAL1 "=%d, " #VAL2 "=%d and " #VAL3 "=%d\n",  cardnumber, val1,val2,val3); \
-  status=ARG2(val1,val2,val3); \
+       printf("gts %lu is running " #FCT " using " #VAL1 "=%d, " #VAL2 "=%d and " #VAL3 "=%d\n",  cardnumber, val1,val2,val3); \
+  status=FCT(val1,val2,val3); \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
-epicsRegisterFunction(ARG1##EPICS); \
+epicsRegisterFunction(ARG##EPICS); \
 //funcThreeArgEPICS
 
 #else //other ARCH
 
-#define funcThreeArgEPICS(ARG1,ARG2,VAL1,VAL2,VAL3) \
-static long ARG1##EPICS(subRecord *precord) \
+#define funcThreeArgEPICS(ARG,FCT,VAL1,VAL2,VAL3) \
+static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
   int status=0; \
@@ -349,7 +349,7 @@ static long ARG1##EPICS(subRecord *precord) \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
-epicsRegisterFunction(ARG1##EPICS); \
+epicsRegisterFunction(ARG##EPICS); \
 //funcThreeArgEPICS
 
 #endif //_X86_64_
@@ -362,8 +362,8 @@ funcThreeArgEPICS(tdcMeas,tdcMeas, meas, debug, nmes)
 
 #ifndef _X86_64_
 
-#define funcFourArgEPICS(ARG1,ARG2,VAL1,VAL2,VAL3,VAL4) \
-static long ARG1##EPICS(subRecord *precord) \
+#define funcFourArgEPICS(ARG,FCT,VAL1,VAL2,VAL3,VAL4) \
+static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
   int status = XST_SUCCESS; \
@@ -375,18 +375,18 @@ static long ARG1##EPICS(subRecord *precord) \
   int val3 = (int)precord->c; \
   int val4 = (int)precord->d; \
   if (mySubDebug) \
-       printf("gts %lu is running " #ARG2 " using " #VAL1 "=%d, " #VAL2 "=%d, " #VAL3 "=%d and " #VAL4 "=%d\n",  cardnumber, val1,val2,val3,val4); \
-  status=ARG2(val1,val2,val3,val4); \
+       printf("gts %lu is running " #FCT " using " #VAL1 "=%d, " #VAL2 "=%d, " #VAL3 "=%d and " #VAL4 "=%d\n",  cardnumber, val1,val2,val3,val4); \
+  status=FCT(val1,val2,val3,val4); \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
-epicsRegisterFunction(ARG1##EPICS); \
+epicsRegisterFunction(ARG##EPICS); \
 //funcFourArgEPICS
 
 #else //other ARCH
 
-#define funcFourArgEPICS(ARG1,ARG2,VAL1,VAL2,VAL3,VAL4) \
-static long ARG1##EPICS(subRecord *precord) \
+#define funcFourArgEPICS(ARG,FCT,VAL1,VAL2,VAL3,VAL4) \
+static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
   int status=0; \
@@ -401,7 +401,7 @@ static long ARG1##EPICS(subRecord *precord) \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
-epicsRegisterFunction(ARG1##EPICS); \
+epicsRegisterFunction(ARG##EPICS); \
 //funcFourArgEPICS
 
 #endif //_X86_64_
