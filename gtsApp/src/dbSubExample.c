@@ -270,13 +270,6 @@ printBinary
 readReg
 */
 
-/*
-2 args
-alignSet(GTStype,forward)
-alignMeas(forward,nmes)
-triggerSetup(GTStype,step)
-*/
-
 #ifndef _X86_64_
 
 #define funcTwoArgEPICS(ARG,SET,VAL1,VAL2) \
@@ -324,4 +317,62 @@ funcTwoArgEPICS(alignSet,  alignSet, GTStype,forward)
 funcTwoArgEPICS(alignMeas, alignMeasurement, forward,nmes)
 funcTwoArgEPICS(triggerSetup, triggerSetup, GTStype,step)
 #undef funcTwoArgEPICS
+
+
+/*
+3 args
+tdcSet( meas, debug, delay )
+tdcMeas( meas, debug, nmes )
+*/
+
+#ifndef _X86_64_
+
+#define funcThreeArgEPICS(ARG,SET,VAL1,VAL2,VAL3) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  SUB_DEBUG_PRINT \
+  int status = XST_SUCCESS; \
+  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS); \
+ \
+  if(precord->val != 1.0) return 0; \
+  int val1 = (int)precord->a; \
+  int val2 = (int)precord->b; \
+  int val3 = (int)precord->c; \
+  if (mySubDebug) \
+       printf("gts %lu is being " #SET " using " #VAL1 "=%d, " #VAL2 "=%d and " #VAL3 "=%d\n",  cardnumber, val1,val2,val3); \
+  status=ARG(val1,val2,val3); \
+  precord->val = status; \
+  return 0; \
+}/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
+//funcThreeArgEPICS
+
+#else //other ARCH
+
+#define funcThreeArgEPICS(ARG,SET,VAL1,VAL2,VAL3) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  SUB_DEBUG_PRINT \
+  int status=0; \
+  if(precord->val != 1.0) return 0; \
+  int val1 = (int)precord->a; \
+  int val2 = (int)precord->b; \
+  int val3 = (int)precord->c; \
+  if(mySubDebug) \
+    printf("gts fake: EPICS/%s(subRecord */" #VAL1 "=%d, " #VAL2 "=%d and " #VAL3 "=%d\n",__func__,val1,val2,val3); \
+ \
+  precord->val = status; \
+  return 0; \
+}/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
+//funcThreeArgEPICS
+
+#endif //_X86_64_
+
+//funcThreeArgEPICS(,,,)
+funcThreeArgEPICS(tdcSet,  TDCset,        meas, debug, delay)
+funcThreeArgEPICS(tdcMeas, TDCmesurement, meas, debug, nmes)
+#undef funcThreeArgEPICS
+
+
 

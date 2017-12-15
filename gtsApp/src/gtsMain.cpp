@@ -4,7 +4,7 @@
  * \author Sebastien COUDERT
 **/
 
-#define VERSION "v0.1.4e"
+#define VERSION "v0.1.4f"
 
 #include <stddef.h>
 #include <stdlib.h>

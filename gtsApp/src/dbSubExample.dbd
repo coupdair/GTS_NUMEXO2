@@ -27,4 +27,6 @@ function(triggerStartEPICS)
 function(alignSetEPICS)
 function(alignMeasEPICS)
 function(triggerSetupEPICS)
+function(tdcSetEPICS)
+function(tdcMeasEPICS)
 

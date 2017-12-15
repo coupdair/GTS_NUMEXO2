@@ -23,7 +23,7 @@ record(sub,"$(user):gtsExample")
 
 record(sub,"$(user):serverVersion")
 {
-    field(DESC,"v0.1.4e")
+    field(DESC,"v0.1.4f")
 }
 
 record(sub,"$(user):gtsReset")
@@ -144,5 +144,17 @@ record(sub,"$(user):triggerSetup")
     field(SCAN,"Passive")
     field(SNAM,"triggerSetupEPICS")
     field(DESC,"triggerSetup(GTStype,step)")
+}
+record(sub,"$(user):tdcSet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"tdcSetEPICS")
+    field(DESC,"tdcSet(meas,debug,delay)")
+}
+record(sub,"$(user):tdcMeas")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"tdcMeasEPICS")
+    field(DESC,"tdcMeas(meas,debug,nmes)")
 }
 

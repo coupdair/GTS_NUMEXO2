@@ -1,4 +1,3 @@
-alignSet(GTStype,forward)
-alignMeas(forward,nmes)
-triggerSetup(GTStype,step)
+tdcSet(meas,debug,delay)
+tdcMeas(meas,debug,nmes)
 

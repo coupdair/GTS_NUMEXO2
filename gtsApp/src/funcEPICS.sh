@@ -16,6 +16,7 @@ do
   f=`echo $s | cut -d' ' -f1`
 #  a=`echo $s | cut -d' ' -f2`
 #  b=`echo $s | cut -d' ' -f3`
+#  c=`echo $s | cut -d' ' -f3`
   echo 'record(sub,"$(user):'$f'")'
   echo '{'
   echo '    field(SCAN,"Passive")'

@@ -145,4 +145,16 @@ record(sub,"$(user):triggerSetup")
     field(SNAM,"triggerSetupEPICS")
     field(DESC,"triggerSetup(GTStype,step)")
 }
+record(sub,"$(user):tdcSet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"tdcSetEPICS")
+    field(DESC,"tdcSet(meas,debug,delay)")
+}
+record(sub,"$(user):tdcMeas")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"tdcMeasEPICS")
+    field(DESC,"tdcMeas(meas,debug,nmes)")
+}
 
