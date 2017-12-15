@@ -1,0 +1,10 @@
+./gtsServer (v1.0.1h - Dec 15 2017 17:06:16)
+description:
+	old GTS embedded server for NUMEXO2 (UDP only).
+usage:
+	./gtsServer
+	./gtsServer -h
+	./gtsServer -v
+options:
+	-h: help
+	-v: version
