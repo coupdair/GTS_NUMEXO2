@@ -191,40 +191,40 @@ transDigitizer(con0,con1,con2,con3)
 alignTdcSet(GTStype,forward,tr,cal)
 </pre></div><h3><a class="anchor" id="subsectionSCUDPvsEPICS">
 UDP vs EPICS command table</a></h3>
-<div class="fragment"><pre class="fragment">gtsTest                         gtsTest()
-gtsReset                        gtsReset()
-gtsInit                         gtsInit()
-gtsUpdate                       gtsUpdate()
-transCon                        transCon(con0,con1,con2,con3)
-transGtsTree                    transGtsTree(con0,con1,con2,con3)
-transDigitizer                  transDigitizer(con0,con1,con2,con3)
-conIs                           conIs()
-gtsIs                           gtsIs()
-treeSetup                       treeSetup(step)
-treeStart                       treeStart()
-rxSystemIsReady                 rxSystemIsReady(transceiver)
-treeRead                        treeRead(transceiver)
-treeStop                        treeStop()
-excludeCarrierForAlign          excludeCarrierForAlign()
-includeCarrierForAlign          includeCarrierForAlign()
-alignStart                      alignStart()
-fineDelaySetNow                 fineDelaySetNow(delay)
-fineDelaySet                    fineDelaySet(delay)
-coarseDelaySet                  coarseDelaySet(delay)
+<div class="fragment"><pre class="fragment">alignMeas                       alignMeas(forward,nmes)
 alignSet                        alignSet(GTStype,forward)
+alignStart                      alignStart()
 alignTdcSet                     alignTdcSet(GTStype,forward,tr,cal)
-printBinary                     
-set_output_file_name            
-alignMeas                       alignMeas(forward,nmes)
-tdcSet                          tdcSet(meas,debug,delay)
-tdcMeas                         tdcMeas(meas,debug,nmes)
-triggerSetup                    triggerSetup(GTStype,step)
-triggerStart                    triggerStart(GTStype)
+coarseDelaySet                  coarseDelaySet(delay)
+conIs                           conIs()
+excludeCarrierForAlign          excludeCarrierForAlign()
 excludeTriggerProcessor         
-testSet                         
+fineDelaySet                    fineDelaySet(delay)
+fineDelaySetNow                 fineDelaySetNow(delay)
+gtsInit                         gtsInit()
+gtsIs                           gtsIs()
+gtsReset                        gtsReset()
+gtsTest                         gtsTest()
+gtsUpdate                       gtsUpdate()
+includeCarrierForAlign          includeCarrierForAlign()
+printBinary                     
+readAll                         
 readField                       
 readReg                         
-readAll                         
+rxSystemIsReady                 rxSystemIsReady(transceiver)
+set_output_file_name            
+tdcMeas                         tdcMeas(meas,debug,nmes)
+tdcSet                          tdcSet(meas,debug,delay)
+testSet                         
+transCon                        transCon(con0,con1,con2,con3)
+transDigitizer                  transDigitizer(con0,con1,con2,con3)
+transGtsTree                    transGtsTree(con0,con1,con2,con3)
+treeRead                        treeRead(transceiver)
+treeSetup                       treeSetup(step)
+treeStart                       treeStart()
+treeStop                        treeStop()
+triggerSetup                    triggerSetup(GTStype,step)
+triggerStart                    triggerStart(GTStype)
 writeField                      
 </pre></div><h2><a class="anchor" id="sectionGTSserverDocumentation">
 documentation outline</a></h2>

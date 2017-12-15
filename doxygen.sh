@@ -33,7 +33,7 @@ grep 'int.cmd_' udpInterpret.c | head -n 35 | sed 's/int.cmd_//;s/.(void\*)\;//'
 ###EPICS
 cat gtsApp/Db/dbSubExample.db | grep DESC | cut -d',' -f2- | sed 's/"//g;s/)//' | grep -v __SERVER_VERSION__ > gtsServer_command_EPICS.txt
 ###UDP<->EPICS table
-for w in `cat gtsServer_command_UDP.txt`
+for w in `cat gtsServer_command_UDP.txt | sort`
 do
   w2=`grep $w'(' gtsServer_command_EPICS.txt`
   printf "%-32s%s\n" $w $w2
