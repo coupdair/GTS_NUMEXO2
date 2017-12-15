@@ -29,4 +29,8 @@ function(alignMeasEPICS)
 function(triggerSetupEPICS)
 function(tdcSetEPICS)
 function(tdcMeasEPICS)
+function(transConEPICS)
+function(transGtsTreeEPICS)
+function(transDigitizerEPICS)
+function(alignTdcSetEPICS)
 

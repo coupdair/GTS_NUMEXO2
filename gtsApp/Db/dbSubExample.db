@@ -157,4 +157,28 @@ record(sub,"$(user):tdcMeas")
     field(SNAM,"tdcMeasEPICS")
     field(DESC,"tdcMeas(meas,debug,nmes)")
 }
+record(sub,"$(user):transCon")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"transConEPICS")
+    field(DESC,"transCon(con0,con1,con2,con3)")
+}
+record(sub,"$(user):transGtsTree")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"transGtsTreeEPICS")
+    field(DESC,"transGtsTree(con0,con1,con2,con3)")
+}
+record(sub,"$(user):transDigitizer")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"transDigitizerEPICS")
+    field(DESC,"transDigitizer(con0,con1,con2,con3)")
+}
+record(sub,"$(user):alignTdcSet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"alignTdcSetEPICS")
+    field(DESC,"alignTdcSet(GTStype,forward,tr,cal)")
+}
 

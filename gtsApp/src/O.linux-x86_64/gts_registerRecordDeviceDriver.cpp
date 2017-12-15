@@ -178,6 +178,7 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_tsInitialize, pvar_func_register_func_alignMeasEPICS,
     pvar_func_register_func_alignSetEPICS,
     pvar_func_register_func_alignStartEPICS,
+    pvar_func_register_func_alignTdcSetEPICS,
     pvar_func_register_func_coarseDelaySetEPICS,
     pvar_func_register_func_conIsEPICS,
     pvar_func_register_func_excludeCarrierForAlignEPICS,
@@ -198,6 +199,9 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_rxSystemIsReadyEPICS,
     pvar_func_register_func_tdcMeasEPICS,
     pvar_func_register_func_tdcSetEPICS,
+    pvar_func_register_func_transConEPICS,
+    pvar_func_register_func_transDigitizerEPICS,
+    pvar_func_register_func_transGtsTreeEPICS,
     pvar_func_register_func_treeReadEPICS,
     pvar_func_register_func_treeSetupEPICS,
     pvar_func_register_func_treeStartEPICS,
@@ -278,6 +282,7 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_alignMeasEPICS();
     pvar_func_register_func_alignSetEPICS();
     pvar_func_register_func_alignStartEPICS();
+    pvar_func_register_func_alignTdcSetEPICS();
     pvar_func_register_func_coarseDelaySetEPICS();
     pvar_func_register_func_conIsEPICS();
     pvar_func_register_func_excludeCarrierForAlignEPICS();
@@ -298,6 +303,9 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_rxSystemIsReadyEPICS();
     pvar_func_register_func_tdcMeasEPICS();
     pvar_func_register_func_tdcSetEPICS();
+    pvar_func_register_func_transConEPICS();
+    pvar_func_register_func_transDigitizerEPICS();
+    pvar_func_register_func_transGtsTreeEPICS();
     pvar_func_register_func_treeReadEPICS();
     pvar_func_register_func_treeSetupEPICS();
     pvar_func_register_func_treeStartEPICS();

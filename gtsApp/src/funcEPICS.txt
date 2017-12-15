@@ -1,3 +1,5 @@
-tdcSet(meas,debug,delay)
-tdcMeas(meas,debug,nmes)
+transCon(con0,con1,con2,con3)
+transGtsTree(con0,con1,con2,con3)
+transDigitizer(con0,con1,con2,con3)
+alignTdcSet(GTStype,forward,transceiver,newcal)
 

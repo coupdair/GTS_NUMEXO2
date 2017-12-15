@@ -319,12 +319,6 @@ funcTwoArgEPICS(triggerSetup, triggerSetup, GTStype,step)
 #undef funcTwoArgEPICS
 
 
-/*
-3 args
-tdcSet( meas, debug, delay )
-tdcMeas( meas, debug, nmes )
-*/
-
 #ifndef _X86_64_
 
 #define funcThreeArgEPICS(ARG,SET,VAL1,VAL2,VAL3) \
@@ -375,4 +369,56 @@ funcThreeArgEPICS(tdcMeas, TDCmesurement, meas, debug, nmes)
 #undef funcThreeArgEPICS
 
 
+#ifndef _X86_64_
+
+#define funcFourArgEPICS(ARG,SET,VAL1,VAL2,VAL3,VAL4) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  SUB_DEBUG_PRINT \
+  int status = XST_SUCCESS; \
+  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS); \
+ \
+  if(precord->val != 1.0) return 0; \
+  int val1 = (int)precord->a; \
+  int val2 = (int)precord->b; \
+  int val3 = (int)precord->c; \
+  int val4 = (int)precord->d; \
+  if (mySubDebug) \
+       printf("gts %lu is being " #SET " using " #VAL1 "=%d, " #VAL2 "=%d, " #VAL3 "=%d and " #VAL4 "=%d\n",  cardnumber, val1,val2,val3,val4); \
+  status=ARG(val1,val2,val3,val4); \
+  precord->val = status; \
+  return 0; \
+}/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
+//funcFourArgEPICS
+
+#else //other ARCH
+
+#define funcFourArgEPICS(ARG,SET,VAL1,VAL2,VAL3,VAL4) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  SUB_DEBUG_PRINT \
+  int status=0; \
+  if(precord->val != 1.0) return 0; \
+  int val1 = (int)precord->a; \
+  int val2 = (int)precord->b; \
+  int val3 = (int)precord->c; \
+  int val4 = (int)precord->d; \
+  if(mySubDebug) \
+    printf("gts fake: EPICS/%s(subRecord */" #VAL1 "=%d, " #VAL2 "=%d, " #VAL3 "=%d and " #VAL4 "=%d\n",__func__,val1,val2,val3,val4); \
+ \
+  precord->val = status; \
+  return 0; \
+}/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
+//funcFourArgEPICS
+
+#endif //_X86_64_
+
+//funcFourArgEPICS(,,,)
+funcFourArgEPICS(transCon,       transCon,       con0, con1, con2, con3)
+funcFourArgEPICS(transGtsTree,   transGTStree,   con0, con1, con2, con3)
+funcFourArgEPICS(transDigitizer, transDigitizer, con0, con1, con2, con3)
+funcFourArgEPICS(alignTdcSet,    alignTDCset,    GTStype, forward, transceiver, newcal)
+#undef funcFourArgEPICS
 
