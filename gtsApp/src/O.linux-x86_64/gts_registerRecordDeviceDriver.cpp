@@ -201,6 +201,7 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_tdcMeasEPICS,
     pvar_func_register_func_tdcSetEPICS,
     pvar_func_register_func_testSetEPICS,
+    pvar_func_register_func_testUnSetEPICS,
     pvar_func_register_func_transConEPICS,
     pvar_func_register_func_transDigitizerEPICS,
     pvar_func_register_func_transGtsTreeEPICS,
@@ -310,6 +311,7 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_tdcMeasEPICS();
     pvar_func_register_func_tdcSetEPICS();
     pvar_func_register_func_testSetEPICS();
+    pvar_func_register_func_testUnSetEPICS();
     pvar_func_register_func_transConEPICS();
     pvar_func_register_func_transDigitizerEPICS();
     pvar_func_register_func_transGtsTreeEPICS();

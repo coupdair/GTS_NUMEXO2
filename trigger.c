@@ -316,6 +316,23 @@ unsigned long triggerCoreReset(void)
 }
 
 /************************************************************
+set/unsets test mode
+************************************************************/
+int testSet(void)
+{
+  int status = XST_SUCCESS;
+  status |= XMMRegs_Trigger_Test_Set(&XMMRegsDriver);
+  return status; 
+}
+
+int testUnSet(void)
+{
+  int status = XST_SUCCESS;
+  status |= XMMRegs_Trigger_Test_UnSet(&XMMRegsDriver);
+  return status; 
+}
+
+/************************************************************
 counterRootSetup --
 once the last measurement for the alignment has been done
 and the delays corrected for, it opens the MGTs in both directions

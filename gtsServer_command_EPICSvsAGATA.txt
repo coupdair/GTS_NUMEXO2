@@ -24,7 +24,7 @@ setIdlePeriod
 tdcMeas                         tdcMeas(meas,debug,nmes)
 tdcSet                          tdcSet(meas,debug,delay)
 testSet                         testSet()
-testUnSet                       
+testUnSet                       testUnSet()
 transCon                        transCon(con0,con1,con2,con3)
 transDigitizer                  transDigitizer(con0,con1,con2,con3)
 transGtsTree                    transGtsTree(con0,con1,con2,con3)

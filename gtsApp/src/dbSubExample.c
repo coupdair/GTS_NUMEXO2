@@ -175,12 +175,14 @@ funcNoArgEPICS(treeStop,  treeStop)
 funcNoArgEPICS(includeCarrierForAlign, includeCarrierForAlign)
 funcNoArgEPICS(excludeCarrierForAlign, excludeCarrierForAlign)
 funcNoArgEPICS(alignStart, alignStart)
-funcNoArgEPICS(testSet, leaveTestLoopback)
 funcNoArgEPICS(triggerCoreStart, triggerCoreStart)
 funcNoArgEPICS(triggerCoreStop,  triggerCoreStop)
 funcNoArgEPICS(triggerCoreReset, triggerCoreReset)
+//funcNoArgEPICS(testSet, leaveTestLoopback)
+funcNoArgEPICS(testSet, testSet)
+funcNoArgEPICS(testUnSet, testUnSet)
 #undef funcNoArgEPICS
-//! \todo no arg function for EPICS: need to implement - //excludeTriggerProcessor empty - testSet -> leaveTestLoopback - readAll ...
+//! \todo no arg function for EPICS: need to implement - //excludeTriggerProcessor empty - readAll ...
 
 /*
 static long gtsResetEPICS(subRecord *precord)

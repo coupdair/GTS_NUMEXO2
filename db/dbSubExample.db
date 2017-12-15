@@ -25,9 +25,9 @@ record(sub,"$(user):serverVersion")
 {
     field(A,"0")
     field(B,"2")
-    field(C,"1")
-    field(D,"0")
-    field(DESC,"v0.2.1")
+    field(C,"2")
+    field(D,"13")
+    field(DESC,"v0.2.2d")
 }
 
 record(sub,"$(user):gtsReset")
@@ -206,6 +206,12 @@ record(sub,"$(user):testSet")
     field(SCAN,"Passive")
     field(SNAM,"testSetEPICS")
     field(DESC,"testSet()")
+}
+record(sub,"$(user):testUnSet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"testUnSetEPICS")
+    field(DESC,"testUnSet()")
 }
 
 record(sub,"$(user):triggerCoreStart")

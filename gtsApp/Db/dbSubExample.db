@@ -207,6 +207,12 @@ record(sub,"$(user):testSet")
     field(SNAM,"testSetEPICS")
     field(DESC,"testSet()")
 }
+record(sub,"$(user):testUnSet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"testUnSetEPICS")
+    field(DESC,"testUnSet()")
+}
 
 record(sub,"$(user):triggerCoreStart")
 {
