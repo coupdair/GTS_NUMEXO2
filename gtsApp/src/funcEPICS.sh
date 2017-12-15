@@ -5,7 +5,6 @@ for i in `cat funcEPICS.txt`
 do
   s=`echo $i | sed 's/(/ /;s/)//'`
   f=`echo $s | cut -d' ' -f1`
-#  echo $i': '$f $a
   echo "function("$f"EPICS)"
 done
 
@@ -13,9 +12,10 @@ done
 echo "add to \"../Db/dbSubExample.db\""
 for i in `cat funcEPICS.txt`
 do
-  s=`echo $i | sed 's/(/ /;s/)//'`
+  s=`echo $i | sed 's/(/ /;s/,/ /g;s/)//'`
   f=`echo $s | cut -d' ' -f1`
-  a=`echo $s | cut -d' ' -f2`
+#  a=`echo $s | cut -d' ' -f2`
+#  b=`echo $s | cut -d' ' -f3`
   echo 'record(sub,"$(user):'$f'")'
   echo '{'
   echo '    field(SCAN,"Passive")'

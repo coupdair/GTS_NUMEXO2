@@ -59,6 +59,12 @@ New : numexo2:gtsTest                127
 Old : numexo2:coarseDelaySet         0
 New : numexo2:coarseDelaySet         1
 
+~/bin/caget numexo2:alignMeas.DESC
+~/bin/caput numexo2:alignMeas 0
+~/bin/caput numexo2:alignMeas.A 1
+~/bin/caput numexo2:alignMeas.B 123
+~/bin/caput numexo2:alignMeas 1
+
 ~/bin/caput numexo2:treeSetup 0
 ~/bin/caput numexo2:treeSetup.A 1    
 ~/bin/caput numexo2:treeSetup 1

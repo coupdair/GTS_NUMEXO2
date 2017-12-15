@@ -23,7 +23,7 @@ record(sub,"$(user):gtsExample")
 
 record(sub,"$(user):serverVersion")
 {
-    field(DESC,"v0.1.4d")
+    field(DESC,"v0.1.4e")
 }
 
 record(sub,"$(user):gtsReset")
@@ -126,5 +126,23 @@ record(sub,"$(user):triggerStart")
     field(SCAN,"Passive")
     field(SNAM,"triggerStartEPICS")
     field(DESC,"triggerStart(GTStype)")
+}
+record(sub,"$(user):alignSet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"alignSetEPICS")
+    field(DESC,"alignSet(GTStype,forward)")
+}
+record(sub,"$(user):alignMeas")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"alignMeasEPICS")
+    field(DESC,"alignMeas(forward,nmes)")
+}
+record(sub,"$(user):triggerSetup")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"triggerSetupEPICS")
+    field(DESC,"triggerSetup(GTStype,step)")
 }
 

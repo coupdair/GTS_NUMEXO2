@@ -175,7 +175,9 @@ typedef void (*reg_func)(void);
 epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_dbndInitialize, pvar_func_helloRegister,
     pvar_func_initTraceRegister, pvar_func_syncInitialize,
-    pvar_func_tsInitialize, pvar_func_register_func_alignStartEPICS,
+    pvar_func_tsInitialize, pvar_func_register_func_alignMeasEPICS,
+    pvar_func_register_func_alignSetEPICS,
+    pvar_func_register_func_alignStartEPICS,
     pvar_func_register_func_coarseDelaySetEPICS,
     pvar_func_register_func_conIsEPICS,
     pvar_func_register_func_excludeCarrierForAlignEPICS,
@@ -198,6 +200,7 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_treeSetupEPICS,
     pvar_func_register_func_treeStartEPICS,
     pvar_func_register_func_treeStopEPICS,
+    pvar_func_register_func_triggerSetupEPICS,
     pvar_func_register_func_triggerStartEPICS;
 
 epicsShareExtern int * const pvar_int_asCaDebug;
@@ -270,6 +273,8 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_initTraceRegister();
     pvar_func_syncInitialize();
     pvar_func_tsInitialize();
+    pvar_func_register_func_alignMeasEPICS();
+    pvar_func_register_func_alignSetEPICS();
     pvar_func_register_func_alignStartEPICS();
     pvar_func_register_func_coarseDelaySetEPICS();
     pvar_func_register_func_conIsEPICS();
@@ -293,6 +298,7 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_treeSetupEPICS();
     pvar_func_register_func_treeStartEPICS();
     pvar_func_register_func_treeStopEPICS();
+    pvar_func_register_func_triggerSetupEPICS();
     pvar_func_register_func_triggerStartEPICS();
     iocshRegisterVariable(vardefs);
     return 0;

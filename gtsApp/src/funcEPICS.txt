@@ -1,8 +1,4 @@
-treeSetup(step)
-rxSystemIsReady(transceiver)
-treeRead(transceiver)
-fineDelaySetNow(delay)
-fineDelaySet(delay)
-coarseDelaySet(delay)
-triggerStart(GTStype)
+alignSet(GTStype,forward)
+alignMeas(forward,nmes)
+triggerSetup(GTStype,step)
 

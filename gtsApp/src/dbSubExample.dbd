@@ -24,4 +24,7 @@ function(fineDelaySetNowEPICS)
 function(fineDelaySetEPICS)
 function(coarseDelaySetEPICS)
 function(triggerStartEPICS)
+function(alignSetEPICS)
+function(alignMeasEPICS)
+function(triggerSetupEPICS)
 

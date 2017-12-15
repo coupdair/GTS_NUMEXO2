@@ -105,6 +105,15 @@ static long myGTSProcess(subRecord *precord)
   return 0;
 }//myGTSProcess
 
+/* Register these symbols for use by IOC code: */
+epicsExportAddress(int, mySubDebug);
+epicsRegisterFunction(mySubInit);
+epicsRegisterFunction(mySubProcess);
+epicsRegisterFunction(myAsubInit);
+epicsRegisterFunction(myAsubProcess);
+epicsRegisterFunction(myGTSInit);
+epicsRegisterFunction(myGTSProcess);
+
 #define SUB_DEBUG_PRINT_COMMENT(COMMENT) \
   if(mySubDebug) \
     printf("Record %s called %s(%p/%f)" #COMMENT "\n" \
@@ -114,15 +123,14 @@ static long myGTSProcess(subRecord *precord)
       ,precord->val \
     );
 
-#define SUB_DEBUG_PRINT_NO_ARG SUB_DEBUG_PRINT_COMMENT(activated_if_1)
-#define SUB_DEBUG_PRINT SUB_DEBUG_PRINT_COMMENT()
+#define SUB_DEBUG_PRINT SUB_DEBUG_PRINT_COMMENT(activated_if_1)
 
 #ifndef _X86_64_
 
 #define funcNoArgEPICS(ARG,SET) \
 static long ARG##EPICS(subRecord *precord) \
 { \
-  SUB_DEBUG_PRINT_NO_ARG \
+  SUB_DEBUG_PRINT \
   int status = XST_SUCCESS; \
   unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS); \
  \
@@ -142,7 +150,7 @@ epicsRegisterFunction(ARG##EPICS); \
 #define funcNoArgEPICS(ARG,SET) \
 static long ARG##EPICS(subRecord *precord) \
 { \
-  SUB_DEBUG_PRINT_NO_ARG \
+  SUB_DEBUG_PRINT \
   int status=0; \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord *)\n",__func__); \
@@ -241,7 +249,7 @@ static long ARG##EPICS(subRecord *precord) \
   return 0; \
 }/*ARG##EPICS*/ \
 epicsRegisterFunction(ARG##EPICS); \
-//funcNoArgEPICS
+//funcOneArgEPICS
 
 #endif //_X86_64_
 
@@ -262,12 +270,58 @@ printBinary
 readReg
 */
 
-/* Register these symbols for use by IOC code: */
-epicsExportAddress(int, mySubDebug);
-epicsRegisterFunction(mySubInit);
-epicsRegisterFunction(mySubProcess);
-epicsRegisterFunction(myAsubInit);
-epicsRegisterFunction(myAsubProcess);
-epicsRegisterFunction(myGTSInit);
-epicsRegisterFunction(myGTSProcess);
+/*
+2 args
+alignSet(GTStype,forward)
+alignMeas(forward,nmes)
+triggerSetup(GTStype,step)
+*/
+
+#ifndef _X86_64_
+
+#define funcTwoArgEPICS(ARG,SET,VAL1,VAL2) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  SUB_DEBUG_PRINT \
+  int status = XST_SUCCESS; \
+  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS); \
+ \
+  if(precord->val != 1.0) return 0; \
+  int val1 = (int)precord->a; \
+  int val2 = (int)precord->b; \
+  if (mySubDebug) \
+       printf("gts %lu is being " #SET " using " #VAL1 "=%d and " #VAL2 "=%d\n",  cardnumber, val1,val2); \
+  status=ARG(val1,val2); \
+  precord->val = status; \
+  return 0; \
+}/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
+//funcTwoArgEPICS
+
+#else //other ARCH
+
+#define funcTwoArgEPICS(ARG,SET,VAL1,VAL2) \
+static long ARG##EPICS(subRecord *precord) \
+{ \
+  SUB_DEBUG_PRINT \
+  int status=0; \
+  if(precord->val != 1.0) return 0; \
+  int val1 = (int)precord->a; \
+  int val2 = (int)precord->b; \
+  if(mySubDebug) \
+    printf("gts fake: EPICS/%s(subRecord */" #VAL1 "=%d, " #VAL2 "=%d\n",__func__,val1,val2); \
+ \
+  precord->val = status; \
+  return 0; \
+}/*ARG##EPICS*/ \
+epicsRegisterFunction(ARG##EPICS); \
+//funcTwoArgEPICS
+
+#endif //_X86_64_
+
+//funcTwoArgEPICS(,,)
+funcTwoArgEPICS(alignSet,  alignSet, GTStype,forward)
+funcTwoArgEPICS(alignMeas, alignMeasurement, forward,nmes)
+funcTwoArgEPICS(triggerSetup, triggerSetup, GTStype,step)
+#undef funcTwoArgEPICS
 
