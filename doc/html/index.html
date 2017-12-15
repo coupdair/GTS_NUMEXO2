@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="contents">
-<h1>NUMEXO2 GTS server</h1><h3>v0.2.0 </h3><p>table of content: </p>
+<h1>NUMEXO2 GTS server</h1><h3>v0.2.1e </h3><p>table of content: </p>
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
 <li><a class="el" href="index.html#sectionCommandLine">command line options</a> </li>
@@ -50,6 +50,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a class="el" href="index.html#subsectionSCEPICS">EPICS list</a>  </li>
 <li>
 <a class="el" href="index.html#subsectionSCUDPvsEPICS">UDP vs EPICS command table</a>  </li>
+<li>
+<a class="el" href="index.html#subsectionSCEPICSvsAGATA">EPICS vs AGATA table (development progressing)</a>  </li>
 </ul>
 </li>
 <li><a class="el" href="index.html#sectionGTSserverDocumentation">documentation outline</a> </li>
@@ -85,7 +87,7 @@ command line options</a></h2>
 </ul>
 <div class="fragment"><pre class="fragment">Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.0
+  gts.v0.2.1e
 examples:
   gts --help
   gts --epics -c st.cmd
@@ -108,7 +110,7 @@ Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><ul>
 <li><b>old</b> GTS server (UDP only)</li>
 </ul>
-<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 15 2017 11:08:04)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 15 2017 15:07:50)
 description:
 	old GTS embedded server for NUMEXO2 (UDP only).
 usage:
@@ -189,6 +191,8 @@ transCon(con0,con1,con2,con3)
 transGtsTree(con0,con1,con2,con3)
 transDigitizer(con0,con1,con2,con3)
 alignTdcSet(GTStype,forward,tr,cal)
+printBinary(offset)
+testSet()
 </pre></div><h3><a class="anchor" id="subsectionSCUDPvsEPICS">
 UDP vs EPICS command table</a></h3>
 <div class="fragment"><pre class="fragment">alignMeas                       alignMeas(forward,nmes)
@@ -207,7 +211,7 @@ gtsReset                        gtsReset()
 gtsTest                         gtsTest()
 gtsUpdate                       gtsUpdate()
 includeCarrierForAlign          includeCarrierForAlign()
-printBinary                     
+printBinary                     printBinary(offset)
 readAll                         
 readField                       
 readReg                         
@@ -215,7 +219,7 @@ rxSystemIsReady                 rxSystemIsReady(transceiver)
 set_output_file_name            
 tdcMeas                         tdcMeas(meas,debug,nmes)
 tdcSet                          tdcSet(meas,debug,delay)
-testSet                         
+testSet                         testSet()
 transCon                        transCon(con0,con1,con2,con3)
 transDigitizer                  transDigitizer(con0,con1,con2,con3)
 transGtsTree                    transGtsTree(con0,con1,con2,con3)
@@ -226,6 +230,49 @@ treeStop                        treeStop()
 triggerSetup                    triggerSetup(GTStype,step)
 triggerStart                    triggerStart(GTStype)
 writeField                      
+</pre></div><h3><a class="anchor" id="subsectionSCEPICSvsAGATA">
+EPICS vs AGATA table (development progressing)</a></h3>
+<div class="fragment"><pre class="fragment">alignMeas                       alignMeas(forward,nmes)
+alignSet                        alignSet(GTStype,forward)
+alignStart                      alignStart()
+alignTdcSet                     alignTdcSet(GTStype,forward,tr,cal)
+backpressureRateGet             
+coarseDelaySet                  coarseDelaySet(delay)
+conIs                           conIs()
+excludeCarrierForAlign          excludeCarrierForAlign()
+exclude_trigger_processor       
+fineDelaySet                    fineDelaySet(delay)
+fineDelaySetNow                 fineDelaySetNow(delay)
+getLatency                      
+gtsIs                           gtsIs()
+gtsReset                        gtsReset()
+gtsTest                         gtsTest()
+gtsUpdate                       gtsUpdate()
+include_trigger_processor       
+printBinary                     printBinary(offset)
+rejectionRateGet                
+requestRateGet                  
+rxSystemIsReady                 rxSystemIsReady(transceiver)
+setIdleEnabled                  
+setIdlePeriod                   
+tdcMeas                         tdcMeas(meas,debug,nmes)
+tdcSet                          tdcSet(meas,debug,delay)
+testSet                         testSet()
+testUnSet                       
+transCon                        transCon(con0,con1,con2,con3)
+transDigitizer                  transDigitizer(con0,con1,con2,con3)
+transGtsTree                    transGtsTree(con0,con1,con2,con3)
+treeRead                        treeRead(transceiver)
+treeSetup                       treeSetup(step)
+treeStart                       treeStart()
+treeStop                        treeStop()
+triggerCoreReset                
+triggerCoreStart                
+triggerCoreStop                 
+triggerGetRates                 
+triggerSetup                    triggerSetup(GTStype,step)
+triggerStart                    triggerStart(GTStype)
+validationRateGet               
 </pre></div><h2><a class="anchor" id="sectionGTSserverDocumentation">
 documentation outline</a></h2>
 <p>This is the reference documentation of <a href="http://wiki.ganil.fr/gap/">NUMEXO2 GTS server</a>, from the <a href="http://www.ganil-spiral2.eu">GANIL</a>.<br/>

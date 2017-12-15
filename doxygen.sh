@@ -38,6 +38,12 @@ do
   w2=`grep $w'(' gtsServer_command_EPICS.txt`
   printf "%-32s%s\n" $w $w2
 done > gtsServer_command.txt
+###UDP<->EPICS table
+for w in `cat gtsServer_command_AGATA.txt | sort`
+do
+  w2=`grep $w'(' gtsServer_command_EPICS.txt`
+  printf "%-32s%s\n" $w $w2
+done > gtsServer_command_EPICSvsAGATA.txt
 
 ##make (html and prepare latex)
 doxygen

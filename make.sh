@@ -51,7 +51,7 @@ set rev=`echo $ver   | cut -d'.' -f3 | tr -d \[a-z\]`
 set dev=`echo $ver   | tr -d \[.,0-9\]`
 set dev=`printf %d 0x$dev`
 cat gtsApp/Db/dbSubExample.db | sed "s/__SERVER_VERSION__/$version/;s/__SERVER_VERSION_MAJOR__/$major/;s/__SERVER_VERSION_MINOR__/$minor/;s/__SERVER_VERSION_REVISION__/$rev/;s/__SERVER_VERSION_DEVELOPMENT__/$dev/" > db/dbSubExample.db
-grep serverVersion -A 7 db/dbSubExample.db
+#grep serverVersion -A 7 db/dbSubExample.db
 ##print
 grep serverVersion -A 2 db/dbSubExample.db | grep DESC | grep 'v.\..\..' --color
 sync

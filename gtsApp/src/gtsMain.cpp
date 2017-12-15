@@ -9,7 +9,7 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.2.1d"
+#define VERSION "v0.2.1e"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -22,6 +22,7 @@
 * <li> \ref subsectionSCUDP </li>
 * <li> \ref subsectionSCEPICS </li>
 * <li> \ref subsectionSCUDPvsEPICS </li>
+* <li> \ref subsectionSCEPICSvsAGATA </li>
 * </ul>
 * \li \ref sectionGTSserverDocumentation
 * \li \ref sectionDoxygenSyntax
@@ -70,6 +71,10 @@
 * \subsection subsectionSCUDPvsEPICS UDP vs EPICS command table
 *
 * \verbinclude "gtsServer_command.txt"
+*
+* \subsection subsectionSCEPICSvsAGATA EPICS vs AGATA table (development progressing)
+*
+* \verbinclude "gtsServer_command_EPICSvsAGATA.txt"
 *
 * \section sectionGTSserverDocumentation documentation outline
 * This is the reference documentation of 

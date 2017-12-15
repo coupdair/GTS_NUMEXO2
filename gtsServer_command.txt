@@ -14,7 +14,7 @@ gtsReset                        gtsReset()
 gtsTest                         gtsTest()
 gtsUpdate                       gtsUpdate()
 includeCarrierForAlign          includeCarrierForAlign()
-printBinary                     
+printBinary                     printBinary(offset)
 readAll                         
 readField                       
 readReg                         
@@ -22,7 +22,7 @@ rxSystemIsReady                 rxSystemIsReady(transceiver)
 set_output_file_name            
 tdcMeas                         tdcMeas(meas,debug,nmes)
 tdcSet                          tdcSet(meas,debug,delay)
-testSet                         
+testSet                         testSet()
 transCon                        transCon(con0,con1,con2,con3)
 transDigitizer                  transDigitizer(con0,con1,con2,con3)
 transGtsTree                    transGtsTree(con0,con1,con2,con3)

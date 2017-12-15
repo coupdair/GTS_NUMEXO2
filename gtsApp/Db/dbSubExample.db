@@ -195,3 +195,16 @@ record(sub,"$(user):alignTdcSet")
     field(DESC,"alignTdcSet(GTStype,forward,tr,cal)")
 }
 
+record(sub,"$(user):printBinary")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"printBinaryEPICS")
+    field(DESC,"printBinary(offset)")
+}
+record(sub,"$(user):testSet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"testSetEPICS")
+    field(DESC,"testSet()")
+}
+

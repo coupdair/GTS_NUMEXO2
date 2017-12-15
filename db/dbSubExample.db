@@ -26,8 +26,8 @@ record(sub,"$(user):serverVersion")
     field(A,"0")
     field(B,"2")
     field(C,"1")
-    field(D,"13")
-    field(DESC,"v0.2.1d")
+    field(D,"14")
+    field(DESC,"v0.2.1e")
 }
 
 record(sub,"$(user):gtsReset")
@@ -193,5 +193,18 @@ record(sub,"$(user):alignTdcSet")
     field(SCAN,"Passive")
     field(SNAM,"alignTdcSetEPICS")
     field(DESC,"alignTdcSet(GTStype,forward,tr,cal)")
+}
+
+record(sub,"$(user):printBinary")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"printBinaryEPICS")
+    field(DESC,"printBinary(offset)")
+}
+record(sub,"$(user):testSet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"testSetEPICS")
+    field(DESC,"testSet()")
 }
 
