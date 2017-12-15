@@ -176,6 +176,9 @@ funcNoArgEPICS(includeCarrierForAlign, includeCarrierForAlign)
 funcNoArgEPICS(excludeCarrierForAlign, excludeCarrierForAlign)
 funcNoArgEPICS(alignStart, alignStart)
 funcNoArgEPICS(testSet, leaveTestLoopback)
+funcNoArgEPICS(triggerCoreStart, triggerCoreStart)
+funcNoArgEPICS(triggerCoreStop,  triggerCoreStop)
+funcNoArgEPICS(triggerCoreReset, triggerCoreReset)
 #undef funcNoArgEPICS
 //! \todo no arg function for EPICS: need to implement - //excludeTriggerProcessor empty - testSet -> leaveTestLoopback - readAll ...
 

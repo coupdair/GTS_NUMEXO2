@@ -208,6 +208,9 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_treeSetupEPICS,
     pvar_func_register_func_treeStartEPICS,
     pvar_func_register_func_treeStopEPICS,
+    pvar_func_register_func_triggerCoreResetEPICS,
+    pvar_func_register_func_triggerCoreStartEPICS,
+    pvar_func_register_func_triggerCoreStopEPICS,
     pvar_func_register_func_triggerSetupEPICS,
     pvar_func_register_func_triggerStartEPICS;
 
@@ -314,6 +317,9 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_treeSetupEPICS();
     pvar_func_register_func_treeStartEPICS();
     pvar_func_register_func_treeStopEPICS();
+    pvar_func_register_func_triggerCoreResetEPICS();
+    pvar_func_register_func_triggerCoreStartEPICS();
+    pvar_func_register_func_triggerCoreStopEPICS();
     pvar_func_register_func_triggerSetupEPICS();
     pvar_func_register_func_triggerStartEPICS();
     iocshRegisterVariable(vardefs);

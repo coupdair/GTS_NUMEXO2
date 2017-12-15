@@ -56,6 +56,50 @@ int XMMRegs_Trigger_CoreType_Get(XMMRegs *InstancePtr)
   return trg_status->trigger_type;
 }
 
+int XMMRegs_Trigger_CoreStop(XMMRegs *InstancePtr) 
+{
+  XMMRegs_trigger_ctrl *trg_ctrl;
+
+  trg_ctrl = (XMMRegs_trigger_ctrl *)(InstancePtr->BaseAddress + XMMR_TRIGGER_CTRL_OFFSET);
+  
+  trg_ctrl->rst_core_uP = 1;
+
+  return XST_SUCCESS;
+}
+
+int XMMRegs_Trigger_CoreStart(XMMRegs *InstancePtr) 
+{
+  XMMRegs_trigger_ctrl *trg_ctrl;
+
+  trg_ctrl = (XMMRegs_trigger_ctrl *)(InstancePtr->BaseAddress + XMMR_TRIGGER_CTRL_OFFSET);
+  
+  trg_ctrl->rst_core_uP = 0;
+
+  return XST_SUCCESS;
+}
+
+int XMMRegs_Trigger_Test_Set(XMMRegs *InstancePtr) 
+{
+  XMMRegs_trigger_ctrl *trg_ctrl;
+
+  trg_ctrl = (XMMRegs_trigger_ctrl *)(InstancePtr->BaseAddress + XMMR_TRIGGER_CTRL_OFFSET);
+  
+  trg_ctrl->test_enable = 1;
+
+  return XST_SUCCESS;
+}
+
+int XMMRegs_Trigger_Test_UnSet(XMMRegs *InstancePtr) 
+{
+  XMMRegs_trigger_ctrl *trg_ctrl;
+
+  trg_ctrl = (XMMRegs_trigger_ctrl *)(InstancePtr->BaseAddress + XMMR_TRIGGER_CTRL_OFFSET);
+  
+  trg_ctrl->test_enable = 0;
+
+  return XST_SUCCESS;
+}
+
 int XMMRegs_Trigger_CrystalID_Set(XMMRegs *InstancePtr, int crystalID)
 {
   XMMRegs_i2cgts_output_ctrl *m;

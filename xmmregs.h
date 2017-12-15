@@ -281,6 +281,12 @@ extern int  XMMRegs_Trigger_Init(XMMRegs *InstancePtr);
 extern int  XMMRegs_Trigger_Reset(XMMRegs *InstancePtr);
 extern void XMMRegs_Trigger_PrintAll(XMMRegs *InstancePtr);
 extern int  XMMRegs_Trigger_CoreType_Get(XMMRegs *InstancePtr);
+
+extern int XMMRegs_Trigger_CoreStop(XMMRegs *InstancePtr);
+extern int XMMRegs_Trigger_CoreStart(XMMRegs *InstancePtr);
+extern int XMMRegs_Trigger_Test_Set(XMMRegs *InstancePtr);
+extern int XMMRegs_Trigger_Test_UnSet(XMMRegs *InstancePtr);
+
 extern int  XMMRegs_Trigger_CrystalID_Set(XMMRegs *InstancePtr, int crystalID);
 extern void XMMRegs_Trigger_GtsReady_Set(XMMRegs *InstancePtr);
 extern void XMMRegs_Trigger_GtsReady_UnSet(XMMRegs *InstancePtr);

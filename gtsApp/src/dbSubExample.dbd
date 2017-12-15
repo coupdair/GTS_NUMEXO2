@@ -35,3 +35,7 @@ function(transDigitizerEPICS)
 function(alignTdcSetEPICS)
 function(printBinaryEPICS)
 function(testSetEPICS)
+function(triggerCoreStartEPICS)
+function(triggerCoreStopEPICS)
+function(triggerCoreResetEPICS)
+

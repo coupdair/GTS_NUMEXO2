@@ -208,3 +208,22 @@ record(sub,"$(user):testSet")
     field(DESC,"testSet()")
 }
 
+record(sub,"$(user):triggerCoreStart")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"triggerCoreStartEPICS")
+    field(DESC,"triggerCoreStart()")
+}
+record(sub,"$(user):triggerCoreStop")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"triggerCoreStopEPICS")
+    field(DESC,"triggerCoreStop()")
+}
+record(sub,"$(user):triggerCoreReset")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"triggerCoreResetEPICS")
+    field(DESC,"triggerCoreReset()")
+}
+

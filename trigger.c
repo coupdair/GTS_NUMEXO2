@@ -289,6 +289,31 @@ int triggerStart(int GTStype)
   return triggerCoreSet(GTStype);
 }
 
+/************************************************************
+coreTriggerStop/Start --
+it resets / starts the trigger core 
+************************************************************/
+int triggerCoreStop(subRecord *precord)
+{
+  int status = XST_SUCCESS;
+  status |= XMMRegs_Trigger_CoreStop(&XMMRegsDriver);
+  return status; 
+}
+
+int triggerCoreStart(subRecord *precord)
+{
+  int status = XST_SUCCESS;
+  status |= XMMRegs_Trigger_CoreStart(&XMMRegsDriver);
+  return status; 
+}
+
+unsigned long triggerCoreReset(subRecord *precord)
+{
+  int status = XST_SUCCESS;
+  status |= XMMRegs_Trigger_CoreStop(&XMMRegsDriver);
+  status |= XMMRegs_Trigger_CoreStart(&XMMRegsDriver);
+  return status; 
+}
 
 /************************************************************
 counterRootSetup --
