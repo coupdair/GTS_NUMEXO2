@@ -23,6 +23,10 @@ record(sub,"$(user):gtsExample")
 
 record(sub,"$(user):serverVersion")
 {
+    field(A,"__SERVER_VERSION_MAJOR__")
+    field(B,"__SERVER_VERSION_MINOR__")
+    field(C,"__SERVER_VERSION_REVISION__")
+    field(D,"__SERVER_VERSION_DEVELOPMENT__")
     field(DESC,"__SERVER_VERSION__")
 }
 

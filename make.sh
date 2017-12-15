@@ -44,7 +44,14 @@ date
 
 #VERSION
 set version=`./bin/linux-x86_64/gts --version`
-cat gtsApp/Db/dbSubExample.db | sed "s/__SERVER_VERSION__/$version/" > db/dbSubExample.db
+set ver=`echo $version | sed 's/v//'`
+set major=`echo $ver | cut -d'.' -f1`
+set minor=`echo $ver | cut -d'.' -f2`
+set rev=`echo $ver   | cut -d'.' -f3 | tr -d \[a-z\]`
+set dev=`echo $ver   | tr -d \[.,0-9\]`
+set dev=`printf %d 0x$dev`
+cat gtsApp/Db/dbSubExample.db | sed "s/__SERVER_VERSION__/$version/;s/__SERVER_VERSION_MAJOR__/$major/;s/__SERVER_VERSION_MINOR__/$minor/;s/__SERVER_VERSION_REVISION__/$rev/;s/__SERVER_VERSION_DEVELOPMENT__/$dev/" > db/dbSubExample.db
+grep serverVersion -A 7 db/dbSubExample.db
 ##print
 grep serverVersion -A 2 db/dbSubExample.db | grep DESC | grep 'v.\..\..' --color
 sync
