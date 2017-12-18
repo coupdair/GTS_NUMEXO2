@@ -179,6 +179,7 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_alignSetEPICS,
     pvar_func_register_func_alignStartEPICS,
     pvar_func_register_func_alignTdcSetEPICS,
+    pvar_func_register_func_backpressureRateGetEPICS,
     pvar_func_register_func_coarseDelaySetEPICS,
     pvar_func_register_func_conIsEPICS,
     pvar_func_register_func_excludeCarrierForAlignEPICS,
@@ -199,6 +200,8 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_mySubInit,
     pvar_func_register_func_mySubProcess,
     pvar_func_register_func_printBinaryEPICS,
+    pvar_func_register_func_rejectionRateGetEPICS,
+    pvar_func_register_func_requestRateGetEPICS,
     pvar_func_register_func_rxSystemIsReadyEPICS,
     pvar_func_register_func_setIdleEnabledEPICS,
     pvar_func_register_func_setIdlePeriodEPICS,
@@ -216,8 +219,10 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_triggerCoreResetEPICS,
     pvar_func_register_func_triggerCoreStartEPICS,
     pvar_func_register_func_triggerCoreStopEPICS,
+    pvar_func_register_func_triggerGetRatesEPICS,
     pvar_func_register_func_triggerSetupEPICS,
-    pvar_func_register_func_triggerStartEPICS;
+    pvar_func_register_func_triggerStartEPICS,
+    pvar_func_register_func_validationRateGetEPICS;
 
 epicsShareExtern int * const pvar_int_asCaDebug;
 epicsShareExtern int * const pvar_int_atExitDebug;
@@ -293,6 +298,7 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_alignSetEPICS();
     pvar_func_register_func_alignStartEPICS();
     pvar_func_register_func_alignTdcSetEPICS();
+    pvar_func_register_func_backpressureRateGetEPICS();
     pvar_func_register_func_coarseDelaySetEPICS();
     pvar_func_register_func_conIsEPICS();
     pvar_func_register_func_excludeCarrierForAlignEPICS();
@@ -313,6 +319,8 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_mySubInit();
     pvar_func_register_func_mySubProcess();
     pvar_func_register_func_printBinaryEPICS();
+    pvar_func_register_func_rejectionRateGetEPICS();
+    pvar_func_register_func_requestRateGetEPICS();
     pvar_func_register_func_rxSystemIsReadyEPICS();
     pvar_func_register_func_setIdleEnabledEPICS();
     pvar_func_register_func_setIdlePeriodEPICS();
@@ -330,8 +338,10 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_triggerCoreResetEPICS();
     pvar_func_register_func_triggerCoreStartEPICS();
     pvar_func_register_func_triggerCoreStopEPICS();
+    pvar_func_register_func_triggerGetRatesEPICS();
     pvar_func_register_func_triggerSetupEPICS();
     pvar_func_register_func_triggerStartEPICS();
+    pvar_func_register_func_validationRateGetEPICS();
     iocshRegisterVariable(vardefs);
     return 0;
 }

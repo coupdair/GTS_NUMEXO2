@@ -31,6 +31,8 @@
 #define XMMR_CARRIER_STATUS_OFFSET          0x64
 #define XMMR_REQ_BKP_RATE_STATUS_OFFSET     0x68
 #define XMMR_IDLE_PERIOD_CTRL_OFFSET        0x124
+#define XMMR_RATE_REQ_BKP_STATUS_OFFSET     0xF8
+#define XMMR_RATE_VAL_REJ_STATUS_OFFSET     0xFC
 
 /* NOT USED REGISTERS */
 #define XMMR_DP_ULINKMUX_CTRL_OFFSET        0x00
@@ -625,5 +627,17 @@ typedef union
   XMMRegs_hardware_status    hardware;
   XMMRegs_ClockPath_status   ClockPath;
 } XMMRegs_status;
+
+typedef struct
+{
+  unsigned int bkp_rate            : 16; /*31->16*/
+  unsigned int req_rate            : 16; /*15->0*/
+} XMMRegs_rate_req_bkp_status; 
+
+typedef struct
+{
+  unsigned int rej_rate            : 16; /*31->16*/
+  unsigned int val_rate            : 16; /*15->0*/
+} XMMRegs_rate_val_rej_status; 
 
 #endif

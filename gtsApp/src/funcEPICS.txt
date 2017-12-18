@@ -1,2 +1,6 @@
-exclude_trigger_processor()
-include_trigger_processor()
+requestRateGet()
+validationRateGet()
+rejectionRateGet()
+backpressureRateGet()
+triggerGetRates(Req,Valid,Reject,BackP,LatM)
+

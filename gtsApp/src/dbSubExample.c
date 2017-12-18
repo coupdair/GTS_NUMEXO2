@@ -183,8 +183,12 @@ funcNoArgEPICS(testSet, testSet)
 funcNoArgEPICS(testUnSet, testUnSet)
 funcNoArgEPICS(exclude_trigger_processor,excludeTriggerProcessor)
 funcNoArgEPICS(include_trigger_processor,includeTriggerProcessor)
+funcNoArgEPICS(requestRateGet,requestRateGet)
+funcNoArgEPICS(validationRateGet,validationRateGet)
+funcNoArgEPICS(rejectionRateGet,rejectionRateGet)
+funcNoArgEPICS(backpressureRateGet,backpressureRateGet)
 #undef funcNoArgEPICS
-//! \todo no arg function for EPICS: need to implement - //excludeTriggerProcessor empty - readAll ...
+//! \todo no arg function for EPICS: need to implement - readAll ...
 
 /*
 static long gtsResetEPICS(subRecord *precord)
@@ -421,4 +425,25 @@ funcFourArgEPICS(transGtsTree,   transGtsTree,   con0, con1, con2, con3)
 funcFourArgEPICS(transDigitizer, transDigitizer, con0, con1, con2, con3)
 funcFourArgEPICS(alignTdcSet,    alignTdcSet,    GTStype, forward, transceiver, newcal)
 #undef funcFourArgEPICS
+
+
+static long triggerGetRatesEPICS(subRecord *precord)
+{
+  SUB_DEBUG_PRINT
+/*  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS);
+  if(precord->val != 1.0) return 0;
+  if (mySubDebug)
+       printf("gts %lu is running %s/4 gets (.A to .D)\n",  cardnumber, __func__);
+
+  precord->a = requestRateGet()         + 1;
+  precord->b = validationRateGet()      + 2;
+  precord->c = rejectionRateGet()       + 3;
+  precord->d = backpressureRateGet()    + 4;
+//  precord->e = XMMRegs_Status_LatencyMean_Get(&XMMRegsDriver)          + 5;
+*/
+  precord->val = precord->a + precord->b + precord->c + precord->d; // + precord->e;
+  return 0;
+}//triggerGetRatesEPICS
+epicsRegisterFunction(triggerGetRatesEPICS);
+
 

@@ -582,6 +582,46 @@ void XMMRegs_Trigger_Diagnose(XMMRegs *InstancePtr)
   return;
 }
 
+int XMMRegs_Trigger_RequestRate_Get(XMMRegs *InstancePtr)
+{
+ XMMRegs_rate_req_bkp_status *c;
+ unsigned int *ba;
+ ba = (unsigned int *)(InstancePtr->BaseAddress + XMMR_RATE_REQ_BKP_STATUS_OFFSET);
+ c = (XMMRegs_rate_req_bkp_status *)(ba);
+
+ return c->req_rate;
+}
+
+int XMMRegs_Trigger_ValidationRate_Get(XMMRegs *InstancePtr)
+{
+ XMMRegs_rate_val_rej_status *c;
+ unsigned int *ba;
+ ba = (unsigned int *)(InstancePtr->BaseAddress + XMMR_RATE_VAL_REJ_STATUS_OFFSET);
+ c = (XMMRegs_rate_val_rej_status *)(ba);
+
+ return c->val_rate;
+}
+
+int XMMRegs_Trigger_RejectionRate_Get(XMMRegs *InstancePtr)
+{
+ XMMRegs_rate_val_rej_status *c;
+ unsigned int *ba;
+ ba = (unsigned int *)(InstancePtr->BaseAddress + XMMR_RATE_VAL_REJ_STATUS_OFFSET);
+ c = (XMMRegs_rate_val_rej_status *)(ba);
+
+ return c->rej_rate;
+}
+
+int XMMRegs_Trigger_BackpressureRate_Get(XMMRegs *InstancePtr)
+{
+ XMMRegs_rate_req_bkp_status *c;
+ unsigned int *ba;
+ ba = (unsigned int *)(InstancePtr->BaseAddress + XMMR_RATE_REQ_BKP_STATUS_OFFSET);
+ c = (XMMRegs_rate_req_bkp_status *)(ba);
+
+ return c->bkp_rate;
+}
+
 int XMMRegs_Trigger_IdleEventsPeriod_Set(XMMRegs *InstancePtr, int p)
 {
   int status = XST_SUCCESS;

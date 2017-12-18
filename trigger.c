@@ -438,5 +438,26 @@ int setIdleEnabled(int value)
   return XMMRegs_Trigger_IdleEventsEnable_Set(&XMMRegsDriver, value);
 }
 
+int requestRateGet(void)
+{
+  return XMMRegs_Trigger_RequestRate_Get(&XMMRegsDriver);
+}
+
+int validationRateGet(void)
+{
+  return  XMMRegs_Trigger_ValidationRate_Get(&XMMRegsDriver);
+}
+
+int rejectionRateGet(void)
+{
+  return XMMRegs_Trigger_RejectionRate_Get(&XMMRegsDriver);
+}
+
+int backpressureRateGet(void)
+{
+  return XMMRegs_Trigger_BackpressureRate_Get(&XMMRegsDriver);
+}
+
+
 #undef DBG
 

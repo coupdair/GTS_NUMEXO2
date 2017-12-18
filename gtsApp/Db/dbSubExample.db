@@ -259,3 +259,34 @@ record(sub,"$(user):include_trigger_processor")
     field(DESC,"include_trigger_processor()")
 }
 
+record(sub,"$(user):requestRateGet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"requestRateGetEPICS")
+    field(DESC,"requestRateGet()")
+}
+record(sub,"$(user):validationRateGet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"validationRateGetEPICS")
+    field(DESC,"validationRateGet()")
+}
+record(sub,"$(user):rejectionRateGet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"rejectionRateGetEPICS")
+    field(DESC,"rejectionRateGet()")
+}
+record(sub,"$(user):backpressureRateGet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"backpressureRateGetEPICS")
+    field(DESC,"backpressureRateGet()")
+}
+record(sub,"$(user):triggerGetRates")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"triggerGetRatesEPICS")
+    field(DESC,"triggerGetRates(Req,Valid,Reject,BackP,LatM)")
+}
+

@@ -26,8 +26,8 @@ record(sub,"$(user):serverVersion")
     field(A,"0")
     field(B,"2")
     field(C,"3")
-    field(D,"13")
-    field(DESC,"v0.2.3d")
+    field(D,"14")
+    field(DESC,"v0.2.3e")
 }
 
 record(sub,"$(user):gtsReset")
@@ -257,5 +257,36 @@ record(sub,"$(user):include_trigger_processor")
     field(SCAN,"Passive")
     field(SNAM,"include_trigger_processorEPICS")
     field(DESC,"include_trigger_processor()")
+}
+
+record(sub,"$(user):requestRateGet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"requestRateGetEPICS")
+    field(DESC,"requestRateGet()")
+}
+record(sub,"$(user):validationRateGet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"validationRateGetEPICS")
+    field(DESC,"validationRateGet()")
+}
+record(sub,"$(user):rejectionRateGet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"rejectionRateGetEPICS")
+    field(DESC,"rejectionRateGet()")
+}
+record(sub,"$(user):backpressureRateGet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"backpressureRateGetEPICS")
+    field(DESC,"backpressureRateGet()")
+}
+record(sub,"$(user):triggerGetRates")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"triggerGetRatesEPICS")
+    field(DESC,"triggerGetRates(Req,Valid,Reject,BackP,LatM)")
 }
 
