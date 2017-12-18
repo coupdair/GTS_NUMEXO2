@@ -9,7 +9,7 @@ excludeCarrierForAlign          excludeCarrierForAlign()
 exclude_trigger_processor       exclude_trigger_processor()
 fineDelaySet                    fineDelaySet(delay)
 fineDelaySetNow                 fineDelaySetNow(delay)
-getLatency                      
+getLatency                      getLatency()
 gtsIs                           gtsIs()
 gtsReset                        gtsReset()
 gtsTest                         gtsTest()

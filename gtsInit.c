@@ -159,4 +159,13 @@ unsigned int gtsTest(void)
   return card_number;
 }
 
+///////////////////////
+// get the mean latency in the LEAVES
+///////////////////////
+
+int getLatency(void)
+{
+  return XMMRegs_Status_LatencyMean_Get(&XMMRegsDriver);
+}
+
 #undef DBG

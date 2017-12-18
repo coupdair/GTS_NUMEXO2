@@ -26,8 +26,8 @@ record(sub,"$(user):serverVersion")
     field(A,"0")
     field(B,"2")
     field(C,"3")
-    field(D,"15")
-    field(DESC,"v0.2.3f")
+    field(D,"0")
+    field(DESC,"v0.2.3g")
 }
 
 record(sub,"$(user):gtsReset")
@@ -282,6 +282,12 @@ record(sub,"$(user):backpressureRateGet")
     field(SCAN,"Passive")
     field(SNAM,"backpressureRateGetEPICS")
     field(DESC,"backpressureRateGet()")
+}
+record(sub,"$(user):getLatency")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"getLatencyEPICS")
+    field(DESC,"getLatency()")
 }
 record(sub,"$(user):triggerGetRates")
 {

@@ -47,5 +47,6 @@ function(requestRateGetEPICS)
 function(validationRateGetEPICS)
 function(rejectionRateGetEPICS)
 function(backpressureRateGetEPICS)
+function(getLatencyEPICS)
 function(triggerGetRatesEPICS)
 

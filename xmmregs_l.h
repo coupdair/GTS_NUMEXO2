@@ -33,6 +33,7 @@
 #define XMMR_IDLE_PERIOD_CTRL_OFFSET        0x124
 #define XMMR_RATE_REQ_BKP_STATUS_OFFSET     0xF8
 #define XMMR_RATE_VAL_REJ_STATUS_OFFSET     0xFC
+#define XMMR_LATENCY_MEAN_STATUS_OFFSET     0x11C
 
 /* NOT USED REGISTERS */
 #define XMMR_DP_ULINKMUX_CTRL_OFFSET        0x00
@@ -639,5 +640,11 @@ typedef struct
   unsigned int rej_rate            : 16; /*31->16*/
   unsigned int val_rate            : 16; /*15->0*/
 } XMMRegs_rate_val_rej_status; 
+
+typedef struct
+{
+  unsigned int                     : 15; /*31->17*/
+  unsigned int mean_lat            : 17; /*16->0*/
+} XMMRegs_latency_mean_status; 
 
 #endif

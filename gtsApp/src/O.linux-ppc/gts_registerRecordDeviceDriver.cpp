@@ -186,6 +186,7 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_exclude_trigger_processorEPICS,
     pvar_func_register_func_fineDelaySetEPICS,
     pvar_func_register_func_fineDelaySetNowEPICS,
+    pvar_func_register_func_getLatencyEPICS,
     pvar_func_register_func_gtsInitEPICS,
     pvar_func_register_func_gtsIsEPICS,
     pvar_func_register_func_gtsResetEPICS,
@@ -305,6 +306,7 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_exclude_trigger_processorEPICS();
     pvar_func_register_func_fineDelaySetEPICS();
     pvar_func_register_func_fineDelaySetNowEPICS();
+    pvar_func_register_func_getLatencyEPICS();
     pvar_func_register_func_gtsInitEPICS();
     pvar_func_register_func_gtsIsEPICS();
     pvar_func_register_func_gtsResetEPICS();

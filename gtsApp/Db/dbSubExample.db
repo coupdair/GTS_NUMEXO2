@@ -283,6 +283,12 @@ record(sub,"$(user):backpressureRateGet")
     field(SNAM,"backpressureRateGetEPICS")
     field(DESC,"backpressureRateGet()")
 }
+record(sub,"$(user):getLatency")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"getLatencyEPICS")
+    field(DESC,"getLatency()")
+}
 record(sub,"$(user):triggerGetRates")
 {
     field(SCAN,"Passive")

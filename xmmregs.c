@@ -368,7 +368,17 @@ int XMMRegs_Status_Check(XMMRegs *InstancePtr)
 
   return status;
 }
+
+int  XMMRegs_Status_LatencyMean_Get(XMMRegs *InstancePtr) {
+  XMMRegs_latency_mean_status *c;
+  unsigned int *ba;
+  ba = (unsigned int *)(InstancePtr->BaseAddress + XMMR_LATENCY_MEAN_STATUS_OFFSET);
+  c = (XMMRegs_latency_mean_status *)(ba);
+
+  return c->mean_lat;
+}
     
+   
 /************************************************************
 
 		SETTING FUNCTIONS

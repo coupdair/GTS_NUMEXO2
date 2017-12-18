@@ -187,6 +187,7 @@ funcNoArgEPICS(requestRateGet,requestRateGet)
 funcNoArgEPICS(validationRateGet,validationRateGet)
 funcNoArgEPICS(rejectionRateGet,rejectionRateGet)
 funcNoArgEPICS(backpressureRateGet,backpressureRateGet)
+funcNoArgEPICS(getLatency,getLatency)
 #undef funcNoArgEPICS
 //! \todo no arg function for EPICS: need to implement - readAll ...
 
@@ -440,8 +441,7 @@ static long triggerGetRatesEPICS(subRecord *precord)
   precord->b = validationRateGet()      + 2;
   precord->c = rejectionRateGet()       + 3;
   precord->d = backpressureRateGet()    + 4;
-//  precord->e = XMMRegs_Status_LatencyMean_Get(&XMMRegsDriver)          + 5;
-  precord->e = 5;
+  precord->e = getLatency()             + 5;
 #else
   precord->a = 1;
   precord->b = 2;

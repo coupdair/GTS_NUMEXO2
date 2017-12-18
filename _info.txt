@@ -120,6 +120,7 @@ epics> dbl
 127:validationRateGet
 127:rejectionRateGet
 127:backpressureRateGet
+127:getLatency
 127:triggerGetRates
 
 epics> dbpr 127:serverVersion

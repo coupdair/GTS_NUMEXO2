@@ -151,6 +151,7 @@ extern int  XMMRegs_TransceiverGtsTree_Remove(XMMRegs *InstancePtr, int transcei
 extern int  XMMRegs_IsTransceiverConnectedToDigitizer(XMMRegs *InstancePtr, int transceiver);
 extern int  XMMRegs_TransceiverDigitizer_Connect(XMMRegs *InstancePtr, int transceiver);
 extern int  XMMRegs_TransceiverDigitizer_DisConnect(XMMRegs *InstancePtr, int transceiver);
+extern int  XMMRegs_Status_LatencyMean_Get(XMMRegs *InstancePtr);
 
 /***********************************************/
 /*  Settings APIs                              */
