@@ -302,6 +302,9 @@ extern int  XMMRegs_Trigger_CarrierLmkPllLock_Read(XMMRegs *InstancePtr);
 extern int  XMMRegs_Trigger_CarrierType_Read(XMMRegs *InstancePtr);
 extern int  XMMRegs_Trigger_PeriodMask_Set(XMMRegs *InstancePtr, int log2_period);
 
+extern int XMMRegs_Trigger_IdleEventsPeriod_Set(XMMRegs *InstancePtr, int p);
+extern int XMMRegs_Trigger_IdleEventsEnable_Set(XMMRegs *InstancePtr, int p);
+
 /***********************************************/
 /*  external PLL APIs                          */
 /***********************************************/

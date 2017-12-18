@@ -3,6 +3,7 @@
 
 #define CARD_NUMBER_ADDRESS ( &cardNumber )
 
+/* offsets defined in opb_mmregs */
 #define XMMR_GT_CTRL_OFFSET                 0x00
 #define XMMR_GT_DRP_ADDR_CTRL_OFFSET        0x04
 #define XMMR_GT_DRP_CTRL_OFFSET             0x08
@@ -29,6 +30,7 @@
 #define XMMR_DOWNSTREAM_LEAF_STATUS_OFFSET  0x60
 #define XMMR_CARRIER_STATUS_OFFSET          0x64
 #define XMMR_REQ_BKP_RATE_STATUS_OFFSET     0x68
+#define XMMR_IDLE_PERIOD_CTRL_OFFSET        0x124
 
 /* NOT USED REGISTERS */
 #define XMMR_DP_ULINKMUX_CTRL_OFFSET        0x00
@@ -546,6 +548,13 @@ typedef struct
   unsigned int rej_rate            : 16; /*31->16*/
   unsigned int val_rate            : 16; /*15->0*/
 } XMMRegs_val_rej_rate_status; 
+
+typedef struct
+{
+  unsigned int                     : 14; /*31->18*/
+  unsigned int idle_period_en      : 1; /*17*/
+  unsigned int idle_period         : 17; /*16->0*/
+} XMMRegs_idle_period_ctrl; 
 
 typedef struct
 {

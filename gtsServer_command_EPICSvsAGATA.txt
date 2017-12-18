@@ -19,8 +19,8 @@ printBinary                     printBinary(offset)
 rejectionRateGet                
 requestRateGet                  
 rxSystemIsReady                 rxSystemIsReady(transceiver)
-setIdleEnabled                  
-setIdlePeriod                   
+setIdleEnabled                  setIdleEnabled(value)
+setIdlePeriod                   setIdlePeriod(value)
 tdcMeas                         tdcMeas(meas,debug,nmes)
 tdcSet                          tdcSet(meas,debug,delay)
 testSet                         testSet()

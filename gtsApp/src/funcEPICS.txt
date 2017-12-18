@@ -1,4 +1,3 @@
-triggerCoreStart()
-triggerCoreStop()
-triggerCoreReset()
+setIdlePeriod(value)
+setIdleEnabled(value)
 

@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="contents">
-<h1>NUMEXO2 GTS server</h1><h3>v0.2.2d </h3><p>table of content: </p>
+<h1>NUMEXO2 GTS server</h1><h3>v0.2.2 </h3><p>table of content: </p>
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
 <li><a class="el" href="index.html#sectionCommandLine">command line options</a> </li>
@@ -87,7 +87,7 @@ command line options</a></h2>
 </ul>
 <div class="fragment"><pre class="fragment">Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.2d
+  gts.v0.2.2
 examples:
   gts --help
   gts --epics -c st.cmd
@@ -110,7 +110,7 @@ Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><ul>
 <li><b>old</b> GTS server (UDP only)</li>
 </ul>
-<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 15 2017 17:33:33)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 18 2017 10:01:34)
 description:
 	old GTS embedded server for NUMEXO2 (UDP only).
 usage:
@@ -197,6 +197,8 @@ testUnSet()
 triggerCoreStart()
 triggerCoreStop()
 triggerCoreReset()
+setIdlePeriod(value)
+setIdleEnabled(value)
 </pre></div><h3><a class="anchor" id="subsectionSCUDPvsEPICS">
 UDP vs EPICS command table</a></h3>
 <div class="fragment"><pre class="fragment">alignMeas                       alignMeas(forward,nmes)
@@ -257,8 +259,8 @@ printBinary                     printBinary(offset)
 rejectionRateGet                
 requestRateGet                  
 rxSystemIsReady                 rxSystemIsReady(transceiver)
-setIdleEnabled                  
-setIdlePeriod                   
+setIdleEnabled                  setIdleEnabled(value)
+setIdlePeriod                   setIdlePeriod(value)
 tdcMeas                         tdcMeas(meas,debug,nmes)
 tdcSet                          tdcSet(meas,debug,delay)
 testSet                         testSet()
@@ -358,7 +360,7 @@ make documentation using Doxygen syntax</a></h2>
 </iframe>
 </div>
 
-<hr size="1"/><address style="text-align: right;"><small>Generated on 15 Dec 2017 for GTS server for NUMEXO2 by&nbsp;
+<hr size="1"/><address style="text-align: right;"><small>Generated on 18 Dec 2017 for GTS server for NUMEXO2 by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.6.1 </small></address>
 </body>

@@ -47,7 +47,7 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
 ~/bin/caget numexo2:serverVersion.DESC
-numexo2:serverVersion.DESC     v0.2.0
+numexo2:serverVersion.DESC     v0.2.2
 
 ~/bin/caput numexo2:gtsTest 1
 Old : numexo2:gtsTest                0
@@ -111,10 +111,12 @@ numexo2:testSet
 numexo2:triggerCoreStart
 numexo2:triggerCoreStop
 numexo2:triggerCoreReset
+numexo2:setIdlePeriod
+numexo2:setIdleEnabled
 
 epics> dbpr numexo2:serverVersion
 ...
-D: 0                DESC: v0.2.0       DISA: 0             DISP: 0             
+D: 0                DESC: v0.2.2       DISA: 0             DISP: 0             
 ...
 epics>
 

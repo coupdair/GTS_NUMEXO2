@@ -528,4 +528,45 @@ void XMMRegs_Trigger_Diagnose(XMMRegs *InstancePtr)
   return;
 }
 
+int XMMRegs_Trigger_IdleEventsPeriod_Set(XMMRegs *InstancePtr, int p)
+{
+  int status = XST_SUCCESS;
+  XMMRegs_idle_period_ctrl *c;
+  unsigned int *ba;
+  ba = (unsigned int *)(InstancePtr->BaseAddress + XMMR_IDLE_PERIOD_CTRL_OFFSET);
+  c = (XMMRegs_idle_period_ctrl *)(ba);
+
+  if ( (p <= 1) || (p >= (1 << 18)) ) {
+    DBG(DBLE, "period should be : 1 < period < %d\n", (1 << 18));
+    return XST_FAILURE;
+  }
+
+  c->idle_period = p;
+
+  DBG(DBLE, "idle period has been set to %d\n", p);
+
+  return status;
+}
+
+int XMMRegs_Trigger_IdleEventsEnable_Set(XMMRegs *InstancePtr, int p)
+{
+  int status = XST_SUCCESS;
+  XMMRegs_idle_period_ctrl *c;
+  unsigned int *ba;
+  ba = (unsigned int *)(InstancePtr->BaseAddress + XMMR_IDLE_PERIOD_CTRL_OFFSET);
+  c = (XMMRegs_idle_period_ctrl *)(ba);
+
+  if ( (p != 0) && (p != 1) ) {
+    DBG(DBLE, "enable value should be 0 or 1\n");
+    return XST_FAILURE;
+  }
+
+  c->idle_period_en = p;
+
+  DBG(DBLE, "idle period has been %s\n", p==1 ? "enabled" : "disabled");
+
+  return status;
+}
+
 #undef DBG
+

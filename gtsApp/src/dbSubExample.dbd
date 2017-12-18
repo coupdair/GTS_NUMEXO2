@@ -39,4 +39,6 @@ function(testUnSetEPICS)
 function(triggerCoreStartEPICS)
 function(triggerCoreStopEPICS)
 function(triggerCoreResetEPICS)
+function(setIdlePeriodEPICS)
+function(setIdleEnabledEPICS)
 

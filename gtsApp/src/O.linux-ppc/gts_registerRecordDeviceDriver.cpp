@@ -198,6 +198,8 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_mySubProcess,
     pvar_func_register_func_printBinaryEPICS,
     pvar_func_register_func_rxSystemIsReadyEPICS,
+    pvar_func_register_func_setIdleEnabledEPICS,
+    pvar_func_register_func_setIdlePeriodEPICS,
     pvar_func_register_func_tdcMeasEPICS,
     pvar_func_register_func_tdcSetEPICS,
     pvar_func_register_func_testSetEPICS,
@@ -308,6 +310,8 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_mySubProcess();
     pvar_func_register_func_printBinaryEPICS();
     pvar_func_register_func_rxSystemIsReadyEPICS();
+    pvar_func_register_func_setIdleEnabledEPICS();
+    pvar_func_register_func_setIdlePeriodEPICS();
     pvar_func_register_func_tdcMeasEPICS();
     pvar_func_register_func_tdcSetEPICS();
     pvar_func_register_func_testSetEPICS();

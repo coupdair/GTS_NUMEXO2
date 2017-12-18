@@ -233,3 +233,16 @@ record(sub,"$(user):triggerCoreReset")
     field(DESC,"triggerCoreReset()")
 }
 
+record(sub,"$(user):setIdlePeriod")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"setIdlePeriodEPICS")
+    field(DESC,"setIdlePeriod(value)")
+}
+record(sub,"$(user):setIdleEnabled")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"setIdleEnabledEPICS")
+    field(DESC,"setIdleEnabled(value)")
+}
+

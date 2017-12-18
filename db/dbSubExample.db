@@ -26,8 +26,8 @@ record(sub,"$(user):serverVersion")
     field(A,"0")
     field(B,"2")
     field(C,"2")
-    field(D,"13")
-    field(DESC,"v0.2.2d")
+    field(D,"0")
+    field(DESC,"v0.2.2")
 }
 
 record(sub,"$(user):gtsReset")
@@ -231,5 +231,18 @@ record(sub,"$(user):triggerCoreReset")
     field(SCAN,"Passive")
     field(SNAM,"triggerCoreResetEPICS")
     field(DESC,"triggerCoreReset()")
+}
+
+record(sub,"$(user):setIdlePeriod")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"setIdlePeriodEPICS")
+    field(DESC,"setIdlePeriod(value)")
+}
+record(sub,"$(user):setIdleEnabled")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"setIdleEnabledEPICS")
+    field(DESC,"setIdleEnabled(value)")
 }
 

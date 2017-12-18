@@ -263,6 +263,8 @@ funcOneArgEPICS(fineDelaySet,fineDelaySet,       delay)
 funcOneArgEPICS(coarseDelaySet,coarseDelaySet,   delay)
 funcOneArgEPICS(triggerStart,triggerStart, GTStype)
 funcOneArgEPICS(printBinary,printBinary, offset)
+funcOneArgEPICS(setIdlePeriod,setIdlePeriod, value)
+funcOneArgEPICS(setIdleEnabled,setIdleEnabled, value)
 #undef funcOneArgEPICS
 //! \todo 1 arg function for EPICS: need to implement: - progTruncatedIpNumber ->	progHostTruncatedIpNumber - readReg
 

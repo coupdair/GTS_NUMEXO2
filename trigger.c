@@ -417,5 +417,18 @@ int counterRootStart(int GTStype)
   return status;
 }
 
+/************************************************************
+set/enable GTS idle period
+************************************************************/
+int setIdlePeriod(int value)
+{
+  return XMMRegs_Trigger_IdleEventsPeriod_Set(&XMMRegsDriver, value);
+}
+
+int setIdleEnabled(int value)
+{
+  return XMMRegs_Trigger_IdleEventsEnable_Set(&XMMRegsDriver, value);
+}
+
 #undef DBG
 
