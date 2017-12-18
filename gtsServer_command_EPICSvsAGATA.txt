@@ -6,7 +6,7 @@ backpressureRateGet
 coarseDelaySet                  coarseDelaySet(delay)
 conIs                           conIs()
 excludeCarrierForAlign          excludeCarrierForAlign()
-exclude_trigger_processor       
+exclude_trigger_processor       exclude_trigger_processor()
 fineDelaySet                    fineDelaySet(delay)
 fineDelaySetNow                 fineDelaySetNow(delay)
 getLatency                      
@@ -14,7 +14,7 @@ gtsIs                           gtsIs()
 gtsReset                        gtsReset()
 gtsTest                         gtsTest()
 gtsUpdate                       gtsUpdate()
-include_trigger_processor       
+include_trigger_processor       include_trigger_processor()
 printBinary                     printBinary(offset)
 rejectionRateGet                
 requestRateGet                  

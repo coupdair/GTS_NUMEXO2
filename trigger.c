@@ -127,6 +127,14 @@ int daqStop(void) {
   return XMMRegs_Trigger_Daq_Stop(&XMMRegsDriver);
 }
 
+int includeTriggerProcessor(void) {
+  return XMMRegs_Trigger_With_TriggerProcessor(&XMMRegsDriver);
+}
+
+int excludeTriggerProcessor(void) {
+  return XMMRegs_Trigger_Without_TriggerProcessor(&XMMRegsDriver);
+}
+
 int syncPeriodSet(int period_mask) {
   return XMMRegs_Trigger_PeriodMask_Set(&XMMRegsDriver, period_mask);
 }

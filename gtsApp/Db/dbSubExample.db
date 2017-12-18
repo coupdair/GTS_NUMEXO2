@@ -246,3 +246,16 @@ record(sub,"$(user):setIdleEnabled")
     field(DESC,"setIdleEnabled(value)")
 }
 
+record(sub,"$(user):exclude_trigger_processor")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"exclude_trigger_processorEPICS")
+    field(DESC,"exclude_trigger_processor()")
+}
+record(sub,"$(user):include_trigger_processor")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"include_trigger_processorEPICS")
+    field(DESC,"include_trigger_processor()")
+}
+

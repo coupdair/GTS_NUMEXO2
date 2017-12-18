@@ -41,4 +41,6 @@ function(triggerCoreStopEPICS)
 function(triggerCoreResetEPICS)
 function(setIdlePeriodEPICS)
 function(setIdleEnabledEPICS)
+function(exclude_trigger_processorEPICS)
+function(include_trigger_processorEPICS)
 

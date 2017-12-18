@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="contents">
-<h1>NUMEXO2 GTS server</h1><h3>v0.2.2 </h3><p>table of content: </p>
+<h1>NUMEXO2 GTS server</h1><h3>v0.2.3d </h3><p>table of content: </p>
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
 <li><a class="el" href="index.html#sectionCommandLine">command line options</a> </li>
@@ -87,7 +87,7 @@ command line options</a></h2>
 </ul>
 <div class="fragment"><pre class="fragment">Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.2
+  gts.v0.2.3d
 examples:
   gts --help
   gts --epics -c st.cmd
@@ -110,7 +110,7 @@ Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><ul>
 <li><b>old</b> GTS server (UDP only)</li>
 </ul>
-<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 18 2017 10:01:34)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 18 2017 11:02:21)
 description:
 	old GTS embedded server for NUMEXO2 (UDP only).
 usage:
@@ -199,6 +199,8 @@ triggerCoreStop()
 triggerCoreReset()
 setIdlePeriod(value)
 setIdleEnabled(value)
+exclude_trigger_processor()
+include_trigger_processor()
 </pre></div><h3><a class="anchor" id="subsectionSCUDPvsEPICS">
 UDP vs EPICS command table</a></h3>
 <div class="fragment"><pre class="fragment">alignMeas                       alignMeas(forward,nmes)
@@ -246,7 +248,7 @@ backpressureRateGet
 coarseDelaySet                  coarseDelaySet(delay)
 conIs                           conIs()
 excludeCarrierForAlign          excludeCarrierForAlign()
-exclude_trigger_processor       
+exclude_trigger_processor       exclude_trigger_processor()
 fineDelaySet                    fineDelaySet(delay)
 fineDelaySetNow                 fineDelaySetNow(delay)
 getLatency                      
@@ -254,7 +256,7 @@ gtsIs                           gtsIs()
 gtsReset                        gtsReset()
 gtsTest                         gtsTest()
 gtsUpdate                       gtsUpdate()
-include_trigger_processor       
+include_trigger_processor       include_trigger_processor()
 printBinary                     printBinary(offset)
 rejectionRateGet                
 requestRateGet                  

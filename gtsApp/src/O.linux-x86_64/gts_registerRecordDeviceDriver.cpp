@@ -182,6 +182,7 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_coarseDelaySetEPICS,
     pvar_func_register_func_conIsEPICS,
     pvar_func_register_func_excludeCarrierForAlignEPICS,
+    pvar_func_register_func_exclude_trigger_processorEPICS,
     pvar_func_register_func_fineDelaySetEPICS,
     pvar_func_register_func_fineDelaySetNowEPICS,
     pvar_func_register_func_gtsInitEPICS,
@@ -190,6 +191,7 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_gtsTestEPICS,
     pvar_func_register_func_gtsUpdateEPICS,
     pvar_func_register_func_includeCarrierForAlignEPICS,
+    pvar_func_register_func_include_trigger_processorEPICS,
     pvar_func_register_func_myAsubInit,
     pvar_func_register_func_myAsubProcess,
     pvar_func_register_func_myGTSInit,
@@ -294,6 +296,7 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_coarseDelaySetEPICS();
     pvar_func_register_func_conIsEPICS();
     pvar_func_register_func_excludeCarrierForAlignEPICS();
+    pvar_func_register_func_exclude_trigger_processorEPICS();
     pvar_func_register_func_fineDelaySetEPICS();
     pvar_func_register_func_fineDelaySetNowEPICS();
     pvar_func_register_func_gtsInitEPICS();
@@ -302,6 +305,7 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_gtsTestEPICS();
     pvar_func_register_func_gtsUpdateEPICS();
     pvar_func_register_func_includeCarrierForAlignEPICS();
+    pvar_func_register_func_include_trigger_processorEPICS();
     pvar_func_register_func_myAsubInit();
     pvar_func_register_func_myAsubProcess();
     pvar_func_register_func_myGTSInit();

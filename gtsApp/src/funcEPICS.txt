@@ -1,3 +1,2 @@
-setIdlePeriod(value)
-setIdleEnabled(value)
-
+exclude_trigger_processor()
+include_trigger_processor()

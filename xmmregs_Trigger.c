@@ -315,6 +315,60 @@ int XMMRegs_Trigger_Daq_Stop(XMMRegs *InstancePtr)
   return XST_SUCCESS;
 }
 
+int XMMRegs_Trigger_Without_TriggerProcessor(XMMRegs *InstancePtr)
+{
+  XMMRegs_trigger_ctrl *c;
+  XMMRegs_trigger_status *s;
+  
+  c = (XMMRegs_trigger_ctrl *) (InstancePtr->BaseAddress + XMMR_TRIGGER_CTRL_OFFSET);
+  s = (XMMRegs_trigger_status *) (InstancePtr->BaseAddress + XMMR_TRIGGER_STATUS_OFFSET);
+  
+  if ( XMMRegs_Trigger_CoreType_Get(InstancePtr) != TRIGGER_CORE_IS_ROOT ) {
+    DBG(DBLE, "ERROR : trigger core should be root, you have the wrong bitstream!\n");
+    return XST_FAILURE;
+  }
+  
+  if ( (s->rst == 1) || (c->rst_core_uP == 1) || (c->gts_ready == 0) || (c->aurora_loopback == 1) ) {
+    DBG(DBLE, "ERROR : did you launch XMMRegs_Trigger_Root_Loopback_Set beforehand ?");
+    return XST_FAILURE;
+  }
+  
+  if (c->loopback_enable == 1) {
+    DBG(DBLW, "WARNING : the root node is already validating all events\n"); 
+  }
+  
+  c->loopback_enable = 1; /* the trigger core will now validate all events */
+  
+  return XST_SUCCESS;
+}
+
+int XMMRegs_Trigger_With_TriggerProcessor(XMMRegs *InstancePtr)
+{
+  XMMRegs_trigger_ctrl *c;
+  XMMRegs_trigger_status *s;
+  
+  c = (XMMRegs_trigger_ctrl *) (InstancePtr->BaseAddress + XMMR_TRIGGER_CTRL_OFFSET);
+  s = (XMMRegs_trigger_status *) (InstancePtr->BaseAddress + XMMR_TRIGGER_STATUS_OFFSET);
+  
+  if ( XMMRegs_Trigger_CoreType_Get(InstancePtr) != TRIGGER_CORE_IS_ROOT ) {
+    DBG(DBLE, "ERROR : trigger core should be root, you have the wrong bitstream!\n");
+    return XST_FAILURE;
+  }
+  
+  if ( (s->rst == 1) || (c->rst_core_uP == 1) || (c->gts_ready == 0) || (c->aurora_loopback == 1) ) {
+    DBG(DBLE, "ERROR : did you launch XMMRegs_Trigger_Root_Loopback_Set beforehand ?");
+    return XST_FAILURE;
+  }
+  
+  if (c->loopback_enable == 0) {
+    DBG(DBLW, "WARNING : the root node is already sending requests to the trigger processor\n"); 
+  }
+  
+  c->loopback_enable = 0; /* the trigger core will now send all trigger requests to the trigger processor */
+  
+  return XST_SUCCESS;
+}
+
 int XMMRegs_Trigger_Root_AuroraLoopback_Set(XMMRegs *InstancePtr)
 {
   XMMRegs_trigger_ctrl *c;

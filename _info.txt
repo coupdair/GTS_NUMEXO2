@@ -27,12 +27,12 @@ rm gts.zip ; zip -ry9 gts.zip db dbd ; zip -j gts.zip bin/linux-ppc/gts iocBoot/
 bin/linux-x86_64/gts --epics -c iocBoot/iocgts/st.cmd
 # v
 dbl
-numexo2:subExample
-numexo2:gtsExample
-Record numexo2:subExample called mySubProcess(0x22fbb10/1.000000) #0 S1
+127:subExample
+127:gtsExample
+Record 127:subExample called mySubProcess(0x22fbb10/1.000000) #0 S1
 ...
 # v
-~/bin/caput numexo2:subExample 1
+~/bin/caput 127:subExample 1
 ...
 
 ##ppc
@@ -46,102 +46,105 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.127'
 setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
-~/bin/caget numexo2:serverVersion.DESC
-numexo2:serverVersion.DESC     v0.2.2
+~/bin/caget 127:serverVersion.DESC
+127:serverVersion.DESC     v0.2.3d
 
-~/bin/caput numexo2:gtsTest 1
-Old : numexo2:gtsTest                0
-New : numexo2:gtsTest                127
+~/bin/caput 127:gtsTest 1
+Old : 127:gtsTest                0
+New : 127:gtsTest                127
 
-~/bin/caput numexo2:coarseDelaySet 0
-~/bin/caput numexo2:coarseDelaySet.A 1234
-~/bin/caput numexo2:coarseDelaySet 1
-Old : numexo2:coarseDelaySet         0
-New : numexo2:coarseDelaySet         1
+~/bin/caput 127:coarseDelaySet 0
+~/bin/caput 127:coarseDelaySet.A 1234
+~/bin/caput 127:coarseDelaySet 1
+Old : 127:coarseDelaySet         0
+New : 127:coarseDelaySet         1
 
-~/bin/caget numexo2:alignMeas.DESC
-numexo2:alignMeas.DESC         alignMeas(forward,nmes)
-~/bin/caput numexo2:alignMeas 0
-~/bin/caput numexo2:alignMeas.A 1
-~/bin/caput numexo2:alignMeas.B 123
-~/bin/caput numexo2:alignMeas 1
+~/bin/caget 127:alignMeas.DESC
+127:alignMeas.DESC         alignMeas(forward,nmes)
+~/bin/caput 127:alignMeas 0
+~/bin/caput 127:alignMeas.A 1
+~/bin/caput 127:alignMeas.B 123
+~/bin/caput 127:alignMeas 1
 
-~/bin/caput numexo2:treeSetup 0
-~/bin/caput numexo2:treeSetup.A 1    
-~/bin/caput numexo2:treeSetup 1
+~/bin/caput 127:treeSetup 0
+~/bin/caput 127:treeSetup.A 1    
+~/bin/caput 127:treeSetup 1
 
-~/bin/caput numexo2:treeSetup 0
-~/bin/caput numexo2:treeSetup.A 2    
-~/bin/caput numexo2:treeSetup 1
+~/bin/caput 127:treeSetup 0
+~/bin/caput 127:treeSetup.A 2    
+~/bin/caput 127:treeSetup 1
 Ctrl+C
 
 epics> dbl
-numexo2:subExample
-numexo2:gtsExample
-numexo2:serverVersion
-numexo2:gtsReset
-numexo2:gtsInit
-numexo2:gtsTest
-numexo2:gtsUpdate
-numexo2:conIs
-numexo2:gtsIs
-numexo2:treeStart
-numexo2:treeStop
-numexo2:includeCarrierForAlign
-numexo2:excludeCarrierForAlign
-numexo2:alignStart
-numexo2:treeSetup
-numexo2:rxSystemIsReady
-numexo2:treeRead
-numexo2:fineDelaySetNow
-numexo2:fineDelaySet
-numexo2:coarseDelaySet
-numexo2:triggerStart
-numexo2:alignSet
-numexo2:alignMeas
-numexo2:triggerSetup
-numexo2:tdcSet
-numexo2:tdcMeas
-numexo2:transCon
-numexo2:transGtsTree
-numexo2:transDigitizer
-numexo2:alignTdcSet
-numexo2:printBinary
-numexo2:testSet
-numexo2:triggerCoreStart
-numexo2:triggerCoreStop
-numexo2:triggerCoreReset
-numexo2:setIdlePeriod
-numexo2:setIdleEnabled
+127:subExample
+127:gtsExample
+127:serverVersion
+127:gtsReset
+127:gtsInit
+127:gtsTest
+127:gtsUpdate
+127:conIs
+127:gtsIs
+127:treeStart
+127:treeStop
+127:includeCarrierForAlign
+127:excludeCarrierForAlign
+127:alignStart
+127:treeSetup
+127:rxSystemIsReady
+127:treeRead
+127:fineDelaySetNow
+127:fineDelaySet
+127:coarseDelaySet
+127:triggerStart
+127:alignSet
+127:alignMeas
+127:triggerSetup
+127:tdcSet
+127:tdcMeas
+127:transCon
+127:transGtsTree
+127:transDigitizer
+127:alignTdcSet
+127:printBinary
+127:testSet
+127:testUnSet
+127:triggerCoreStart
+127:triggerCoreStop
+127:triggerCoreReset
+127:setIdlePeriod
+127:setIdleEnabled
+127:exclude_trigger_processor
+127:include_trigger_processor
 
-epics> dbpr numexo2:serverVersion
+epics> dbpr 127:serverVersion
 ...
-D: 0                DESC: v0.2.2       DISA: 0             DISP: 0             
+D: 0                DESC: v0.2.3d       DISA: 0             DISP: 0             
 ...
 epics>
 
-Record numexo2:gtsTest called gtsTestEPICS(0x10705f68/1.000000)activated_if_1
+Record 127:gtsTest called gtsTestEPICS(0x10705f68/1.000000)activated_if_1
 gts 127 is being test
 
-Record numexo2:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/0.000000)
-Record numexo2:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/0.000000)
-Record numexo2:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/1.000000)
+Record 127:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/0.000000)activated_if_1
+Record 127:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/0.000000)activated_if_1
+Record 127:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/1.000000)activated_if_1
 gts 127 is being coarseDelay using delay=1234
 
-Record numexo2:alignMeas called alignMeasEPICS(0x104cde40/0.000000)activated_if_1
-Record numexo2:alignMeas called alignMeasEPICS(0x104cde40/0.000000)activated_if_1
-Record numexo2:alignMeas called alignMeasEPICS(0x104cde40/0.000000)activated_if_1
-Record numexo2:alignMeas called alignMeasEPICS(0x104cde40/1.000000)activated_if_1
+Record 127:alignMeas called alignMeasEPICS(0x104cde40/0.000000)activated_if_1
+Record 127:alignMeas called alignMeasEPICS(0x104cde40/0.000000)activated_if_1
+Record 127:alignMeas called alignMeasEPICS(0x104cde40/0.000000)activated_if_1
+Record 127:alignMeas called alignMeasEPICS(0x104cde40/1.000000)activated_if_1
 gts 127 is being alignMeasurement using forward=1 and nmes=123
 
-Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/0.000000)
-Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/0.000000)
-Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/1.000000)
+Record 127:treeSetup called treeSetupEPICS(0x1043f168/0.000000)activated_if_1
+Record 127:treeSetup called treeSetupEPICS(0x1043f168/0.000000)activated_if_1
+Record 127:treeSetup called treeSetupEPICS(0x1043f168/1.000000)activated_if_1
 gts 127 is being setup using step=1
 
-Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/0.000000)
-Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/0.000000)
-Record numexo2:treeSetup called treeSetupEPICS(0x1043f168/1.000000)
+Record 127:treeSetup called treeSetupEPICS(0x1043f168/0.000000)activated_if_1
+Record 127:treeSetup called treeSetupEPICS(0x1043f168/0.000000)activated_if_1
+Record 127:treeSetup called treeSetupEPICS(0x1043f168/1.000000)activated_if_1
 gts 127 is being setup using step=2
 ### locked ###
 

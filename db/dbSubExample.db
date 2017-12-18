@@ -25,9 +25,9 @@ record(sub,"$(user):serverVersion")
 {
     field(A,"0")
     field(B,"2")
-    field(C,"2")
-    field(D,"0")
-    field(DESC,"v0.2.2")
+    field(C,"3")
+    field(D,"13")
+    field(DESC,"v0.2.3d")
 }
 
 record(sub,"$(user):gtsReset")
@@ -244,5 +244,18 @@ record(sub,"$(user):setIdleEnabled")
     field(SCAN,"Passive")
     field(SNAM,"setIdleEnabledEPICS")
     field(DESC,"setIdleEnabled(value)")
+}
+
+record(sub,"$(user):exclude_trigger_processor")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"exclude_trigger_processorEPICS")
+    field(DESC,"exclude_trigger_processor()")
+}
+record(sub,"$(user):include_trigger_processor")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"include_trigger_processorEPICS")
+    field(DESC,"include_trigger_processor()")
 }
 

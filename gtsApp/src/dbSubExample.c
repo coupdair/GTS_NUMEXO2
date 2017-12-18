@@ -138,7 +138,7 @@ static long ARG##EPICS(subRecord *precord) \
  \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT "\n",  cardnumber); \
-  status=FCT(); \
+  status|=FCT(); \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -151,11 +151,11 @@ epicsRegisterFunction(ARG##EPICS); \
 static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
-  int status=0; \
+  int status=XST_SUCCESS; \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord *)\n",__func__); \
  \
-  precord->val = status; \
+  precord->val=status; \
   return 0; \
 }/*ARG##EPICS*/ \
 epicsRegisterFunction(ARG##EPICS); \
@@ -181,6 +181,8 @@ funcNoArgEPICS(triggerCoreReset, triggerCoreReset)
 //funcNoArgEPICS(testSet, leaveTestLoopback)
 funcNoArgEPICS(testSet, testSet)
 funcNoArgEPICS(testUnSet, testUnSet)
+funcNoArgEPICS(exclude_trigger_processor,excludeTriggerProcessor)
+funcNoArgEPICS(include_trigger_processor,includeTriggerProcessor)
 #undef funcNoArgEPICS
 //! \todo no arg function for EPICS: need to implement - //excludeTriggerProcessor empty - readAll ...
 
@@ -203,7 +205,7 @@ static long gtsResetEPICS(subRecord *precord)
 
   if (mySubDebug)
        printf("gts %lu is being reset\n",  cardnumber);
-  status=gtsReset();
+  status|=gtsReset();
 #else
   int status=0;
   if(mySubDebug)
@@ -227,7 +229,7 @@ static long ARG##EPICS(subRecord *precord) \
   int val = (int)precord->a; \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT " using " #VAL "=%d\n",  cardnumber, val); \
-  status=FCT(val); \
+  status|=FCT(val); \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -240,13 +242,13 @@ epicsRegisterFunction(ARG##EPICS); \
 static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
-  int status=0; \
+  int status=XST_SUCCESS; \
   if(precord->val != 1.0) return 0; \
   int val = (int)precord->a; \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord */" #VAL "=%d)\n",__func__,val); \
  \
-  precord->val = status; \
+  precord->val=status; \
   return 0; \
 }/*ARG##EPICS*/ \
 epicsRegisterFunction(ARG##EPICS); \
@@ -282,7 +284,7 @@ static long ARG##EPICS(subRecord *precord) \
   int val2 = (int)precord->b; \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT " using " #VAL1 "=%d and " #VAL2 "=%d\n",  cardnumber, val1,val2); \
-  status=FCT(val1,val2); \
+  status|=FCT(val1,val2); \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -295,7 +297,7 @@ epicsRegisterFunction(ARG##EPICS); \
 static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
-  int status=0; \
+  int status=XST_SUCCESS; \
   if(precord->val != 1.0) return 0; \
   int val1 = (int)precord->a; \
   int val2 = (int)precord->b; \
@@ -332,7 +334,7 @@ static long ARG##EPICS(subRecord *precord) \
   int val3 = (int)precord->c; \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT " using " #VAL1 "=%d, " #VAL2 "=%d and " #VAL3 "=%d\n",  cardnumber, val1,val2,val3); \
-  status=FCT(val1,val2,val3); \
+  status|=FCT(val1,val2,val3); \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -345,7 +347,7 @@ epicsRegisterFunction(ARG##EPICS); \
 static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
-  int status=0; \
+  int status=XST_SUCCESS; \
   if(precord->val != 1.0) return 0; \
   int val1 = (int)precord->a; \
   int val2 = (int)precord->b; \
@@ -383,7 +385,7 @@ static long ARG##EPICS(subRecord *precord) \
   int val4 = (int)precord->d; \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT " using " #VAL1 "=%d, " #VAL2 "=%d, " #VAL3 "=%d and " #VAL4 "=%d\n",  cardnumber, val1,val2,val3,val4); \
-  status=FCT(val1,val2,val3,val4); \
+  status|=FCT(val1,val2,val3,val4); \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -396,7 +398,7 @@ epicsRegisterFunction(ARG##EPICS); \
 static long ARG##EPICS(subRecord *precord) \
 { \
   SUB_DEBUG_PRINT \
-  int status=0; \
+  int status=XST_SUCCESS; \
   if(precord->val != 1.0) return 0; \
   int val1 = (int)precord->a; \
   int val2 = (int)precord->b; \
