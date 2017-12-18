@@ -287,6 +287,6 @@ record(sub,"$(user):triggerGetRates")
 {
     field(SCAN,"Passive")
     field(SNAM,"triggerGetRatesEPICS")
-    field(DESC,"triggerGetRates(Req,Valid,Reject,BackP,LatM)")
+    field(DESC,"triggerGetRates(Req,Val,Rej,BckP,L)")
 }
 

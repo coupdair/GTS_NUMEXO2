@@ -26,8 +26,8 @@ record(sub,"$(user):serverVersion")
     field(A,"0")
     field(B,"2")
     field(C,"3")
-    field(D,"14")
-    field(DESC,"v0.2.3e")
+    field(D,"15")
+    field(DESC,"v0.2.3f")
 }
 
 record(sub,"$(user):gtsReset")
@@ -287,6 +287,6 @@ record(sub,"$(user):triggerGetRates")
 {
     field(SCAN,"Passive")
     field(SNAM,"triggerGetRatesEPICS")
-    field(DESC,"triggerGetRates(Req,Valid,Reject,BackP,LatM)")
+    field(DESC,"triggerGetRates(Req,Val,Rej,BckP,L)")
 }
 

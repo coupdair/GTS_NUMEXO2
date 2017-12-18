@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="contents">
-<h1>NUMEXO2 GTS server</h1><h3>v0.2.3d </h3><p>table of content: </p>
+<h1>NUMEXO2 GTS server</h1><h3>v0.2.3f </h3><p>table of content: </p>
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
 <li><a class="el" href="index.html#sectionCommandLine">command line options</a> </li>
@@ -87,7 +87,7 @@ command line options</a></h2>
 </ul>
 <div class="fragment"><pre class="fragment">Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.3d
+  gts.v0.2.3f
 examples:
   gts --help
   gts --epics -c st.cmd
@@ -110,7 +110,7 @@ Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><ul>
 <li><b>old</b> GTS server (UDP only)</li>
 </ul>
-<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 18 2017 11:02:21)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Dec 18 2017 14:50:34)
 description:
 	old GTS embedded server for NUMEXO2 (UDP only).
 usage:
@@ -201,6 +201,11 @@ setIdlePeriod(value)
 setIdleEnabled(value)
 exclude_trigger_processor()
 include_trigger_processor()
+requestRateGet()
+validationRateGet()
+rejectionRateGet()
+backpressureRateGet()
+triggerGetRates(Req,Val,Rej,BckP,L)
 </pre></div><h3><a class="anchor" id="subsectionSCUDPvsEPICS">
 UDP vs EPICS command table</a></h3>
 <div class="fragment"><pre class="fragment">alignMeas                       alignMeas(forward,nmes)
@@ -244,7 +249,7 @@ EPICS vs AGATA table (development progressing)</a></h3>
 alignSet                        alignSet(GTStype,forward)
 alignStart                      alignStart()
 alignTdcSet                     alignTdcSet(GTStype,forward,tr,cal)
-backpressureRateGet             
+backpressureRateGet             backpressureRateGet()
 coarseDelaySet                  coarseDelaySet(delay)
 conIs                           conIs()
 excludeCarrierForAlign          excludeCarrierForAlign()
@@ -258,8 +263,8 @@ gtsTest                         gtsTest()
 gtsUpdate                       gtsUpdate()
 include_trigger_processor       include_trigger_processor()
 printBinary                     printBinary(offset)
-rejectionRateGet                
-requestRateGet                  
+rejectionRateGet                rejectionRateGet()
+requestRateGet                  requestRateGet()
 rxSystemIsReady                 rxSystemIsReady(transceiver)
 setIdleEnabled                  setIdleEnabled(value)
 setIdlePeriod                   setIdlePeriod(value)
@@ -277,10 +282,10 @@ treeStop                        treeStop()
 triggerCoreReset                triggerCoreReset()
 triggerCoreStart                triggerCoreStart()
 triggerCoreStop                 triggerCoreStop()
-triggerGetRates                 
+triggerGetRates                 triggerGetRates(Req,Val,Rej,BckP,L)
 triggerSetup                    triggerSetup(GTStype,step)
 triggerStart                    triggerStart(GTStype)
-validationRateGet               
+validationRateGet               validationRateGet()
 </pre></div><h2><a class="anchor" id="sectionGTSserverDocumentation">
 documentation outline</a></h2>
 <p>This is the reference documentation of <a href="http://wiki.ganil.fr/gap/">NUMEXO2 GTS server</a>, from the <a href="http://www.ganil-spiral2.eu">GANIL</a>.<br/>

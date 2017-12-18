@@ -47,7 +47,7 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
 ~/bin/caget 127:serverVersion.DESC
-127:serverVersion.DESC     v0.2.3d
+127:serverVersion.DESC     v0.2.3f
 
 ~/bin/caput 127:gtsTest 1
 Old : 127:gtsTest                0
@@ -116,10 +116,15 @@ epics> dbl
 127:setIdleEnabled
 127:exclude_trigger_processor
 127:include_trigger_processor
+127:requestRateGet
+127:validationRateGet
+127:rejectionRateGet
+127:backpressureRateGet
+127:triggerGetRates
 
 epics> dbpr 127:serverVersion
 ...
-D: 0                DESC: v0.2.3d       DISA: 0             DISP: 0             
+D: 0                DESC: v0.2.3f       DISA: 0             DISP: 0             
 ...
 epics>
 

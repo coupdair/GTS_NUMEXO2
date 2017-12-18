@@ -430,7 +430,8 @@ funcFourArgEPICS(alignTdcSet,    alignTdcSet,    GTStype, forward, transceiver, 
 static long triggerGetRatesEPICS(subRecord *precord)
 {
   SUB_DEBUG_PRINT
-/*  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS);
+#ifndef _X86_64_
+  unsigned long  cardnumber = *((unsigned long *) CARD_NUMBER_ADDRESS);
   if(precord->val != 1.0) return 0;
   if (mySubDebug)
        printf("gts %lu is running %s/4 gets (.A to .D)\n",  cardnumber, __func__);
@@ -440,8 +441,15 @@ static long triggerGetRatesEPICS(subRecord *precord)
   precord->c = rejectionRateGet()       + 3;
   precord->d = backpressureRateGet()    + 4;
 //  precord->e = XMMRegs_Status_LatencyMean_Get(&XMMRegsDriver)          + 5;
-*/
-  precord->val = precord->a + precord->b + precord->c + precord->d; // + precord->e;
+  precord->e = 5;
+#else
+  precord->a = 1;
+  precord->b = 2;
+  precord->c = 3;
+  precord->d = 4;
+  precord->e = 5;
+#endif //_X86_64_
+  precord->val = precord->a + precord->b + precord->c + precord->d + precord->e;
   return 0;
 }//triggerGetRatesEPICS
 epicsRegisterFunction(triggerGetRatesEPICS);
