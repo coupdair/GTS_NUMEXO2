@@ -27,7 +27,8 @@ record(sub,"$(user):serverVersion")
     field(B,"2")
     field(C,"3")
     field(D,"0")
-    field(DESC,"v0.2.3g")
+    field(F,"0.2")
+    field(DESC,"v0.2.3")
 }
 
 record(sub,"$(user):gtsReset")

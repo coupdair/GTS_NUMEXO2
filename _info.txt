@@ -32,8 +32,13 @@ dbl
 Record 127:subExample called mySubProcess(0x22fbb10/1.000000) #0 S1
 ...
 # v
-~/bin/caput 127:subExample 1
-...
+from epics import PV
+lat=PV('127:getLatency')
+print lat.get()
+print lat.put(1)
+
+Record 127:getLatency called getLatencyEPICS(0x1ce4fe0/1.000000)activated_if_1
+gts fake: EPICS/getLatencyEPICS(subRecord *)
 
 ##ppc
 ./gts --epics -c st.cmd

@@ -27,6 +27,7 @@ record(sub,"$(user):serverVersion")
     field(B,"__SERVER_VERSION_MINOR__")
     field(C,"__SERVER_VERSION_REVISION__")
     field(D,"__SERVER_VERSION_DEVELOPMENT__")
+    field(F,"__SERVER_VERSION_MAJORnMINOR__")
     field(DESC,"__SERVER_VERSION__")
 }
 
