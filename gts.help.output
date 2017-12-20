@@ -1,14 +1,14 @@
 Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.3
+  gts.v0.2.4
 examples:
   gts --help
-  gts --epics -c st.cmd
+  gts --epics -c gts.cmd
   gts -v
   gts -V
   gts --usage
 
-  -c, --command=st.cmd       EPICS: execute IOC command file, e.g. st.cmd,
+  -c, --command=gts.cmd      EPICS: execute IOC command file, e.g. st.cmd,
                              before interactive shell
   -e, --epics                Use EPICS workflow, otherwise UDP by default
   -v, --verbose              Produce verbose output

@@ -9,7 +9,7 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.2.3"
+#define VERSION "v0.2.4"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -189,7 +189,7 @@ static char doc[]=
 \n\
 examples:\n\
   gts --help\n\
-  gts --epics -c st.cmd\n\
+  gts --epics -c gts.cmd\n\
   gts -v\n\
   gts -V\n\
   gts --usage";
@@ -200,9 +200,9 @@ static char args_doc[] = "";
 //! [argp] The options and its description
 static struct argp_option options[]=
 {
-  {"verbose",  'v', 0, 0,        "Produce verbose output" },
-  {"epics",    'e', 0, 0,        "Use EPICS workflow, otherwise UDP by default" },
-  {"command",  'c', "st.cmd", 0, "EPICS: execute IOC command file, e.g. st.cmd, before interactive shell" },
+  {"verbose",  'v', 0, 0,         "Produce verbose output" },
+  {"epics",    'e', 0, 0,         "Use EPICS workflow, otherwise UDP by default" },
+  {"command",  'c', "gts.cmd", 0, "EPICS: execute IOC command file, e.g. st.cmd, before interactive shell" },
 //default options
   { 0 }
 };//options (CLI)

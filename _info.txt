@@ -13,18 +13,20 @@
 
 #edit
 gitk --all &
-gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/st.cmd &
+gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/gts.cmd &
 
 #GTS (EPICS or UDP)
 ./make.sh
 
+#documentation
+./doxygen.sh
+
 #transfert
-cp -p /space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/bin/linux-ppc/caRepeater bin/linux-ppc/
-rm gts.zip ; zip -ry9 gts.zip db dbd ; zip -j gts.zip bin/linux-ppc/gts iocBoot/iocgts/st.cmd iocBoot/iocgts/envPaths bin/linux-ppc/caRepeater
+./pack.sh
 
 #run
 ##x86
-bin/linux-x86_64/gts --epics -c iocBoot/iocgts/st.cmd
+bin/linux-x86_64/gts --epics -c iocBoot/iocgts/gts.cmd
 # v
 dbl
 127:subExample
@@ -41,7 +43,10 @@ Record 127:getLatency called getLatencyEPICS(0x1ce4fe0/1.000000)activated_if_1
 gts fake: EPICS/getLatencyEPICS(subRecord *)
 
 ##ppc
-./gts --epics -c st.cmd
+###crate ON
+snmpset -v 2c -m +WIENER-CRATE-MIB -c private 10.10.18.61 sysMainSwitch.0 i 1
+###GTS run
+./gts --epics -c gts.cmd
 
 ##PPC server
 setenv EPICS_CA_ADDR_LIST '10.10.17.127'
