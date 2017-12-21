@@ -1,12 +1,6 @@
-# Example substitutions file
+#device substitutions file
 
-file "db/dbExample1.db" {
-    { user = "coudert" }
+file "db/dbSubExample.db" {
+    { user = "numexo2" }
 }
 
-file db/dbExample2.db {
-    pattern { user, no, scan }
-        { "coudert", 1, "1 second" }
-        { "coudert", 2, "2 second" }
-        { "coudert", 3, "5 second" }
-}
