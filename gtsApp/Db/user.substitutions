@@ -1,6 +1,0 @@
-#device substitutions file
-
-file "db/dbSubExample.db" {
-    { user = "numexo2" }
-}
-
