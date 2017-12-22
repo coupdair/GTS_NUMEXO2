@@ -3,7 +3,7 @@
 ## You may have to change gts to something else
 ## everywhere it appears in this file
 
-< envPaths
+< envGTSid
 
 cd "${TOP}"
 
@@ -12,7 +12,7 @@ dbLoadDatabase "dbd/gts.dbd"
 gts_registerRecordDeviceDriver pdbbase
 
 ## Load record instances
-dbLoadRecords "db/dbSubExample.db", "user=gts127"
+dbLoadRecords "db/dbSubExample.db", "user=${GTSID}"
 
 ## Set this to see messages from mySub
 var mySubDebug 1

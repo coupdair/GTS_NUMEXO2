@@ -1,6 +1,6 @@
 Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.5e
+  gts.v0.2.5f
 examples:
   gts --help
   gts --epics -c gts.cmd

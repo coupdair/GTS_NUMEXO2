@@ -1,0 +1,1 @@
+epicsEnvSet("GTSID","gts__GTS_ID__")
