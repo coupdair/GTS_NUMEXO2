@@ -48,120 +48,146 @@ snmpset -v 2c -m +WIENER-CRATE-MIB -c private 10.10.18.61 sysMainSwitch.0 i 1
 ###GTS run
 ./gts --epics -c gts.cmd
 
-##PPC server
+##x86 server
 setenv EPICS_CA_ADDR_LIST '10.10.17.127'
 #setenv EPICS_CA_AUTO_ADDR_LIST 'NO'
 
-##x86 server
+##PPC server
 setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
-~/bin/caget 127:serverVersion.DESC
-127:serverVersion.DESC     v0.2.3f
+caget gts127:serverVersion.DESC
+gts127:serverVersion.DESC     v0.2.5j
 
-~/bin/caput 127:gtsTest 1
-Old : 127:gtsTest                0
-New : 127:gtsTest                127
+caget gts127:alignMeas.DESC
+gts127:alignMeas.DESC         alignMeas(forward,nmes)
 
-~/bin/caput 127:coarseDelaySet 0
-~/bin/caput 127:coarseDelaySet.A 1234
-~/bin/caput 127:coarseDelaySet 1
-Old : 127:coarseDelaySet         0
-New : 127:coarseDelaySet         1
+caput gts127:alignMeas 0      #call gts127:alignMeas(0)
+caput gts127:alignMeas.A 1    #call gts127:alignMeas(0)
+caput gts127:alignMeas.B 123  #call gts127:alignMeas(0)
+caput gts127:alignMeas 1      #call gts127:alignMeas(1)
 
-~/bin/caget 127:alignMeas.DESC
-127:alignMeas.DESC         alignMeas(forward,nmes)
-~/bin/caput 127:alignMeas 0
-~/bin/caput 127:alignMeas.A 1
-~/bin/caput 127:alignMeas.B 123
-~/bin/caput 127:alignMeas 1
-
-~/bin/caput 127:treeSetup 0
-~/bin/caput 127:treeSetup.A 1    
-~/bin/caput 127:treeSetup 1
-
-~/bin/caput 127:treeSetup 0
-~/bin/caput 127:treeSetup.A 2    
-~/bin/caput 127:treeSetup 1
-Ctrl+C
 
 epics> dbl
-127:subExample
-127:gtsExample
-127:serverVersion
-127:gtsReset
-127:gtsInit
-127:gtsTest
-127:gtsUpdate
-127:conIs
-127:gtsIs
-127:treeStart
-127:treeStop
-127:includeCarrierForAlign
-127:excludeCarrierForAlign
-127:alignStart
-127:treeSetup
-127:rxSystemIsReady
-127:treeRead
-127:fineDelaySetNow
-127:fineDelaySet
-127:coarseDelaySet
-127:triggerStart
-127:alignSet
-127:alignMeas
-127:triggerSetup
-127:tdcSet
-127:tdcMeas
-127:transCon
-127:transGtsTree
-127:transDigitizer
-127:alignTdcSet
-127:printBinary
-127:testSet
-127:testUnSet
-127:triggerCoreStart
-127:triggerCoreStop
-127:triggerCoreReset
-127:setIdlePeriod
-127:setIdleEnabled
-127:exclude_trigger_processor
-127:include_trigger_processor
-127:requestRateGet
-127:validationRateGet
-127:rejectionRateGet
-127:backpressureRateGet
-127:getLatency
-127:triggerGetRates
+gts127:subExample
+gts127:gtsExample
+gts127:serverVersion
+gts127:gtsReset
+gts127:gtsInit
+gts127:gtsTest
+gts127:gtsUpdate
+gts127:conIs
+gts127:gtsIs
+gts127:treeStart
+gts127:treeStop
+gts127:includeCarrierForAlign
+gts127:excludeCarrierForAlign
+gts127:alignStart
+gts127:treeSetup
+gts127:rxSystemIsReady
+gts127:treeRead
+gts127:fineDelaySetNow
+gts127:fineDelaySet
+gts127:coarseDelaySet
+gts127:triggerStart
+gts127:alignSet
+gts127:alignMeas
+gts127:triggerSetup
+gts127:tdcSet
+gts127:tdcMeas
+gts127:transCon
+gts127:transGtsTree
+gts127:transDigitizer
+gts127:alignTdcSet
+gts127:printBinary
+gts127:testSet
+gts127:testUnSet
+gts127:triggerCoreStart
+gts127:triggerCoreStop
+gts127:triggerCoreReset
+gts127:setIdlePeriod
+gts127:setIdleEnabled
+gts127:exclude_trigger_processor
+gts127:include_trigger_processor
+gts127:requestRateGet
+gts127:validationRateGet
+gts127:rejectionRateGet
+gts127:backpressureRateGet
+gts127:getLatency
+gts127:triggerGetRates
 
-epics> dbpr 127:serverVersion
+epics> dbpr gts127:serverVersion
 ...
-D: 0                DESC: v0.2.3f       DISA: 0             DISP: 0             
+D: 0                DESC: v0.2.5j       DISA: 0             DISP: 0             
 ...
 epics>
 
-Record 127:gtsTest called gtsTestEPICS(0x10705f68/1.000000)activated_if_1
-gts 127 is being test
+#AGATA
+./gts_client.sh
+...
+*****************************
+*****************************
+Calling trigger_setup
 
-Record 127:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/0.000000)activated_if_1
-Record 127:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/0.000000)activated_if_1
-Record 127:coarseDelaySet called coarseDelaySetEPICS(0x10440a18/1.000000)activated_if_1
-gts 127 is being coarseDelay using delay=1234
+--Call initialize_tree_from_file
+ 13  ROOT   0   6   0   0  0.00000   0.00000     0   0   0 -->   0.000
+  6  FFIO  13  92   0   0  0.00000   0.00000     0   0   0 -->   0.000
+ 92  FFIO   6 127  17   0  0.00000   0.00000     0   0   0 -->   0.000
+127  LEAF  92   0   0   0  0.59163  16.78930     0   8   0 --> 222.415
+ 17  LEAF  92   0   0   0  0.38553  17.28875     0   0   0 --> 222.248
+--Done initialize_tree_from_file
 
-Record 127:alignMeas called alignMeasEPICS(0x104cde40/0.000000)activated_if_1
-Record 127:alignMeas called alignMeasEPICS(0x104cde40/0.000000)activated_if_1
-Record 127:alignMeas called alignMeasEPICS(0x104cde40/0.000000)activated_if_1
-Record 127:alignMeas called alignMeasEPICS(0x104cde40/1.000000)activated_if_1
-gts 127 is being alignMeasurement using forward=1 and nmes=123
+--Call setup_trigger_1
+--Done setup_trigger_1
+--Call setup_trigger_2
+--Done setup_trigger_2
+--Call setup_trigger_3
+--Done setup_trigger_3
+--Call start_trigger
+--Done start_trigger
+--Call triggerCoreStart
+--Done triggerCoreStart
 
-Record 127:treeSetup called treeSetupEPICS(0x1043f168/0.000000)activated_if_1
-Record 127:treeSetup called treeSetupEPICS(0x1043f168/0.000000)activated_if_1
-Record 127:treeSetup called treeSetupEPICS(0x1043f168/1.000000)activated_if_1
-gts 127 is being setup using step=1
+Trigger LAUNCHED.
 
-Record 127:treeSetup called treeSetupEPICS(0x1043f168/0.000000)activated_if_1
-Record 127:treeSetup called treeSetupEPICS(0x1043f168/0.000000)activated_if_1
-Record 127:treeSetup called treeSetupEPICS(0x1043f168/1.000000)activated_if_1
-gts 127 is being setup using step=2
+The trigger processor is included by default.
+To exclude it and validate all events, please execute: 
+exclude_trigger_processor in the gts_client/bin directory
+
+*****************************
+*****************************
+Setting and enabling Idles
+
+Setting idle period to 400
+Enabling idle events
+cannot connect to gts127:setIdleEnabled
+cannot connect to gts127:setIdleEnabled.A
+cannot connect to gts127:setIdleEnabled
+
+*****************************
+*****************************
+ 2018-01-10 06:58:28.983219
+ elapsed time 0:01:37 h:m:s
+       End of Setup
+*****************************
+*****************************
+
+#console
+...
+gts 127 is running triggerSetup using GTStype=3 and step=2
+Record gts127:triggerSetup called triggerSetupEPICS(0x10537d90/0.000000)activated_if_1
+Record gts127:triggerSetup called triggerSetupEPICS(0x10537d90/0.000000)activated_if_1
+Record gts127:triggerSetup called triggerSetupEPICS(0x10537d90/0.000000)activated_if_1
+Record gts127:triggerSetup called triggerSetupEPICS(0x10537d90/1.000000)activated_if_1
+gts 127 is running triggerSetup using GTStype=3 and step=3
+Record gts127:triggerStart called triggerStartEPICS(0x10536ec0/0.000000)activated_if_1
+Record gts127:triggerStart called triggerStartEPICS(0x10536ec0/0.000000)activated_if_1
+Record gts127:triggerStart called triggerStartEPICS(0x10536ec0/1.000000)activated_if_1
+gts 127 is running triggerStart using GTStype=3
+Record gts127:triggerCoreStart called triggerCoreStartEPICS(0x1053aef0/1.000000)activated_if_1
+gts 127 is running triggerCoreStart
+Record gts127:setIdlePeriod called setIdlePeriodEPICS(0x1053bdc0/0.000000)activated_if_1
+Record
 ### locked ###
 
 exit
