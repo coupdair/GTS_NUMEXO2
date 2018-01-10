@@ -212,6 +212,8 @@ int XMMRegs_Trigger_Leave_CarrierRequest_Set(XMMRegs *InstancePtr)
 
   if ( XMMRegs_Trigger_CoreType_Get(InstancePtr) != TRIGGER_CORE_IS_LEAF ) {
     DBG(DBLE, "ERROR : trigger core should be leaf, you have the wrong bitstream!\n");
+printf("\nXST_FAILURE\n");
+//printf("%s/%s: not a leaf ?!",__FILE__,__func__);fflush(stdout);
     return XST_FAILURE;
   }
 
@@ -227,10 +229,16 @@ int XMMRegs_Trigger_Leave_CarrierRequest_Set(XMMRegs *InstancePtr)
 
   if ( s->rst == 1 ) {
     DBG(DBLW, "STRANGE : trigger core is still in reset after XMMRegs_Trigger_Leave_CarrierRequest_Set\n");
+printf("\nXST_FAILURE\n");
+//printf("%s/%s: still in reset => XST_FAILURE",__FILE__,__func__);fflush(stdout);
     return XST_FAILURE; 
   }
 
-  return XST_SUCCESS;
+//printf("\nXST_SUCCESS\n");
+//printf("%s/%s: XST_SUCCESS",__FILE__,__func__);fflush(stdout);
+printf("\n!XST_SUCCESS\n");
+//  return XST_SUCCESS;
+  return XST_FAILURE;
 }
 
 int XMMRegs_Trigger_Root_Loopback_Set(XMMRegs *InstancePtr)
