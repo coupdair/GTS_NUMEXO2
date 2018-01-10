@@ -125,6 +125,9 @@ epicsRegisterFunction(myGTSProcess);
 
 #define SUB_DEBUG_PRINT SUB_DEBUG_PRINT_COMMENT(activated_if_1)
 
+#define STATUS_FOR_EPICS \
+  status=(status==XST_SUCCESS)?1:0;
+
 #ifndef _X86_64_
 
 #define funcNoArgEPICS(ARG,FCT) \
@@ -139,6 +142,7 @@ static long ARG##EPICS(subRecord *precord) \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT "\n",  cardnumber); \
   status|=FCT(); \
+  STATUS_FOR_EPICS \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -155,6 +159,7 @@ static long ARG##EPICS(subRecord *precord) \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord *)\n",__func__); \
  \
+  STATUS_FOR_EPICS \
   precord->val=status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -235,6 +240,7 @@ static long ARG##EPICS(subRecord *precord) \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT " using " #VAL "=%d\n",  cardnumber, val); \
   status|=FCT(val); \
+  STATUS_FOR_EPICS \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -253,6 +259,7 @@ static long ARG##EPICS(subRecord *precord) \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord */" #VAL "=%d)\n",__func__,val); \
  \
+  STATUS_FOR_EPICS \
   precord->val=status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -290,6 +297,7 @@ static long ARG##EPICS(subRecord *precord) \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT " using " #VAL1 "=%d and " #VAL2 "=%d\n",  cardnumber, val1,val2); \
   status|=FCT(val1,val2); \
+  STATUS_FOR_EPICS \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -309,6 +317,7 @@ static long ARG##EPICS(subRecord *precord) \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord */" #VAL1 "=%d, " #VAL2 "=%d\n",__func__,val1,val2); \
  \
+  STATUS_FOR_EPICS \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -340,6 +349,7 @@ static long ARG##EPICS(subRecord *precord) \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT " using " #VAL1 "=%d, " #VAL2 "=%d and " #VAL3 "=%d\n",  cardnumber, val1,val2,val3); \
   status|=FCT(val1,val2,val3); \
+  STATUS_FOR_EPICS \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -360,6 +370,7 @@ static long ARG##EPICS(subRecord *precord) \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord */" #VAL1 "=%d, " #VAL2 "=%d and " #VAL3 "=%d\n",__func__,val1,val2,val3); \
  \
+  STATUS_FOR_EPICS \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -391,6 +402,7 @@ static long ARG##EPICS(subRecord *precord) \
   if (mySubDebug) \
        printf("gts %lu is running " #FCT " using " #VAL1 "=%d, " #VAL2 "=%d, " #VAL3 "=%d and " #VAL4 "=%d\n",  cardnumber, val1,val2,val3,val4); \
   status|=FCT(val1,val2,val3,val4); \
+  STATUS_FOR_EPICS \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
@@ -412,6 +424,7 @@ static long ARG##EPICS(subRecord *precord) \
   if(mySubDebug) \
     printf("gts fake: EPICS/%s(subRecord */" #VAL1 "=%d, " #VAL2 "=%d, " #VAL3 "=%d and " #VAL4 "=%d\n",__func__,val1,val2,val3,val4); \
  \
+  STATUS_FOR_EPICS \
   precord->val = status; \
   return 0; \
 }/*ARG##EPICS*/ \
