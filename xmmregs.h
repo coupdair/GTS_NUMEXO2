@@ -239,7 +239,7 @@ extern void XMMRegs_RocketIO_PrintAll(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_MgtData_Set(XMMRegs *InstancePtr, unsigned int msb, unsigned int lsb, unsigned char comma_msb, unsigned char comma_lsb);
 extern void XMMRegs_RocketIO_RefClk_Set(XMMRegs *InstancePtr);
 extern int  XMMRegs_RocketIO_CommaAlign_Diagnose(XMMRegs *InstancePtr);
-extern unsigned int  XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr);
+extern unsigned int  XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr, int transceiver);
 extern void XMMRegs_RocketIO_TxSystem_Reset(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_RxSystem_Reset(XMMRegs *InstancePtr);
 extern void XMMRegs_RocketIO_TxSystem_Stop(XMMRegs *InstancePtr);

@@ -103,7 +103,10 @@ int treeStart(void)
 
 unsigned int treeRead(int transceiver)
 {
-  return XMMRegs_RocketIO_RxMgtdata_Read(&XMMRegsDriver);
+  if(transceiver < 0 || transceiver > 3) {
+    return XST_FAILURE;
+  }
+  return XMMRegs_RocketIO_RxMgtdata_Read(&XMMRegsDriver,transceiver);
 }
 
 int treeStop(void)

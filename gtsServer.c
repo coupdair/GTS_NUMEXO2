@@ -2,7 +2,7 @@
 /*-----------------------------------------------------------------------
 File : gtsServer.c
 Description : NUMEXO2 GTS server (GANIL)
-Authors : Frederic SAILLANT, 
+Authors : Frederic SAILLANT, Sebastien COUDERT
 -----------------------------------------------------------------------*/
 
 //! version of \b old \c GTS_server

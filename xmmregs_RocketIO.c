@@ -183,7 +183,8 @@ int XMMRegs_RocketIO_CommaAlign_Diagnose(XMMRegs *InstancePtr)
 // F. Saillant le 30 novembre 2012 : on autorise aussi COMMA (0x00BC) car c'est ce que les mezzanines GTS v3 envoient ...
 
 //    if ((s->rxcommadet == 1) && (s->rxchariscomma == 1) && ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr) == COMMA)))
-    if ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr) == COMMA))
+  //! NumExo2 has a single transceiver, i.e. 0=MASTER_TRANSCEIVER
+    if ((XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr,MASTER_TRANSCEIVER) == ALIGN_WORD) || (XMMRegs_RocketIO_RxMgtdata_Read(InstancePtr,MASTER_TRANSCEIVER) == COMMA))
     {
       return COMMA_DETECTED;
     }
@@ -192,10 +193,13 @@ int XMMRegs_RocketIO_CommaAlign_Diagnose(XMMRegs *InstancePtr)
   return COMMA_NOT_DETECTED;
 }
 
-unsigned int XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr)
+unsigned int XMMRegs_RocketIO_RxMgtdata_Read(XMMRegs *InstancePtr, int transceiver)
 {
   XMMRegs_rxmgtdata_status *s;
   unsigned int val;
+
+  //! NumExo2 has a single transceiver, i.e. 0=MASTER_TRANSCEIVER
+  if ( transceiver>0 ) return transceiver; //!MASTER_TRANSCEIVER
 
   s = (XMMRegs_rxmgtdata_status *)(InstancePtr->BaseAddress + XMMR_GT_RXDATA_OFFSET);
 
