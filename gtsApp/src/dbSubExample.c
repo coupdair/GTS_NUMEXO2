@@ -126,7 +126,7 @@ epicsRegisterFunction(myGTSProcess);
 #define SUB_DEBUG_PRINT SUB_DEBUG_PRINT_COMMENT(activated_if_1)
 
 #define STATUS_FOR_EPICS \
-  status=(status==XST_SUCCESS)?1:0;
+  status=(status==XST_SUCCESS)?1:status;
 
 #ifndef _X86_64_
 
