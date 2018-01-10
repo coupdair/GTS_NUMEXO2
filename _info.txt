@@ -116,9 +116,11 @@ gts127:backpressureRateGet
 gts127:getLatency
 gts127:triggerGetRates
 
+#Version in DESC, F and (A.B.C)
 epics> dbpr gts127:serverVersion
-...
-D: 0                DESC: v0.2.5j       DISA: 0             DISP: 0             
+A: 0                ASG:                B: 2                C: 5                
+D: 0                DESC: v0.2.5        DISA: 0             DISP: 0             
+DISV: 1             E: 0                F: 0.2              G: 0                
 ...
 epics>
 
