@@ -11,6 +11,12 @@
 #     - field(SNAM,"func
 #   o. see gtsApp/src/funcEPICS.sh
 
+note:
+  add setIdlePeriod and setIdleEnabled to NumExo2
+  cf. git v0.2.2 9d1d6e168448f26c21ef702ec079b8105578040d
+  in "xmmregs_l.h"
+    ? #define XMMR_IDLE_PERIOD_CTRL_OFFSET        0x124
+
 #edit
 gitk --all &
 gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/gts.cmd &
