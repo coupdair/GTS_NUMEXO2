@@ -30,6 +30,7 @@
 #define XMMR_DOWNSTREAM_LEAF_STATUS_OFFSET  0x60
 #define XMMR_CARRIER_STATUS_OFFSET          0x64
 #define XMMR_REQ_BKP_RATE_STATUS_OFFSET     0x68
+//! \todo [high] need to correct theses 4 OFFSETs for NumExo2
 #define XMMR_IDLE_PERIOD_CTRL_OFFSET        0x124
 #define XMMR_RATE_REQ_BKP_STATUS_OFFSET     0xF8
 #define XMMR_RATE_VAL_REJ_STATUS_OFFSET     0xFC
