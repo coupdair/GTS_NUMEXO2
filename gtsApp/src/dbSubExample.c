@@ -116,12 +116,15 @@ epicsRegisterFunction(myGTSProcess);
 
 #define SUB_DEBUG_PRINT_COMMENT(COMMENT) \
   if(mySubDebug) \
+  { \
     printf("Record %s called %s(%p/%f)" #COMMENT "\n" \
       ,precord->name \
       ,__func__ \
       ,(void*) precord \
       ,precord->val \
-    );
+    ); \
+    fflush(stdout); \
+  }//mySubDebug
 
 #define SUB_DEBUG_PRINT SUB_DEBUG_PRINT_COMMENT(activated_if_1)
 

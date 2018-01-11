@@ -25,3 +25,7 @@ iocInit
 
 ## Start any sequence programs
 
+##IOC shell examples:
+#dbl
+#dbpr gts127:serverVersion
+
