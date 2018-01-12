@@ -107,6 +107,39 @@ int XMMRegs_Trigger_Leave_TestLoopback_Set(XMMRegs *InstancePtr)
   return XST_SUCCESS;
 }
 
+int XMMRegs_Trigger_Leave_Loopback_Set(XMMRegs *InstancePtr)
+{
+  XMMRegs_trigger_ctrl *c;
+  XMMRegs_trigger_status *s;
+  XMMRegs_i2cgts_output_ctrl *ci;
+
+  c = (XMMRegs_trigger_ctrl *) (InstancePtr->BaseAddress + XMMR_TRIGGER_CTRL_OFFSET);
+  s = (XMMRegs_trigger_status *) (InstancePtr->BaseAddress + XMMR_TRIGGER_STATUS_OFFSET);
+  ci = (XMMRegs_i2cgts_output_ctrl *) (InstancePtr->BaseAddress + XMMR_I2CGTS_OUTPUT_CTRL_OFFSET);
+
+  if ( XMMRegs_Trigger_CoreType_Get(InstancePtr) != TRIGGER_CORE_IS_LEAF ) {
+    DBG(DBLE, "ERROR : trigger core should be leaf, you have the wrong bitstream!\n");
+    return XST_FAILURE;
+  }
+
+  c->rst_core_uP = 1;
+  c->gts_ready = 1;
+  c->loopback_enable = 1;
+  c->test_enable = 0;
+
+  ci->mask_L1A_gate = 1;
+  ci->L1A_gate = 1;
+
+  c->rst_core_uP = 0; 
+
+  if ( s->rst == 1 ) {
+    DBG(DBLW, "STRANGE : trigger core is still in reset after XMMRegs_Trigger_Leave_Loopback_Set\n");
+    return XST_FAILURE; 
+  }
+
+  return XST_SUCCESS;
+}
+
 void XMMRegs_Trigger_GtsReady_Set(XMMRegs *InstancePtr)
 {
   XMMRegs_trigger_ctrl *c;
