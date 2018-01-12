@@ -19,7 +19,7 @@ enum GtsCommands {
 
 	PrintBinary, SetOutputFileName, AlignMeas, TdcSet, TdcMeas,
 
-	TriggerSetup, TriggerStart, ExcludeTriggerProcessor, TestSet,
+	TriggerSetup, TriggerStart, ExcludeTriggerProcessor, TestSet, LoopbackSet,
 
 	ReadField, ReadReg, ReadAll, WriteField,
 
