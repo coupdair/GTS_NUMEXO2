@@ -29,6 +29,11 @@ record(sub,"$(user):serverVersion")
     field(D,"__SERVER_VERSION_DEVELOPMENT__")
     field(F,"__SERVER_VERSION_MAJORnMINOR__")
     field(DESC,"__SERVER_VERSION__")
+    #read only
+#    field(SDIS,"1")
+#    field(DISA,"1")
+#    field(DISV,"1")
+    field(DISP,"1")
 }
 
 record(sub,"$(user):gtsReset")
