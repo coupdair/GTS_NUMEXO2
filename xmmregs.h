@@ -286,6 +286,7 @@ extern int  XMMRegs_Trigger_CrystalID_Set(XMMRegs *InstancePtr, int crystalID);
 extern void XMMRegs_Trigger_GtsReady_Set(XMMRegs *InstancePtr);
 extern void XMMRegs_Trigger_GtsReady_UnSet(XMMRegs *InstancePtr);
 extern int  XMMRegs_Trigger_Leave_TestLoopback_Set(XMMRegs *InstancePtr);
+extern int  XMMRegs_Trigger_Leave_Loopback_Set(XMMRegs *InstancePtr);
 extern int  XMMRegs_Trigger_Leave_Test_Set(XMMRegs *InstancePtr);
 extern int  XMMRegs_Trigger_Leave_CarrierRequest_Set(XMMRegs *InstancePtr);
 extern int  XMMRegs_Trigger_Root_Loopback_Set(XMMRegs *InstancePtr);
