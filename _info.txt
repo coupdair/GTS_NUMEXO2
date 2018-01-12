@@ -16,6 +16,8 @@ note:
   cf. git v0.2.2 9d1d6e168448f26c21ef702ec079b8105578040d
   in "xmmregs_l.h"
     ? #define XMMR_IDLE_PERIOD_CTRL_OFFSET        0x124
+  _ see IP modified by GANIL/GAP for real OFFSETs [medium]
+  _ draft dummy function, in order to run ! [high]
 
 #edit
 gitk --all &
@@ -39,7 +41,9 @@ gedit do_tree.c ../../../GTS_EPICS/GTS_VxWorks/gtsApp/src/align_tree.c ../../../
 
 #run
 ##x86
-bin/linux-x86_64/gts --epics -c iocBoot/iocgts/gts.cmd
+./gts_linux-x86_64.sh
+##or in background
+screen -dmS epics ./gts_linux-x86_64.sh
 # v
 dbl
 127:subExample
@@ -54,6 +58,7 @@ print lat.put(1)
 
 Record 127:getLatency called getLatencyEPICS(0x1ce4fe0/1.000000)activated_if_1
 gts fake: EPICS/getLatencyEPICS(subRecord *)
+
 
 ##ppc
 ###crate ON
