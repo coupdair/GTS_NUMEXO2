@@ -20,6 +20,13 @@ note:
 #edit
 gitk --all &
 gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/gts.cmd &
+##current
+gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/st.cmd xmmregs_l.h trigger.c xmmregs_Trigger.c &
+cd ~/GTS_server/GTS_EPICS/GTS_VxWorks/gtsApp/src/
+gedit trigger.c ../../vxworks/shared/ppc405_0_drv_csp/xlowlevel/xmmregs_Trigger.c ../../vxworks/v3/ppc405_0_drv_csp/xlowlevel/xmmregs_l.h &
+cd ~/GTS_server/GTS_EPICS/GTS_client/src/
+gedit do_tree.c ../../../GTS_EPICS/GTS_VxWorks/gtsApp/src/align_tree.c ../../../GTS_EPICS/GTS_VxWorks/vxworks/v3/ppc405_0_drv_csp/xlowlevel/xmmregs_RocketIO.c trigger.c lib_align.c &
+
 
 #GTS (EPICS or UDP)
 ./make.sh
