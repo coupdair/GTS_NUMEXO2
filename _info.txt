@@ -46,25 +46,29 @@ gedit do_tree.c ../../../GTS_EPICS/GTS_VxWorks/gtsApp/src/align_tree.c ../../../
 screen -dmS epics ./gts_linux-x86_64.sh
 # v
 dbl
-127:subExample
-127:gtsExample
-Record 127:subExample called mySubProcess(0x22fbb10/1.000000) #0 S1
+gts127:subExample
+gts127:gtsExample
+Record gts127:subExample called mySubProcess(0x22fbb10/1.000000) #0 S1
 ...
 # v
 from epics import PV
-lat=PV('127:getLatency')
+lat=PV('gts127:getLatency')
 print lat.get()
 print lat.put(1)
 
-Record 127:getLatency called getLatencyEPICS(0x1ce4fe0/1.000000)activated_if_1
+Record gts127:getLatency called getLatencyEPICS(0x1ce4fe0/1.000000)activated_if_1
 gts fake: EPICS/getLatencyEPICS(subRecord *)
 
 
 ##ppc
 ###crate ON
 snmpset -v 2c -m +WIENER-CRATE-MIB -c private 10.10.18.61 sysMainSwitch.0 i 1
-###GTS run
+###GTS run interactive
 ./gts --epics -c gts.cmd
+###or
+/usr/local/bin/gts.sh
+###or from remote
+ssh numexo2@numexo2-27 "su -c '/usr/local/bin/gts.sh'"
 
 ##x86 server
 setenv EPICS_CA_ADDR_LIST '10.10.17.127'
