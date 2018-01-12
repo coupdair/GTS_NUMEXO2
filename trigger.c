@@ -100,6 +100,10 @@ int leaveTestLoopback(void) {
   return XMMRegs_Trigger_Leave_TestLoopback_Set(&XMMRegsDriver); 
 }
 
+int leaveLoopback(void) {
+  return XMMRegs_Trigger_Leave_Loopback_Set(&XMMRegsDriver); 
+}
+
 /* launches the leave trigger core in loopback mode 
 Applies to a leave GTS */
 int leaveTest(void) {
