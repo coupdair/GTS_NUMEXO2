@@ -28,7 +28,7 @@ nt12 /usr/local/bin/gtsServer -h > gtsServer.help.output
 ###or
 ./Linux-x86-64/gtsServer -h > gtsServer.help.output
 ##commands
-grep 'int.cmd_' udpInterpret.c | head -n 35 | sed 's/int.cmd_//;s/.(void\*)\;//' > gtsServer_command.txt
+grep 'int.cmd_' udpInterpret.c | head -n 36 | sed 's/int.cmd_//;s/.(void\*)\;//' > gtsServer_command.txt
 ##make (html and prepare latex)
 doxygen
 ls doc/html/index.html
