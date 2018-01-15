@@ -9,9 +9,7 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.2.8e"
-
-//! \todo . add loopbackSet from master branch (UDP v, EPICS .)
+#define VERSION "v0.2.8"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
