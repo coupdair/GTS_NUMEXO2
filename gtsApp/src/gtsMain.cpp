@@ -9,7 +9,7 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.2.7d"
+#define VERSION "v0.2.7"
 
 //! \todo [medium] add LoopBackSet from master branch
 
@@ -47,6 +47,9 @@
 
     S. Coudert 15/12/2017
      - add EPICS functions (record: .DESC, .A, .B, .C upto .D)
+
+    S. Coudert 15/01/2018
+     - empty setIdle* and *RateGet
 
 * \section sectionCommandLine command line options
 *

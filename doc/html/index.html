@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="contents">
-<h1>NUMEXO2 GTS server</h1><h3>v0.2.7d </h3><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>[medium] add LoopBackSet from master branch </dd></dl>
+<h1>NUMEXO2 GTS server</h1><h3>v0.2.7 </h3><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>[medium] add LoopBackSet from master branch </dd></dl>
 <p>table of content: </p>
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
@@ -81,6 +81,10 @@ Modifications</a></h2>
 <ul>
 <li>add EPICS functions (record: .DESC, .A, .B, .C upto .D)</li>
 </ul>
+<p>S. Coudert 15/01/2018</p>
+<ul>
+<li>empty setIdle* and *RateGet</li>
+</ul>
 <h2><a class="anchor" id="sectionCommandLine">
 command line options</a></h2>
 <ul>
@@ -88,7 +92,7 @@ command line options</a></h2>
 </ul>
 <div class="fragment"><pre class="fragment">Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.7d
+  gts.v0.2.7
 examples:
   gts --help
   gts --epics -c gts.cmd
@@ -111,7 +115,7 @@ Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><ul>
 <li><b>old</b> GTS server (UDP only)</li>
 </ul>
-<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Jan 15 2018 15:48:36)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.1h - Jan 15 2018 16:02:10)
 description:
 	old GTS embedded server for NUMEXO2 (UDP only).
 usage:
