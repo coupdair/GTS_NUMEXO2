@@ -9,7 +9,7 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v1.0.1f"
+#define VERSION "v1.0.2"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
