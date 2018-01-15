@@ -9,7 +9,7 @@ Authors : Frederic SAILLANT,
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v1.0.2"
+#define VERSION "v1.0.3"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -33,6 +33,9 @@ Authors : Frederic SAILLANT,
 
     S. Coudert 15/05/2017
      - add server commands to documentation
+
+    F. Saillant 12/01/2017
+     - add loopbackSet
 
 * \section sectionCommandLine command line options
 *
