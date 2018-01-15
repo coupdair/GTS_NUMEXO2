@@ -9,7 +9,7 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.2.6"
+#define VERSION "v0.2.7d"
 
 //! \todo [medium] add LoopBackSet from master branch
 

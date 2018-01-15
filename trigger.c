@@ -430,32 +430,38 @@ set/enable GTS idle period
 ************************************************************/
 int setIdlePeriod(int value)
 {
-  return XMMRegs_Trigger_IdleEventsPeriod_Set(&XMMRegsDriver, value);
+//  return XMMRegs_Trigger_IdleEventsPeriod_Set(&XMMRegsDriver, value);
+  return 0;
 }
 
 int setIdleEnabled(int value)
 {
-  return XMMRegs_Trigger_IdleEventsEnable_Set(&XMMRegsDriver, value);
+//  return XMMRegs_Trigger_IdleEventsEnable_Set(&XMMRegsDriver, value);
+  return 0;
 }
 
 int requestRateGet(void)
 {
-  return XMMRegs_Trigger_RequestRate_Get(&XMMRegsDriver);
+//  return XMMRegs_Trigger_RequestRate_Get(&XMMRegsDriver);
+  return 0;
 }
 
 int validationRateGet(void)
 {
-  return  XMMRegs_Trigger_ValidationRate_Get(&XMMRegsDriver);
+//  return  XMMRegs_Trigger_ValidationRate_Get(&XMMRegsDriver);
+  return 0;
 }
 
 int rejectionRateGet(void)
 {
-  return XMMRegs_Trigger_RejectionRate_Get(&XMMRegsDriver);
+//  return XMMRegs_Trigger_RejectionRate_Get(&XMMRegsDriver);
+  return 0;
 }
 
 int backpressureRateGet(void)
 {
-  return XMMRegs_Trigger_BackpressureRate_Get(&XMMRegsDriver);
+//  return XMMRegs_Trigger_BackpressureRate_Get(&XMMRegsDriver);
+  return 0;
 }
 
 
