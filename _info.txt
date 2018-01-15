@@ -5,6 +5,7 @@
 #   1. dbSubExample.c:
 #     - func(
 #     - epicsRegisterFunction(func
+      o or use func*ArgEPICS
 #   2. dbSubExample.dbd:
 #     - function(func
 #   3. dbSubExample.db:

@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="contents">
-<h1>NUMEXO2 GTS server</h1><h3>v0.2.8d </h3><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>. add loopbackSet from master branch (UDP v, EPICS _) </dd></dl>
+<h1>NUMEXO2 GTS server</h1><h3>v0.2.8e </h3><dl class="todo"><dt><b><a class="el" href="todo.html#_todo000004">Todo:</a></b></dt><dd>. add loopbackSet from master branch (UDP v, EPICS .) </dd></dl>
 <p>table of content: </p>
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
@@ -81,10 +81,14 @@ Modifications</a></h2>
 <ul>
 <li>add EPICS functions (record: .DESC, .A, .B, .C upto .D)</li>
 </ul>
+<p>F. Saillant 12/01/2018</p>
+<ul>
+<li>add loopbackSet (in old server)</li>
+</ul>
 <p>S. Coudert 15/01/2018</p>
 <ul>
 <li>empty setIdle* and *RateGet</li>
-<li>add loopbackSet function</li>
+<li>add loopbackSet function (from old server; both UDP and EPICS)</li>
 </ul>
 <h2><a class="anchor" id="sectionCommandLine">
 command line options</a></h2>
@@ -93,7 +97,7 @@ command line options</a></h2>
 </ul>
 <div class="fragment"><pre class="fragment">Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.8d
+  gts.v0.2.8e
 examples:
   gts --help
   gts --epics -c gts.cmd
@@ -116,7 +120,7 @@ Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><ul>
 <li><b>old</b> GTS server (UDP only)</li>
 </ul>
-<div class="fragment"><pre class="fragment">./gtsServer (v1.0.3 - Jan 15 2018 16:32:32)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.3 - Jan 15 2018 17:09:10)
 description:
 	old GTS embedded server for NUMEXO2 (UDP only).
 usage:
@@ -165,6 +169,7 @@ loopbackSet
 readField
 readReg
 readAll
+writeField
 </pre></div><h3><a class="anchor" id="subsectionSCEPICS">
 EPICS list</a></h3>
 <ul>
@@ -213,6 +218,7 @@ rejectionRateGet()
 backpressureRateGet()
 getLatency()
 triggerGetRates(Req,Val,Rej,BckP,L)
+loopbackSet()
 </pre></div><h3><a class="anchor" id="subsectionSCUDPvsEPICS">
 UDP vs EPICS command table</a></h3>
 <div class="fragment"><pre class="fragment">alignMeas                       alignMeas(forward,nmes)
@@ -231,7 +237,7 @@ gtsReset                        gtsReset()
 gtsTest                         gtsTest()
 gtsUpdate                       gtsUpdate()
 includeCarrierForAlign          includeCarrierForAlign()
-loopbackSet                     
+loopbackSet                     loopbackSet()
 printBinary                     printBinary(offset)
 readAll                         
 readField                       
@@ -250,6 +256,7 @@ treeStart                       treeStart()
 treeStop                        treeStop()
 triggerSetup                    triggerSetup(GTStype,step)
 triggerStart                    triggerStart(GTStype)
+writeField                      
 </pre></div><h3><a class="anchor" id="subsectionSCEPICSvsAGATA">
 EPICS vs AGATA table (development progressing)</a></h3>
 <div class="fragment"><pre class="fragment">alignMeas                       alignMeas(forward,nmes)

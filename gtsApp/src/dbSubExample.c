@@ -196,6 +196,7 @@ funcNoArgEPICS(validationRateGet,validationRateGet)
 funcNoArgEPICS(rejectionRateGet,rejectionRateGet)
 funcNoArgEPICS(backpressureRateGet,backpressureRateGet)
 funcNoArgEPICS(getLatency,getLatency)
+funcNoArgEPICS(loopbackSet,leaveLoopback)
 #undef funcNoArgEPICS
 //! \todo no arg function for EPICS: need to implement - readAll ...
 

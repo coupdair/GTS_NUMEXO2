@@ -49,4 +49,5 @@ function(rejectionRateGetEPICS)
 function(backpressureRateGetEPICS)
 function(getLatencyEPICS)
 function(triggerGetRatesEPICS)
+function(loopbackSetEPICS)
 

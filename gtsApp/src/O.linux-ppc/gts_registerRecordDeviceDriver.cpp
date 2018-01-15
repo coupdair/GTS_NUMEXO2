@@ -194,6 +194,7 @@ epicsShareExtern reg_func pvar_func_arrInitialize, pvar_func_asSub,
     pvar_func_register_func_gtsUpdateEPICS,
     pvar_func_register_func_includeCarrierForAlignEPICS,
     pvar_func_register_func_include_trigger_processorEPICS,
+    pvar_func_register_func_loopbackSetEPICS,
     pvar_func_register_func_myAsubInit,
     pvar_func_register_func_myAsubProcess,
     pvar_func_register_func_myGTSInit,
@@ -314,6 +315,7 @@ int gts_registerRecordDeviceDriver(DBBASE *pbase)
     pvar_func_register_func_gtsUpdateEPICS();
     pvar_func_register_func_includeCarrierForAlignEPICS();
     pvar_func_register_func_include_trigger_processorEPICS();
+    pvar_func_register_func_loopbackSetEPICS();
     pvar_func_register_func_myAsubInit();
     pvar_func_register_func_myAsubProcess();
     pvar_func_register_func_myGTSInit();

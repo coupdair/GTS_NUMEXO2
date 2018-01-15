@@ -9,9 +9,9 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.2.8d"
+#define VERSION "v0.2.8e"
 
-//! \todo . add loopbackSet from master branch (UDP v, EPICS _)
+//! \todo . add loopbackSet from master branch (UDP v, EPICS .)
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -48,9 +48,12 @@
     S. Coudert 15/12/2017
      - add EPICS functions (record: .DESC, .A, .B, .C upto .D)
 
+    F. Saillant 12/01/2018
+     - add loopbackSet (in old server)
+
     S. Coudert 15/01/2018
      - empty setIdle* and *RateGet
-     - add loopbackSet function
+     - add loopbackSet function (from old server; both UDP and EPICS)
 
 * \section sectionCommandLine command line options
 *

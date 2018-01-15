@@ -298,4 +298,10 @@ record(sub,"$(user):triggerGetRates")
     field(SNAM,"triggerGetRatesEPICS")
     field(DESC,"triggerGetRates(Req,Val,Rej,BckP,L)")
 }
+record(sub,"$(user):loopbackSet")
+{
+    field(SCAN,"Passive")
+    field(SNAM,"loopbackSetEPICS")
+    field(DESC,"loopbackSet()")
+}
 

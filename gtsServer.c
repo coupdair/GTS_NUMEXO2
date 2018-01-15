@@ -43,7 +43,7 @@ Authors : Frederic SAILLANT, Sebastien COUDERT
     S. Coudert 15/12/2017
      - setup documentation to forward to current main program (running both UDP and EPICS)
 
-    F. Saillant 12/01/2017
+    F. Saillant 12/01/2018
      - add loopbackSet
 
 *

@@ -33,3 +33,4 @@ loopbackSet
 readField
 readReg
 readAll
+writeField

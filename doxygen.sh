@@ -29,7 +29,7 @@ VERSION=`cat VERSION`
 cat Doxyfile.template | sed "s/##VERSION##/$VERSION/" > Doxyfile
 ##commands
 ###UDP
-grep 'int.cmd_' udpInterpret.c | head -n 35 | sed 's/int.cmd_//;s/.(void\*)\;//' > gtsServer_command_UDP.txt
+grep 'int.cmd_' udpInterpret.c | head -n 36 | sed 's/int.cmd_//;s/.(void\*)\;//' > gtsServer_command_UDP.txt
 ###EPICS
 cat gtsApp/Db/dbSubExample.db | grep DESC | cut -d',' -f2- | sed 's/"//g;s/)//' | grep -v __SERVER_VERSION__ > gtsServer_command_EPICS.txt
 ###UDP<->EPICS table

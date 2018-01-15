@@ -14,7 +14,7 @@ gtsReset                        gtsReset()
 gtsTest                         gtsTest()
 gtsUpdate                       gtsUpdate()
 includeCarrierForAlign          includeCarrierForAlign()
-loopbackSet                     
+loopbackSet                     loopbackSet()
 printBinary                     printBinary(offset)
 readAll                         
 readField                       
@@ -33,3 +33,4 @@ treeStart                       treeStart()
 treeStop                        treeStop()
 triggerSetup                    triggerSetup(GTStype,step)
 triggerStart                    triggerStart(GTStype)
+writeField                      
