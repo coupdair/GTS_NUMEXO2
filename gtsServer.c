@@ -9,7 +9,7 @@ Authors : Frederic SAILLANT, Sebastien COUDERT
 /**
  * \c \b old GTS_server code version, should be changed by the developper in this \c gtsServer.c C file
 **/
-#define VERSION "v1.0.1h"
+#define VERSION "v1.0.3"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -43,6 +43,10 @@ Authors : Frederic SAILLANT, Sebastien COUDERT
     S. Coudert 15/12/2017
      - setup documentation to forward to current main program (running both UDP and EPICS)
 
+    F. Saillant 12/01/2017
+     - add loopbackSet
+
+*
 * \section sectionOldCommandLine command line options
 *
 * - GTS server (UDP only; old)

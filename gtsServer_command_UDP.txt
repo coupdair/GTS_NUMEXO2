@@ -29,7 +29,7 @@ triggerSetup
 triggerStart
 excludeTriggerProcessor
 testSet
+loopbackSet
 readField
 readReg
 readAll
-writeField

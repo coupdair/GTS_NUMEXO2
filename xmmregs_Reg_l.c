@@ -204,3 +204,100 @@ int XMMRegs_Reg_Associate(XMMRegs *InstancePtr, int config)
       FIELD( val_rate         )
   END
 }
+
+int XMMRegs_Reg_Write(XMMRegs *InstancePtr)
+{
+  int config = XREG_WRITE_ALL;
+
+  START
+    REG(txmgtdata_ctrl, XMMR_MGT_REGDATA_CTRL_OFFSET, 1)
+      FIELD( txcharisk_msb    )
+      FIELD( txcharisk_lsb    )
+      FIELD( msb              )
+      FIELD( lsb              )
+  NEXT
+    REG(gt_ctrl, XMMR_GT_CTRL_OFFSET, 1)
+      FIELD( trigger_rst_carrier )
+      FIELD( backpressure        )
+      FIELD( gtx_buf_reset       )
+      FIELD( gtx_cdr_reset       )
+      FIELD( gtx_pll_reset       )
+      FIELD( rx_system_reset     )
+      FIELD( tx_system_reset     )
+      FIELD( gtx_reset           )
+      FIELD( gtsStreamReady      )
+  NEXT
+    REG(drp_addr_ctrl, XMMR_GT_DRP_ADDR_CTRL_OFFSET, 1)
+      FIELD( drp_choice       )
+      FIELD( drp_addr         )
+  NEXT
+    REG(drp_ctrl, XMMR_GT_DRP_CTRL_OFFSET, 1)
+      FIELD( signal_detect    )
+      FIELD( RST_drp_bsy      )
+      FIELD( drp_we           )
+      FIELD( drp_en           )
+      FIELD( drp_di           )
+  NEXT
+    REG(dp_delay_ctrl, XMMR_DP_DELAY_CTRL_OFFSET, 1)
+      FIELD( delay            )
+  NEXT
+    REG(dp_mux_ctrl, XMMR_DP_MUX_CTRL_OFFSET, 1)
+      FIELD( inspection_mux_sel_1   )
+      FIELD( inspection_mux_sel_0   )
+      FIELD( mux_clk_sync           )
+      FIELD( mux_digitizer_gts_tree )
+      FIELD( sfp_txmux_sync_select  )
+      FIELD( use_sync               )
+      FIELD( mgt_txmux_select       )
+      FIELD( mgt_rxmux_select       )
+  NEXT
+    REG(fine_delay_ctrl, XMMR_FINE_DELAY_CTRL_OFFSET, 1)
+      FIELD( TC_MD2           )
+      FIELD( TC_MD1           )
+      FIELD( tx_sel1          )
+      FIELD( tx_sel0          )
+      FIELD( rx_sel1          )
+      FIELD( rx_sel0          )
+      FIELD( LEN1             )
+      FIELD( LEN0             )
+      FIELD( delay            )
+  NEXT
+    REG(ClockPath_ctrl, XMMR_CLOCKPATH_CTRL_OFFSET, 1)
+      FIELD( rst_dcm_fb       )
+      FIELD( rst_dcm_mictor   )
+      FIELD( clk_select_raw   )
+      FIELD( clk_select_usr   )
+      FIELD( clk_select_remloc)
+  NEXT
+    REG(trigger_ctrl, XMMR_TRIGGER_CTRL_OFFSET, 1)
+      FIELD( reject_window    )
+      FIELD( timestamp_enable )
+      FIELD( aurora_loopback  )
+      FIELD( test_enable      )
+      FIELD( loopback_enable  )
+      FIELD( rst_core_uP      )
+      FIELD( rst_dcm_uP       )
+      FIELD( gts_ready        )
+  NEXT
+    REG(trigger_test_ctrl, XMMR_TRIGGER_TEST_CTRL_OFFSET, 1)
+      FIELD( test_period_mask )
+      FIELD( test_offset      )
+  NEXT
+    REG(i2cgts_output_ctrl, XMMR_I2CGTS_OUTPUT_CTRL_OFFSET, 1)
+      FIELD( mask_crystalID      )
+      FIELD( mask_L1A_gate       )
+      FIELD( mask_LMK_PLL_locked )
+      FIELD( crystalID           )
+      FIELD( L1A_gate            )
+      FIELD( LMK_PLL_locked      )
+  NEXT
+    REG(lmk_pll_ctrl, XMMR_LMK_PLL_CTRL_OFFSET, 1)
+      FIELD( hw_ctrl          )
+      FIELD( hw_init_conf     )
+      FIELD( sync_pll         )
+      FIELD( data             )
+      FIELD( clk              )
+      FIELD( le               )
+      FIELD( goe              )
+  END
+}

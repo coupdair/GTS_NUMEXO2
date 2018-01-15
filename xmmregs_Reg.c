@@ -89,6 +89,7 @@ int XMMRegs_Reg_ReadField(XMMRegs *InstancePtr, char *reg_name, char *field_name
   XMMRegs_Bitfield_t *field;
   int i,j;
 
+//  printf("XMMRegs_Reg_ReadField : reg_name=[%s], field_name=[%s]\n",reg_name,field_name);
   reg = &InstancePtr->reg[0];
   for (i = 0; i < MAX_NUM_REG; i++) {
     if ( strncmp(reg[i].name,reg_name,strlen(reg_name) ) == 0) {

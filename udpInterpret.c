@@ -35,6 +35,7 @@ int	cmd_triggerSetup (void*);
 int	cmd_triggerStart (void*);
 int	cmd_excludeTriggerProcessor (void*);
 int	cmd_testSet (void*);
+int	cmd_loopbackSet (void*);
 int	cmd_readField (void*);
 int	cmd_readReg (void*);
 int	cmd_readAll (void*);
@@ -86,6 +87,7 @@ GTScommands	gtsCommands [MaxGtsCommands] = {
 	{"%s %d",				"triggerStart",				cmd_triggerStart},
 	{"%s",					"excludeTriggerProcessor",	cmd_excludeTriggerProcessor},
 	{"%s",					"testSet",					cmd_testSet},
+	{"%s",					"loopbackSet",					cmd_loopbackSet},
 	{"%s %s %s",			"readField",				cmd_readField},
 	{"%s %s",			"readReg",				cmd_readReg},
 	{"%s",			"readAll",				cmd_readAll},
@@ -550,6 +552,11 @@ int	cmd_testSet (void * param)
   return leaveTestLoopback();
 }
 
+int	cmd_loopbackSet (void * param)
+{
+  return leaveLoopback();
+}
+
 int cmd_readField (void * param)
 {
   GtsThreadArgs * gtsThreadArgs = (GtsThreadArgs *)param;
@@ -620,8 +627,10 @@ int cmd_writeField (void * param)
   }
 
   status |= XMMRegs_Reg_Associate(&XMMRegsDriver, XREG_UPDATE_ALL);
+
   if (status == XST_SUCCESS) status |= XMMRegs_Reg_WriteField(&XMMRegsDriver, reg_name, field_name, val_field);
-  status |= XMMRegs_Reg_Associate(&XMMRegsDriver, XREG_WRITE_ALL);
+
+  status |= XMMRegs_Reg_Write(&XMMRegsDriver);
 
   return status;
 }

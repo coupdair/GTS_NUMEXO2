@@ -9,9 +9,9 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.2.7"
+#define VERSION "v0.2.8d"
 
-//! \todo [medium] add LoopBackSet from master branch
+//! \todo . add loopbackSet from master branch (UDP v, EPICS _)
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -50,6 +50,7 @@
 
     S. Coudert 15/01/2018
      - empty setIdle* and *RateGet
+     - add loopbackSet function
 
 * \section sectionCommandLine command line options
 *
