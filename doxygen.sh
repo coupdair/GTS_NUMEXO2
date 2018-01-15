@@ -50,9 +50,13 @@ doxygen
 ls doc/html/index.html
 firefox doc/html/index.html &
 
+#GUI notify
+notify-send 'GTS documentation ends' 'GTS '$VERSION' doxygen ends,\ni.e. '$0' from "'$PWD'".' --icon=/usr/share/hardinfo/pixmaps/report-large.png -t 4321
+
 exit
 
 ##make latex
 cd doc/latex
 make
+
 
