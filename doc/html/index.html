@@ -39,7 +39,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <div class="contents">
-<h1>NUMEXO2 GTS server</h1><h3>v0.2.9d </h3><p>table of content: </p>
+<h1>NUMEXO2 GTS server</h1><h3>v0.3.0d </h3><p>table of content: </p>
 <ul>
 <li><a class="el" href="index.html#sectionCodeHistory">Modifications</a> </li>
 <li><a class="el" href="index.html#sectionCommandLine">command line options</a> </li>
@@ -96,7 +96,7 @@ command line options</a></h2>
 </ul>
 <div class="fragment"><pre class="fragment">Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.9d
+  gts.v0.3.0d
 examples:
   gts --help
   gts --epics -c gts.cmd
@@ -107,7 +107,7 @@ examples:
   -c, --command=gts.cmd      EPICS: execute IOC command file, e.g. st.cmd,
                              before interactive shell
   -e, --epics                Use EPICS workflow, otherwise UDP by default
-  -i, --gtsid=-1             Set GTS id, otherwise RegisterServer does it by
+  -i, --gtsid=-1             Set GTS id, otherwise last byte of IP address by
                              default
   -v, --verbose              Produce verbose output
   -?, --help                 Give this help list
@@ -121,7 +121,7 @@ Report bugs to sebastien.coudert@ganil.fr.
 </pre></div><ul>
 <li><b>old</b> GTS server (UDP only)</li>
 </ul>
-<div class="fragment"><pre class="fragment">./gtsServer (v1.0.3 - Jan 16 2018 14:47:17)
+<div class="fragment"><pre class="fragment">./gtsServer (v1.0.3 - Jan 16 2018 15:23:06)
 description:
 	old GTS embedded server for NUMEXO2 (UDP only).
 usage:

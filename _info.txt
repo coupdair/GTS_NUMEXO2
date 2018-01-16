@@ -12,14 +12,6 @@
 #     - field(SNAM,"func
 #   o. see gtsApp/src/funcEPICS.sh
 
-note:
-  add setIdlePeriod and setIdleEnabled to NumExo2
-  cf. git v0.2.2 9d1d6e168448f26c21ef702ec079b8105578040d
-  in "xmmregs_l.h"
-    ? #define XMMR_IDLE_PERIOD_CTRL_OFFSET        0x124
-  _ see IP modified by GANIL/GAP for real OFFSETs [medium]
-  _ draft dummy function, in order to run ! [high]
-
 #edit
 gitk --all &
 gedit _info.txt gtsApp/src/gtsMain.cpp gtsApp/src/dbSubExample.c iocBoot/iocgts/gts.cmd &
@@ -65,10 +57,12 @@ gts fake: EPICS/getLatencyEPICS(subRecord *)
 ###crate ON
 snmpset -v 2c -m +WIENER-CRATE-MIB -c private 10.10.18.61 sysMainSwitch.0 i 1
 ###GTS run interactive
-./gts --epics -c gts.cmd
+./gts --epics -c gts.cmd -i 27
 ###or
+cat /GTSid
 /usr/local/bin/gts.sh
 ###or from remote
+id=27; ip=127; ssh numexo2@10.10.17.$ip "su -c 'echo '$id' > /GTSid'"
 ssh numexo2@numexo2-27 "su -c '/usr/local/bin/gts.sh'"
 
 ##x86 server
@@ -149,71 +143,7 @@ epics>
 
 #AGATA
 ./gts_client.sh
-...
-*****************************
-*****************************
-Calling trigger_setup
-
---Call initialize_tree_from_file
- 13  ROOT   0   6   0   0  0.00000   0.00000     0   0   0 -->   0.000
-  6  FFIO  13  92   0   0  0.00000   0.00000     0   0   0 -->   0.000
- 92  FFIO   6 127  17   0  0.00000   0.00000     0   0   0 -->   0.000
-127  LEAF  92   0   0   0  0.59163  16.78930     0   8   0 --> 222.415
- 17  LEAF  92   0   0   0  0.38553  17.28875     0   0   0 --> 222.248
---Done initialize_tree_from_file
-
---Call setup_trigger_1
---Done setup_trigger_1
---Call setup_trigger_2
---Done setup_trigger_2
---Call setup_trigger_3
---Done setup_trigger_3
---Call start_trigger
---Done start_trigger
---Call triggerCoreStart
---Done triggerCoreStart
-
-Trigger LAUNCHED.
-
-The trigger processor is included by default.
-To exclude it and validate all events, please execute: 
-exclude_trigger_processor in the gts_client/bin directory
-
-*****************************
-*****************************
-Setting and enabling Idles
-
-Setting idle period to 400
-Enabling idle events
-cannot connect to gts127:setIdleEnabled
-cannot connect to gts127:setIdleEnabled.A
-cannot connect to gts127:setIdleEnabled
-
-*****************************
-*****************************
- 2018-01-10 06:58:28.983219
- elapsed time 0:01:37 h:m:s
-       End of Setup
-*****************************
-*****************************
-
-#console
-...
-gts 127 is running triggerSetup using GTStype=3 and step=2
-Record gts127:triggerSetup called triggerSetupEPICS(0x10537d90/0.000000)activated_if_1
-Record gts127:triggerSetup called triggerSetupEPICS(0x10537d90/0.000000)activated_if_1
-Record gts127:triggerSetup called triggerSetupEPICS(0x10537d90/0.000000)activated_if_1
-Record gts127:triggerSetup called triggerSetupEPICS(0x10537d90/1.000000)activated_if_1
-gts 127 is running triggerSetup using GTStype=3 and step=3
-Record gts127:triggerStart called triggerStartEPICS(0x10536ec0/0.000000)activated_if_1
-Record gts127:triggerStart called triggerStartEPICS(0x10536ec0/0.000000)activated_if_1
-Record gts127:triggerStart called triggerStartEPICS(0x10536ec0/1.000000)activated_if_1
-gts 127 is running triggerStart using GTStype=3
-Record gts127:triggerCoreStart called triggerCoreStartEPICS(0x1053aef0/1.000000)activated_if_1
-gts 127 is running triggerCoreStart
-Record gts127:setIdlePeriod called setIdlePeriodEPICS(0x1053bdc0/0.000000)activated_if_1
-Record
-### locked ###
+##OK, up to the end
 
 exit
 

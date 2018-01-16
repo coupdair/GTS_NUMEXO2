@@ -1,6 +1,6 @@
 Usage: gts [OPTION...] 
 gts: GTS server using EPICS or UDP
-  gts.v0.2.9d
+  gts.v0.3.0d
 examples:
   gts --help
   gts --epics -c gts.cmd
@@ -11,7 +11,7 @@ examples:
   -c, --command=gts.cmd      EPICS: execute IOC command file, e.g. st.cmd,
                              before interactive shell
   -e, --epics                Use EPICS workflow, otherwise UDP by default
-  -i, --gtsid=-1             Set GTS id, otherwise RegisterServer does it by
+  -i, --gtsid=-1             Set GTS id, otherwise last byte of IP address by
                              default
   -v, --verbose              Produce verbose output
   -?, --help                 Give this help list
