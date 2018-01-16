@@ -18,6 +18,7 @@ cp -p /space/global/buildroot/CentOS6_64/ppc440/epics/base-3.15.5/bin/linux-ppc/
 rm gts.zip ; zip -ry9 gts.zip db dbd ; zip -j gts.zip gts.sh bin/linux-ppc/gts envGTSid gtsApp/src/envGTS_ID iocBoot/iocgts/gts.cmd bin/linux-ppc/caRepeater
 ##should be unpacked in /usr/local/bin/ of numexo2, e.g. cd /usr/local/bin/; unzip -o /tmp/gts.zip
 
+sync
 #GUI notify
 notify-send 'GTS packing ends' 'GTS server packing ends for gts'$id',\ni.e. '$0' from "'$PWD'".' --icon=/usr/share/hardinfo/pixmaps/compress.png -t 4321
 

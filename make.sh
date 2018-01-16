@@ -55,8 +55,8 @@ cat gtsApp/Db/dbSubExample.db | sed "s/__SERVER_VERSION__/$version/;s/__SERVER_V
 #grep serverVersion -A 7 db/dbSubExample.db
 ##print
 grep serverVersion -A 2 db/dbSubExample.db | grep DESC | grep 'v.\..\..' --color
-sync
 
+sync
 #GUI notify
 notify-send 'GTS compilation ends' 'GTS server '$version' compilation ends, i.e. '$0' from "'$PWD'".' --icon=/usr/share/hardinfo/pixmaps/os.png -t 4321
 

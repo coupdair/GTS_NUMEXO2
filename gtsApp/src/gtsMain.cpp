@@ -9,7 +9,7 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.2.8"
+#define VERSION "v0.2.9d"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -208,6 +208,7 @@ static char args_doc[] = "";
 static struct argp_option options[]=
 {
   {"verbose",  'v', 0, 0,         "Produce verbose output" },
+  {"gtsid",    'i', "-1", 0,      "Set GTS id, otherwise last byte of IP address by default" },
   {"epics",    'e', 0, 0,         "Use EPICS workflow, otherwise UDP by default" },
   {"command",  'c', "gts.cmd", 0, "EPICS: execute IOC command file, e.g. st.cmd, before interactive shell" },
 //default options
@@ -219,6 +220,8 @@ struct arguments
 {
   //! verbose mode
   int verbose;
+  //! GTS id
+  int gtsId;
   //! EPICS mode
   int epicsFlow;
   //! command file name
@@ -236,6 +239,9 @@ parse_option(int key, char *arg, struct argp_state *state)
     case 'v':
       arguments->verbose=1;
       break;
+    case 'i':
+      arguments->gtsId=(arg)?atoi(arg):-1;
+      break;
     case 'e':
       arguments->epicsFlow=1;
       break;
@@ -252,8 +258,9 @@ parse_option(int key, char *arg, struct argp_state *state)
 //! [argp] print argument values
 void print_args(struct arguments *p_arguments)
 {
-  printf (".verbose=%s\n.epicsFlow=%s\n.command_file_name=\"%s\"\n"
+  printf (".verbose=%s\n.GTSid=%d\n.epicsFlow=%s\n.command_file_name=\"%s\"\n"
   , p_arguments->verbose?"yes":"no"
+  , p_arguments->gtsId
   , p_arguments->epicsFlow?"yes":"no"
   , p_arguments->cmd_fname
   );
@@ -270,6 +277,7 @@ int main(int argc,char *argv[])
   //CLI arguments
   struct arguments arguments;
   arguments.verbose=0;
+  arguments.gtsId=-1;
   arguments.epicsFlow=0;
   arguments.cmd_fname="st.cmd";
 
@@ -301,9 +309,17 @@ int main(int argc,char *argv[])
 
 //! module access
 #ifndef _X86_64_
-//! - GTS id from IP address
   XMMRegs_lmk_pll_ctrl *c;
-  setCardNumber();
+
+//! - GTS id
+  if(arguments.gtsId<0)
+  {//from IP address
+    setCardNumber();
+  }
+  else
+  {//from command line
+    cardNumber=arguments.gtsId;
+  }
   printf("card number : %u\n", cardNumber);
 
 //! - initialize globals
