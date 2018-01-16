@@ -5,8 +5,8 @@ TC_LightGreen="\033[1;32m"
 TC_LightCyan="\033[1;36m"
 TC_clear="\033[0m"
 
-id=127
-id=`cat GTS_ID`
+#example to set "envGTSid" file (will be reset by "gts.sh" script in embedded target)
+id=123
 
 #GTS id
 echo 'set GTSid to '$id

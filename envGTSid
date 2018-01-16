@@ -1,1 +1,1 @@
-epicsEnvSet("GTSID","gts127")
+epicsEnvSet("GTSID","gts123")
