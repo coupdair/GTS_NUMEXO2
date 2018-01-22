@@ -9,7 +9,7 @@
 /**
  * \c GTS_server code version, should be changed by the developper in this \c gtsMain.c C++ file
 **/
-#define VERSION "v0.3.0e"
+#define VERSION "v0.3.1d"
 
 /*Additional documentation for the generation of the reference page (using doxygen)*/
 /**
@@ -346,7 +346,7 @@ int main(int argc,char *argv[])
 //! EPICS or UDP service
 if(arguments.epicsFlow)
 {//EPICS
-  printf("GTS server 4 EPICS: not fully implemented yet !\n  for complete list, type:\n  epics> dbl\n");
+  printf("GTS server 4 EPICS: for complete function list, type:\n  epics> dbl\n");
   //batch IOC shell
   if(argc>=2)
   {

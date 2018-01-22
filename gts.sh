@@ -1,5 +1,12 @@
+#!/bin/ash
+
 #run GTS server either UDP or EPICS on NumExo2 module
 ##gts.v0.3.
+# setup specific GTS id in "/GTSid" (e.g. echo 123 > /GTSid)
+# run with EPICS, if /GTS_EPICS exists   (e.g. touch /GTS_EPICS)
+# run with UDP, if /GTS_EPICS do NOT exists (e.g. rm /GTS_EPICS)
+
+console=' > /dev/console < /dev/console 2> /dev/console 3> /dev/console'
 
 killall gts caRepeater
 cd /usr/local/bin/
@@ -23,9 +30,9 @@ then
   ./caRepeater &
   #set EPICS env
   sed "s/__GTS_ID__/$id/" /usr/local/bin/envGTS_ID > /usr/local/bin/envGTSid
-  ./gts --epics -c gts.cmd $gtsOpt
+  ./gts --epics -c gts.cmd $gtsOpt $console &
 else
   ##UDP
-  ./gts $gtsOpt &
+  ./gts $gtsOpt $console &
 fi
 

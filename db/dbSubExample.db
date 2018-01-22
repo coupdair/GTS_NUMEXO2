@@ -26,9 +26,9 @@ record(sub,"$(user):serverVersion")
     field(A,"0")
     field(B,"3")
     field(C,"0")
-    field(D,"14")
+    field(D,"0")
     field(F,"0.3")
-    field(DESC,"v0.3.0e")
+    field(DESC,"v0.3.0")
     #read only
     field(DISP,"1")
 }

@@ -59,10 +59,10 @@ snmpset -v 2c -m +WIENER-CRATE-MIB -c private 10.10.18.61 sysMainSwitch.0 i 1
 ###GTS run interactive
 ./gts --epics -c gts.cmd -i 27
 ###or
-cat /GTSid
+ls /GTSid /GTS_EPICS; cat /GTSid
 /usr/local/bin/gts.sh
 ###or from remote
-id=27; ip=127; ssh numexo2@10.10.17.$ip "su -c 'echo '$id' > /GTSid'"
+id=27; ip=127; ssh numexo2@10.10.17.$ip "su -c 'echo '$id' > /GTSid; touch /GTS_EPICS'"
 ssh numexo2@numexo2-27 "su -c '/usr/local/bin/gts.sh'"
 
 ##x86 server
@@ -73,72 +73,76 @@ setenv EPICS_CA_ADDR_LIST '10.10.17.127'
 setenv EPICS_CA_ADDR_LIST '10.10.17.254'
 setenv EPICS_CAS_BEACON_ADDR_LIST '10.10.17.254'
 
-caget gts127:serverVersion.DESC
-gts127:serverVersion.DESC     v0.2.5j
+caget gts27:serverVersion.DESC
+gts27:serverVersion.DESC     v0.3.0
 
-caget gts127:alignMeas.DESC
-gts127:alignMeas.DESC         alignMeas(forward,nmes)
+caget gts27:alignMeas.DESC
+gts27:alignMeas.DESC         alignMeas(forward,nmes)
 
-caput gts127:alignMeas 0      #call gts127:alignMeas(0)
-caput gts127:alignMeas.A 1    #call gts127:alignMeas(0)
-caput gts127:alignMeas.B 123  #call gts127:alignMeas(0)
-caput gts127:alignMeas 1      #call gts127:alignMeas(1)
+caput gts27:alignMeas 0      #call gts127:alignMeas(0)
+caput gts27:alignMeas.A 1    #call gts127:alignMeas(0)
+caput gts27:alignMeas.B 123  #call gts127:alignMeas(0)
+caput gts27:alignMeas 1      #call gts127:alignMeas(1)
 
 
 epics> dbl
-gts127:subExample
-gts127:gtsExample
-gts127:serverVersion
-gts127:gtsReset
-gts127:gtsInit
-gts127:gtsTest
-gts127:gtsUpdate
-gts127:conIs
-gts127:gtsIs
-gts127:treeStart
-gts127:treeStop
-gts127:includeCarrierForAlign
-gts127:excludeCarrierForAlign
-gts127:alignStart
-gts127:treeSetup
-gts127:rxSystemIsReady
-gts127:treeRead
-gts127:fineDelaySetNow
-gts127:fineDelaySet
-gts127:coarseDelaySet
-gts127:triggerStart
-gts127:alignSet
-gts127:alignMeas
-gts127:triggerSetup
-gts127:tdcSet
-gts127:tdcMeas
-gts127:transCon
-gts127:transGtsTree
-gts127:transDigitizer
-gts127:alignTdcSet
-gts127:printBinary
-gts127:testSet
-gts127:testUnSet
-gts127:triggerCoreStart
-gts127:triggerCoreStop
-gts127:triggerCoreReset
-gts127:setIdlePeriod
-gts127:setIdleEnabled
-gts127:exclude_trigger_processor
-gts127:include_trigger_processor
-gts127:requestRateGet
-gts127:validationRateGet
-gts127:rejectionRateGet
-gts127:backpressureRateGet
-gts127:getLatency
-gts127:triggerGetRates
+gts27:subExample
+gts27:gtsExample
+gts27:serverVersion
+gts27:gtsReset
+gts27:gtsInit
+gts27:gtsTest
+gts27:gtsUpdate
+gts27:conIs
+gts27:gtsIs
+gts27:treeStart
+gts27:treeStop
+gts27:includeCarrierForAlign
+gts27:excludeCarrierForAlign
+gts27:alignStart
+gts27:treeSetup
+gts27:rxSystemIsReady
+gts27:treeRead
+gts27:fineDelaySetNow
+gts27:fineDelaySet
+gts27:coarseDelaySet
+gts27:triggerStart
+gts27:alignSet
+gts27:alignMeas
+gts27:triggerSetup
+gts27:tdcSet
+gts27:tdcMeas
+gts27:transCon
+gts27:transGtsTree
+gts27:transDigitizer
+gts27:alignTdcSet
+gts27:printBinary
+gts27:testSet
+gts27:testUnSet
+gts27:triggerCoreStart
+gts27:triggerCoreStop
+gts27:triggerCoreReset
+gts27:setIdlePeriod
+gts27:setIdleEnabled
+gts27:exclude_trigger_processor
+gts27:include_trigger_processor
+gts27:requestRateGet
+gts27:validationRateGet
+gts27:rejectionRateGet
+gts27:backpressureRateGet
+gts27:getLatency
+gts27:triggerGetRates
+gts27:loopbackSet
+
 
 #Version in DESC, F and (A.B.CD)
-epics> dbpr gts127:serverVersion
-A: 0                ASG:                B: 2                C: 5                
-D: 0                DESC: v0.2.5        DISA: 0             DISP: 0             
-DISV: 1             E: 0                F: 0.2              G: 0                
-...
+epics> dbpr gts27:serverVersion
+A: 0                ASG:                B: 3                C: 0                
+D: 0                DESC: v0.3.0       DISA: 0             DISP: 1             
+DISV: 1             E: 0                F: 0.3              G: 0                
+H: 0                I: 0                J: 0                K: 0                
+L: 0                NAME: gts27:serverVersion               SEVR: INVALID       
+STAT: UDF           TPRO: 0             VAL: 0              
 epics>
 
 #AGATA
