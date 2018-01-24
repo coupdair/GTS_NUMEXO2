@@ -1,0 +1,16 @@
+#!/bin/sh
+
+echo "starting telnetd"
+/usr/sbin/telnetd &
+
+echo "install readout driver"
+insmod /usr/local/bin/rdp_fifo_driver.ko
+
+echo "install memory driver"
+insmod /usr/local/bin/memory.ko     
+
+echo "start register server"
+/usr/local/bin/SC_server_numexo 8061 & 
+
+echo "start GTS Leaf NUMEXO2 server"
+/usr/local/bin/gts.sh &
