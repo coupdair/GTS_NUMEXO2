@@ -10,7 +10,8 @@ echo "install memory driver"
 insmod /usr/local/bin/memory.ko     
 
 echo "start register server"
-/usr/local/bin/SC_server_numexo 8061 & 
+/usr/local/bin/register.sh & 
 
 echo "start GTS Leaf NUMEXO2 server"
 /usr/local/bin/gts.sh &
+
