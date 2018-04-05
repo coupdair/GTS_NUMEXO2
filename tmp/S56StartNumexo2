@@ -1,5 +1,8 @@
 #!/bin/sh
 
+#reboot fast on KernelPanic
+echo 16 > /proc/sys/kernel/panic
+
 echo "starting telnetd"
 /usr/sbin/telnetd &
 
