@@ -1,13 +1,18 @@
 #!/bin/sh
 
-#reboot fast on KernelPanic
+echo "fast reboot on KernelPanic"
 echo 16 > /proc/sys/kernel/panic
 
 echo "starting telnetd"
 /usr/sbin/telnetd &
 
-echo "install readout driver"
-insmod /usr/local/bin/rdp_fifo_driver.ko
+if [ -e /NO_RDP_FIFO ]
+then
+  echo "no readout driver"
+else
+  echo "install readout driver"
+  insmod /usr/local/bin/rdp_fifo_driver.ko
+fi
 
 echo "install memory driver"
 insmod /usr/local/bin/memory.ko     
